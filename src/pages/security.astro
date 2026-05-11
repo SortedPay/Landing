@@ -1,0 +1,64 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Security — Sorted';
+const description = 'An honest writeup of how Sorted secures your account, your funds, and your data.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>Legal</span><span class="sep"></span><span>Security</span></div>
+    <span class="subhero-eyebrow">Legal · Security</span>
+    <h1><span class="hl">Security.</span> How we keep money safe.</h1>
+    <p class="subhero-sub">How we secure your account, your balance, and your data. Real engineering, not buzzwords.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="prose">
+      <h2>Three layers, three different threats.</h2>
+      <p>Money safety is really three problems. <strong>Account security</strong> (someone steals your phone or password), <strong>fund safety</strong> (the company holding your money fails), and <strong>data security</strong> (someone breaches the company's database). We treat each separately.</p>
+      <h2>1. Account security.</h2>
+      <ul>
+        <li><strong>Phone number + biometric.</strong> Login is phone-number-bound. Every transaction over $100 requires FaceID/TouchID. Larger transactions require a second factor.</li>
+        <li><strong>Device binding.</strong> Your account is bound to a specific device. Adding a new device requires re-verification (SMS + selfie liveness check).</li>
+        <li><strong>Slide-to-send.</strong> No tap-and-pay for transfers. Every send requires deliberate physical action.</li>
+        <li><strong>5-second undo.</strong> Every send is reversible for 5 seconds, even after biometric confirmation.</li>
+        <li><strong>Real-time fraud monitoring.</strong> Anomalous patterns (new device + large transfer + new recipient) get an instant freeze + human review.</li>
+      </ul>
+      <h2>2. Fund safety.</h2>
+      <ul>
+        <li><strong>You hold AUDD, not a deposit on our books.</strong> If Sorted disappears tomorrow, your AUDD remains redeemable through Novatti directly.</li>
+        <li><strong>1:1 reserves at tier-1 banks.</strong> Every AUDD in circulation is backed by an AUD held in an Australian ADI deposit account.</li>
+        <li><strong>Monthly auditor-attested reserves.</strong> Novatti publishes attestations from a registered auditor.</li>
+        <li><strong>No lending against deposits.</strong> Reserves can't be lent out, leveraged, or rehypothecated. They sit and earn deposit rates.</li>
+      </ul>
+      <h2>3. Data security.</h2>
+      <ul>
+        <li><strong>Australian data centres.</strong> All data lives in AWS ap-southeast-2 (Sydney). No offshore replication.</li>
+        <li><strong>Encryption everywhere.</strong> TLS 1.3 in transit, AES-256 at rest. Database backups encrypted with a customer-managed key.</li>
+        <li><strong>No raw IDs stored.</strong> KYC documents are verified by Frankie and discarded; we keep only a hash of the verification.</li>
+        <li><strong>Penetration tested annually.</strong> Independent security firm, results shared with our AFSL holder.</li>
+        <li><strong>Bug bounty.</strong> Coming soon. In the meantime, email <a href="mailto:security@sortedaud.app">security@sortedaud.app</a> with disclosures.</li>
+      </ul>
+      <h2>What you can do.</h2>
+      <ul>
+        <li><strong>Use FaceID or TouchID.</strong> Always on by default; please don't turn it off.</li>
+        <li><strong>Set a unique 6-digit PIN.</strong> Not your birthday. Not 1-2-3-4-5-6.</li>
+        <li><strong>Don't share verification codes.</strong> Sorted will never ask for your code over phone or email.</li>
+        <li><strong>Watch for impersonation.</strong> We'll only ever email from <strong>@sortedaud.app</strong>. Anything else is a scam.</li>
+      </ul>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Found a vulnerability?</h2>
+      <p class="page-cta-sub">Email <strong>security@sortedaud.app</strong>. We respond within 24 hours and credit responsible disclosures.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">Read compliance</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

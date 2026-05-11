@@ -1,0 +1,609 @@
+---
+// ClaimHandleModal — opens when any [data-claim] element is clicked.
+// Captures email + desired @handle, posts to PUBLIC_CLAIM_ENDPOINT env var.
+// If endpoint is not configured, logs to console (dev/preview behaviour).
+const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '';
+---
+
+<div class="claim-modal" id="claim-modal" aria-hidden="true" role="dialog" aria-labelledby="claim-modal-title" data-endpoint={endpoint}>
+  <div class="claim-modal__backdrop" data-claim-close></div>
+  <div class="claim-modal__panel">
+    <button class="claim-modal__close" data-claim-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- STATE 1: Form -->
+    <div class="claim-modal__form-state" data-claim-state="form">
+      <h3 class="claim-modal__title" id="claim-modal-title">Claim your <span class="hl">@handle.</span></h3>
+      <p class="claim-modal__sub">Be first in when we open the doors. We'll send you the app + your handle the second beta opens.</p>
+
+      <form class="claim-form" data-claim-form>
+        <div class="claim-field">
+          <label class="claim-label" for="claim-handle">Pick your handle</label>
+          <div class="claim-handle-wrap">
+            <span class="claim-handle-prefix">@</span>
+            <input
+              class="claim-input claim-input--handle"
+              id="claim-handle"
+              name="handle"
+              type="text"
+              placeholder="hannah"
+              required
+              minlength="3"
+              maxlength="20"
+              pattern="[a-zA-Z0-9_]+"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <p class="claim-hint">Letters, numbers, and underscores. 3–20 chars.</p>
+        </div>
+
+        <div class="claim-field">
+          <label class="claim-label" for="claim-email">Your email</label>
+          <input
+            class="claim-input"
+            id="claim-email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <button type="submit" class="claim-submit">
+          <span class="claim-submit-label">Claim it</span>
+          <svg class="claim-submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <p class="claim-fineprint">No spam. We'll only email you when the app's ready.</p>
+      </form>
+    </div>
+
+    <!-- STATE 2: Loading -->
+    <div class="claim-modal__loading-state" data-claim-state="loading" hidden>
+      <div class="claim-spinner"></div>
+      <p>Locking in your handle...</p>
+    </div>
+
+    <!-- STATE 3: Success -->
+    <div class="claim-modal__success-state" data-claim-state="success" hidden>
+      <div class="claim-success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="claim-modal__title">You're sorted.</h3>
+      <p class="claim-modal__sub">We'll email <strong data-claim-success-email></strong> the second beta opens. <strong data-claim-success-handle></strong> is yours.</p>
+      <button class="claim-submit" data-claim-close>Sweet as</button>
+    </div>
+
+    <!-- STATE 4: Taken -->
+    <div class="claim-modal__taken-state" data-claim-state="taken" hidden>
+      <div class="claim-taken-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <h3 class="claim-modal__title">Damn, <strong data-claim-taken-handle></strong> is taken.</h3>
+      <p class="claim-modal__sub">Someone got there first. Try one of these?</p>
+      <div class="claim-suggestions" data-claim-suggestions></div>
+      <button class="claim-submit claim-submit--ghost" data-claim-retry>Try a different one</button>
+    </div>
+
+    <!-- STATE 5: Error -->
+    <div class="claim-modal__error-state" data-claim-state="error" hidden>
+      <h3 class="claim-modal__title">Hmm, that didn't work.</h3>
+      <p class="claim-modal__sub" data-claim-error-message>Something went wrong. Give it another go?</p>
+      <button class="claim-submit" data-claim-retry>Try again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const modal = document.getElementById('claim-modal');
+    if (!modal) return;
+    const endpoint = (modal as HTMLElement).dataset.endpoint || '';
+
+    const form = modal.querySelector<HTMLFormElement>('[data-claim-form]');
+    const stateForm = modal.querySelector<HTMLElement>('[data-claim-state="form"]');
+    const stateLoading = modal.querySelector<HTMLElement>('[data-claim-state="loading"]');
+    const stateSuccess = modal.querySelector<HTMLElement>('[data-claim-state="success"]');
+    const stateTaken = modal.querySelector<HTMLElement>('[data-claim-state="taken"]');
+    const stateError = modal.querySelector<HTMLElement>('[data-claim-state="error"]');
+    const successEmail = modal.querySelector<HTMLElement>('[data-claim-success-email]');
+    const successHandle = modal.querySelector<HTMLElement>('[data-claim-success-handle]');
+    const takenHandle = modal.querySelector<HTMLElement>('[data-claim-taken-handle]');
+    const suggestionsEl = modal.querySelector<HTMLElement>('[data-claim-suggestions]');
+    const errorMsg = modal.querySelector<HTMLElement>('[data-claim-error-message]');
+    const handleInput = modal.querySelector<HTMLInputElement>('input[name="handle"]');
+
+    // Demo reserved handles — used when no endpoint is configured.
+    // Real implementation: backend should return { taken: true } for any of these.
+    const RESERVED_HANDLES = new Set([
+      'admin', 'support', 'help', 'info', 'sorted', 'team', 'official',
+      'hannah', 'maya', 'jack', 'jackl', 'sarah', 'tom', 'ben', 'alex',
+      'chris', 'liam', 'oliver', 'noah', 'ethan', 'mike', 'james', 'will',
+      'emma', 'olivia', 'ava', 'mia', 'isabella', 'sophia', 'charlotte',
+      'aussie', 'mate', 'bro', 'cooper', 'jackson', 'lachlan', 'hunter',
+      'test', 'demo', 'example', 'user', 'me', 'you', 'sortedaud',
+    ]);
+
+    function setState(s: 'form' | 'loading' | 'success' | 'taken' | 'error') {
+      [stateForm, stateLoading, stateSuccess, stateTaken, stateError].forEach((el) => {
+        if (!el) return;
+        el.hidden = el.dataset.claimState !== s;
+      });
+    }
+
+    function open() {
+      modal.classList.add('claim-modal--open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setState('form');
+      setTimeout(() => handleInput?.focus(), 100);
+    }
+    function close() {
+      modal.classList.remove('claim-modal--open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-claim]').forEach((el) => {
+      el.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    });
+    modal.querySelectorAll('[data-claim-close]').forEach((el) => {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('claim-modal--open')) close();
+    });
+    modal.querySelector('[data-claim-retry]')?.addEventListener('click', () => {
+      setState('form');
+      setTimeout(() => handleInput?.focus(), 50);
+    });
+
+    // Generate handle suggestions when one is taken
+    function generateSuggestions(base: string): string[] {
+      const suggestions = new Set<string>();
+      // _au, _aussie variants
+      suggestions.add(`${base}_au`);
+      suggestions.add(`${base}au`);
+      // numbered variants
+      const year = new Date().getFullYear() % 100;
+      suggestions.add(`${base}${year}`);
+      suggestions.add(`${base}${Math.floor(Math.random() * 90 + 10)}`);
+      // the_ prefix
+      suggestions.add(`the${base}`);
+      // Filter out any that are in the reserved set
+      return Array.from(suggestions).filter(h => !RESERVED_HANDLES.has(h)).slice(0, 4);
+    }
+
+    function showTaken(handle: string) {
+      if (takenHandle) takenHandle.textContent = '@' + handle;
+      if (suggestionsEl) {
+        suggestionsEl.innerHTML = '';
+        generateSuggestions(handle).forEach(s => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'claim-suggestion';
+          btn.innerHTML = `<span class="claim-suggestion-at">@</span>${s}`;
+          btn.addEventListener('click', () => {
+            if (handleInput) handleInput.value = s;
+            setState('form');
+            setTimeout(() => handleInput?.focus(), 50);
+          });
+          suggestionsEl.appendChild(btn);
+        });
+      }
+      setState('taken');
+    }
+
+    // Check if a handle is taken. With a real endpoint configured, server
+    // decides. Without, fall back to hardcoded reserved set.
+    async function checkAvailability(handle: string): Promise<boolean> {
+      if (!endpoint) {
+        return !RESERVED_HANDLES.has(handle);
+      }
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ check: handle }),
+        });
+        if (!res.ok) return true; // treat ambiguous as available, server will reject on real submit
+        const data = await res.json().catch(() => null);
+        if (data && typeof data.taken === 'boolean') return !data.taken;
+        return true;
+      } catch {
+        return true;
+      }
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const handle = (fd.get('handle') as string || '').trim().toLowerCase();
+      const email = (fd.get('email') as string || '').trim().toLowerCase();
+
+      if (!handle || !email) return;
+      if (!/^[a-zA-Z0-9_]{3,20}$/.test(handle)) {
+        if (errorMsg) errorMsg.textContent = 'Handles can only have letters, numbers, and underscores. 3–20 characters.';
+        setState('error');
+        return;
+      }
+
+      setState('loading');
+
+      // 1. Availability check
+      const available = await checkAvailability(handle);
+      if (!available) {
+        showTaken(handle);
+        return;
+      }
+
+      // 2. Submit
+      const payload = {
+        handle, email,
+        timestamp: new Date().toISOString(),
+        source: 'sorted-landing',
+      };
+
+      try {
+        if (endpoint) {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          // If server returns { taken: true } even on submit, treat as taken
+          const data = await res.json().catch(() => null);
+          if (data && data.taken === true) {
+            showTaken(handle);
+            return;
+          }
+        } else {
+          console.info('[Sorted] Handle claim (no PUBLIC_CLAIM_ENDPOINT set, logging only):', payload);
+          await new Promise((r) => setTimeout(r, 600));
+        }
+
+        try {
+          if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('sorted-claimed', JSON.stringify(payload));
+          }
+        } catch {}
+
+        if (successEmail) successEmail.textContent = email;
+        if (successHandle) successHandle.textContent = '@' + handle;
+        setState('success');
+      } catch (err) {
+        console.error('[Sorted] Claim failed:', err);
+        if (errorMsg) errorMsg.textContent = "Couldn't reach our servers. Check your connection and try again?";
+        setState('error');
+      }
+    });
+  })();
+</script>
+
+<style>
+  .claim-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .claim-modal--open { display: flex; }
+  .claim-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 14, 24, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: claim-fade 200ms ease-out;
+  }
+  .claim-modal__panel {
+    position: relative;
+    background: var(--paper-elevated);
+    border: 3px solid var(--ink);
+    border-radius: 24px;
+    box-shadow: 0 10px 0 var(--ink);
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 480px;
+    animation: claim-pop 350ms var(--ease-spring);
+  }
+  @keyframes claim-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes claim-pop {
+    from { opacity: 0; transform: scale(0.92) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .claim-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 0 2px 0 var(--ink);
+    cursor: pointer;
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    transition: transform 150ms var(--ease-spring);
+  }
+  .claim-modal__close:hover { transform: rotate(8deg) scale(1.06); }
+  .claim-modal__close svg { width: 16px; height: 16px; }
+
+  .claim-modal__title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .claim-modal__title .hl {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+    padding: 0 6px;
+  }
+  .claim-modal__title .hl::before {
+    content: '';
+    position: absolute;
+    inset: 8% -2% 8% -2%;
+    background: var(--lime);
+    z-index: -1;
+    transform: skewX(-4deg) rotate(-1deg);
+    border-radius: 6px;
+  }
+  .claim-modal__sub {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .claim-modal__sub strong { color: var(--ink); }
+
+  /* Form */
+  .claim-form { display: flex; flex-direction: column; gap: 16px; }
+  .claim-field { display: flex; flex-direction: column; gap: 6px; }
+  .claim-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .claim-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    background: var(--paper);
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--ink);
+    box-shadow: 0 2px 0 var(--ink);
+    transition: box-shadow 150ms ease, transform 150ms ease;
+  }
+  .claim-input:focus {
+    outline: none;
+    box-shadow: 0 4px 0 var(--lime);
+    transform: translateY(-1px);
+  }
+  .claim-handle-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .claim-handle-prefix {
+    position: absolute;
+    left: 14px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink-muted);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .claim-input--handle {
+    padding-left: 32px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .claim-hint {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+  .claim-submit {
+    margin-top: 8px;
+    width: 100%;
+    padding: 16px 22px;
+    background: var(--lime);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 0 4px 0 var(--ink);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 150ms var(--ease-spring);
+  }
+  .claim-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--ink);
+    background: var(--lime-deep);
+  }
+  .claim-submit:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--ink);
+  }
+  .claim-submit-icon { width: 16px; height: 16px; }
+  .claim-fineprint {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* Loading state */
+  .claim-modal__loading-state[hidden],
+  .claim-modal__success-state[hidden],
+  .claim-modal__taken-state[hidden],
+  .claim-modal__error-state[hidden],
+  .claim-modal__form-state[hidden] {
+    display: none !important;
+  }
+  .claim-modal__loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 40px 0;
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    font-size: 18px;
+  }
+  .claim-spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid var(--lime);
+    border-top-color: var(--ink);
+    border-radius: 50%;
+    animation: claim-spin 700ms linear infinite;
+  }
+  @keyframes claim-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Success state */
+  .claim-modal__success-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .claim-success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--lime);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 0 var(--ink);
+    color: var(--ink);
+    margin-bottom: 8px;
+    animation: claim-pop 400ms var(--ease-spring);
+  }
+  .claim-success-icon svg { width: 30px; height: 30px; }
+  .claim-modal__success-state .claim-submit { max-width: 200px; margin-top: 12px; }
+
+  /* Error state */
+  .claim-modal__error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .claim-modal__error-state .claim-submit {
+    max-width: 200px;
+    margin-top: 12px;
+    background: var(--coral);
+    color: var(--paper);
+  }
+
+  /* Taken state */
+  .claim-modal__taken-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .claim-taken-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--coral);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 0 var(--ink);
+    color: var(--paper);
+    margin-bottom: 4px;
+    animation: claim-pop 400ms var(--ease-spring);
+  }
+  .claim-taken-icon svg { width: 30px; height: 30px; }
+  .claim-modal__taken-state .claim-modal__title strong {
+    color: var(--coral);
+    font-weight: 700;
+  }
+  .claim-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0 8px;
+  }
+  .claim-suggestion {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 0 var(--ink);
+    transition: transform 150ms var(--ease-spring), box-shadow 150ms ease;
+  }
+  .claim-suggestion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 var(--ink);
+    background: var(--lime);
+  }
+  .claim-suggestion-at {
+    color: var(--ink-muted);
+    margin-right: 1px;
+  }
+  .claim-submit--ghost {
+    background: transparent;
+    color: var(--ink);
+    box-shadow: 0 2px 0 var(--ink);
+    max-width: 240px;
+    margin-top: 4px;
+  }
+  .claim-submit--ghost:hover {
+    background: var(--paper);
+    box-shadow: 0 4px 0 var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    .claim-modal__panel { padding: 28px 22px; }
+    .claim-modal__title { font-size: 26px; }
+  }
+</style>

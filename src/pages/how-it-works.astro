@@ -1,0 +1,55 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'How it works — Sorted';
+const description = 'The full picture: how money moves, what AUDD is, why we use Solana, where every dollar sits.';
+---
+
+<Base title={title} description={description} active="how">
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>How it works</span></div>
+    <span class="subhero-eyebrow">Sorted · How it works</span>
+    <h1>How it <span class="hl">actually works.</span></h1>
+    <p class="subhero-sub">No jargon. No "leveraging". A plain-English walkthrough of how money moves through Sorted, where the maths comes from, and why every other feature is free.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="section-head"><span class="section-eyebrow">The 30-second version</span><h2 class="section-title">Easy as. <span class="hl">Three taps.</span></h2></div>
+    <div class="card-grid reveal-stagger" style="max-width:1080px;margin:60px auto 0;">
+      <div class="tile-card"><span class="tile-card-tag">01</span><h3 class="tile-card-title">Top up free</h3><p class="tile-card-desc">Link your Aussie bank once. Move money in instantly via PayID — no card surcharge, no "1% loading fee".</p><div class="tile-card-meta">PayID · Free · Instant</div></div>
+      <div class="tile-card coral"><span class="tile-card-tag">02</span><h3 class="tile-card-title">Send to @anyone</h3><p class="tile-card-desc">Type a handle, type an amount, slide to send. Lands in their account in under two seconds.</p><div class="tile-card-meta">No BSB · No fee · Always on</div></div>
+      <div class="tile-card sky"><span class="tile-card-tag">03</span><h3 class="tile-card-title">Earn while you wait</h3><p class="tile-card-desc">Anything sitting in your balance earns 3.33% p.a., paid every morning at 9am. No tier, no hoops.</p><div class="tile-card-meta">3.33% p.a. · Paid daily</div></div>
+    </div></div></section><section class="section reveal"><div class="container">
+    <div class="prose">
+      <h2>The longer answer.</h2>
+      <p>Sorted is built on three things stacked together: <strong>AUDD</strong> (an Australian-dollar token), <strong>Solana</strong> (the rails it moves on), and <strong>our app</strong> (everything you actually see and touch).</p>
+      <h3>AUDD — the Australian-dollar token</h3>
+      <p>Every dollar inside Sorted exists as AUDD, a fully-reserved digital Australian dollar issued by Novatti — an AFSL-licensed Australian financial services provider. Every AUDD in circulation is backed 1:1 by an AUD held in tier-1 Australian bank deposit accounts. You can redeem AUDD for AUD any time, 1:1.</p>
+      <p>Why a token instead of regular AUD? Because tokens are programmable. They settle in seconds, can move on rails that don't sleep on weekends, and make instant peer-to-peer transfer actually possible without going through the multi-day clearing systems banks built in the 1970s.</p>
+      <h3>Solana — the rails</h3>
+      <p>Solana is the blockchain we settle on. We chose it because it's fast (sub-second block times), cheap (network fees are fractions of a cent), and stable. Every send in Sorted is a Solana transaction under the hood. You don't see it, don't pay for it, and don't need to know what it is.</p>
+      <p>The fact that it's "blockchain" is irrelevant to you — same way the fact that your text messages travel over LTE is irrelevant. It's plumbing.</p>
+      <h3>The app — what you actually use</h3>
+      <p>Everything visible: handles, the keypad, the balance screen, the activity list, FaceID, notifications. The app is what hides everything else. You sign in with your phone number, you see Australian dollars, you tap things. The crypto is buried at the bottom of the stack where it belongs.</p>
+      <h2>So how do you make money?</h2>
+      <p>Same way Wise and Revolut do. The reserves backing your AUDD sit in tier-1 Australian bank accounts earning around 4% per year (close to the RBA cash rate). We pay you 3.33% and keep the spread (~0.6%) to run the company.</p>
+      <p>This is why every other feature is free: top-ups, sends, withdraws, holds — all zero. Charging for those would be double-dipping.</p>
+      <blockquote>If you understand "Wise makes money on the FX spread", you understand how Sorted makes money on the deposit spread. Same idea, different rate.</blockquote>
+      <h2>Sounds like a stablecoin, basically?</h2>
+      <p>Mechanically, yes — AUDD is a regulated AUD-denominated stablecoin, and Sorted is the consumer-friendly app sitting on top. Most users will never need to know that. We're transparent about it because we'd rather you find out from us than from a Reddit thread.</p>
+      <p>The differentiator from "just hold AUDC/USDC yourself" is that we handle the regulatory work, the fiat on/off ramps, the customer service, and the yield sourcing — and present it all as one app you can hand to your mum.</p>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Right then.<br>Let's get it sorted.</h2>
+      <p class="page-cta-sub">Reading about it is fine. Trying it is faster.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">See FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

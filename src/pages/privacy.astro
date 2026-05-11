@@ -1,0 +1,59 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Privacy — Sorted';
+const description = "What data we collect, what we do with it, and what we don't. Plain-language privacy policy from Sorted.";
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>Legal</span><span class="sep"></span><span>Privacy</span></div>
+    <span class="subhero-eyebrow">Legal · Privacy</span>
+    <h1><span class="hl">Privacy</span> policy.</h1>
+    <p class="subhero-sub">Plain English. No "we may share data with affiliates" weasel-wording. Last updated <strong>March 2026</strong>.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="prose">
+      <h2>The TL;DR.</h2>
+      <ul>
+        <li><strong>What we collect:</strong> the minimum needed to verify you (name, DOB, ID), let you transact (phone, email, transactions), and stay legal (AUSTRAC reporting).</li>
+        <li><strong>What we sell:</strong> nothing. We don't sell, rent, or trade your data. Not now, not ever.</li>
+        <li><strong>Who we share with:</strong> Novatti (AUDD issuer), our KYC provider, our cloud infra, and law enforcement when legally required. That's it.</li>
+        <li><strong>Where it lives:</strong> Australian data centres (Sydney, AWS ap-southeast-2). Backups encrypted at rest and in transit.</li>
+        <li><strong>How long we keep it:</strong> only as long as legally required (7 years for transaction records, per AUSTRAC). After that, deleted.</li>
+      </ul>
+      <h2>The longer answer.</h2>
+      <h3>What we collect at signup</h3>
+      <p>Phone number, email, full legal name, date of birth, residential address, and one form of government photo ID (drivers licence or passport). This is the legal minimum for AUSTRAC-registered services in Australia. We use a third-party KYC provider (Frankie) to verify the ID; we keep a hash of the verification result, not the document itself.</p>
+      <h3>What we collect during use</h3>
+      <p>Every transaction (sender, recipient, amount, time), device info (model, OS, app version), and login activity. We use this to spot fraud, comply with regulations, and improve the product.</p>
+      <h3>What we never collect</h3>
+      <p>Browsing history outside the app, location beyond country-level, contacts (unless you explicitly grant access for handle search), photos, microphone, or any data not directly related to the app working.</p>
+      <h3>Cookies & tracking on this website</h3>
+      <p>This marketing website uses one cookie to remember whether you've dismissed the cookie banner. No analytics, no Facebook pixel, no Google Tag Manager. We use server-side privacy-first analytics (Plausible) which doesn't set cookies.</p>
+      <h3>Your rights</h3>
+      <p>Under the Australian Privacy Principles, you can:</p>
+      <ul>
+        <li>Request a copy of all data we hold on you (export from Settings → Privacy in the app, or email <a href="mailto:privacy@sortedaud.app">privacy@sortedaud.app</a>)</li>
+        <li>Correct inaccurate data</li>
+        <li>Request deletion (subject to AUSTRAC retention requirements for transaction records)</li>
+        <li>Lodge a complaint with the OAIC if we mess this up</li>
+      </ul>
+      <h3>Changes to this policy</h3>
+      <p>We'll notify all users in-app and by email at least 30 days before any material change. Minor wording fixes are tracked in our public changelog.</p>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Questions about your data?</h2>
+      <p class="page-cta-sub">Email <strong>privacy@sortedaud.app</strong> — a real person, usually under one business day.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">Read terms</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

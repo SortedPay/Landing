@@ -1,0 +1,619 @@
+/* ============================================================
+   SORTED — DESIGN SYSTEM
+   Brand: warm cream paper · electric lime · hard ink shadows
+   Type: Bricolage Grotesque (display) · Plus Jakarta Sans (body) · JetBrains Mono (mono)
+   Aesthetic: flat sticker graphics, ink borders, no gradients in UI surfaces
+   ============================================================ */
+
+:root {
+  /* ── Colour ── */
+  --paper: #F6F2E9;
+  --paper-elevated: #FFFCF5;
+  --paper-deep: #EFEADD;
+  --ink: #0E0E18;
+  --ink-soft: #2A2A38;
+  --ink-muted: #6B6B7A;
+  --ink-faint: #B8B5AC;
+  --line: #E5E0D2;
+  --line-soft: #EDE8DA;
+
+  --lime: #C8F154;
+  --lime-deep: #A8D426;
+  --lime-soft: #ECF8C7;
+  --coral: #FF5A4E;
+  --coral-soft: #FFE4E0;
+  --sky: #5BB7FF;
+  --sky-soft: #D6ECFF;
+  --plum: #6B4EFF;
+  --butter: #FFD66B;
+
+  /* ── Type ── */
+  --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  /* ── Motion ── */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: var(--lime); color: var(--ink); }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ──────── DOT GRID ──────── */
+.dotgrid { position: relative; }
+.dotgrid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(14, 14, 24, 0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 40%, black 60%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 90% at 50% 40%, black 60%, transparent 100%);
+}
+.dotgrid > * { position: relative; z-index: 1; }
+.dotgrid-hero::before {
+  background-image: radial-gradient(circle, rgba(14, 14, 24, 0.13) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ──────── CONTAINER ──────── */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+}
+@media (max-width: 460px) { .container { padding: 0 20px; } }
+
+.icon { width: 1em; height: 1em; flex-shrink: 0; }
+
+/* ──────── NAV ──────── */
+nav.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(246, 242, 233, 0.85);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+nav.site-nav.scrolled {
+  border-bottom-color: var(--line);
+  background: rgba(246, 242, 233, 0.92);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+/* ──────── LOGO ──────── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  background: var(--lime);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  transform: rotate(-4deg);
+  transition: transform 380ms var(--ease-spring);
+  box-shadow: 0 3px 0 var(--ink);
+  border: 2px solid var(--ink);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.logo-mark img,
+.logo-mark svg { width: 26px; height: 26px; }
+.logo:hover .logo-mark { transform: rotate(8deg) scale(1.06); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav-links a {
+  font-family: var(--font-display);
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: color 150ms ease, transform 200ms var(--ease-spring);
+  position: relative;
+  display: inline-block;
+}
+.nav-links a:hover {
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.nav-links a.active { color: var(--ink); }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -6px;
+  height: 4px;
+  background: var(--lime);
+  border-radius: 2px;
+  transform: skewX(-8deg);
+}
+.nav-cta { display: flex; gap: 10px; align-items: center; }
+
+.nav-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--paper-elevated);
+  border: 2px solid var(--ink);
+  box-shadow: 0 2px 0 var(--ink);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+.nav-burger svg { width: 22px; height: 22px; }
+
+/* ──────── MOBILE NAV ──────── */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  z-index: 200;
+  padding: 24px 28px 40px;
+  display: none;
+  flex-direction: column;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.mobile-nav-close {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--paper-elevated);
+  border: 2px solid var(--ink);
+  box-shadow: 0 2px 0 var(--ink);
+  display: grid; place-items: center;
+  cursor: pointer;
+  color: var(--ink);
+}
+.mobile-nav-close svg { width: 22px; height: 22px; }
+.mobile-nav-links { display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav-links a {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 2px dashed var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mobile-nav-links a:last-child { border-bottom: none; }
+.mobile-nav-links a svg { width: 22px; height: 22px; opacity: 0.4; }
+.mobile-nav-cta {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ──────── BUTTONS ──────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 200ms var(--ease-spring);
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.btn .icon { width: 16px; height: 16px; }
+
+.btn-ghost { color: var(--ink-soft); background: transparent; }
+.btn-ghost:hover { color: var(--ink); background: var(--line-soft); transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--lime);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--ink);
+  background: var(--lime-deep);
+}
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+.btn-dark {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  box-shadow: 0 3px 0 var(--lime);
+}
+.btn-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--lime);
+}
+.btn-secondary {
+  background: var(--paper-elevated);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--ink);
+  background: #fff;
+}
+.btn-lg { padding: 16px 26px; font-size: 16px; }
+
+/* ──────── HIGHLIGHT (text decoration) ──────── */
+/* Lime highlight: ALWAYS ink text on top */
+.hl {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  padding: 0 8px;
+  color: var(--ink);
+}
+.hl::before {
+  content: '';
+  position: absolute;
+  inset: 12% -2% 8% -2%;
+  background: var(--lime);
+  z-index: -1;
+  transform: rotate(-1deg) skewX(-3deg);
+  border-radius: 6px;
+}
+.hl-coral { color: var(--paper); }
+.hl-coral::before { background: var(--coral); }
+.hl-sky::before { background: var(--sky); }
+.hl-butter::before { background: var(--butter); }
+
+.underline-coral {
+  position: relative;
+  display: inline-block;
+}
+.underline-coral::after {
+  content: '';
+  position: absolute;
+  left: -2%; right: -2%;
+  bottom: 6%;
+  height: 14%;
+  background: var(--coral);
+  z-index: -1;
+  border-radius: 2px;
+  transform: skewX(-8deg);
+}
+
+/* ──────── SECTION ELEMENTS ──────── */
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--lime);
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 2px solid var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 0 var(--ink);
+  transform: rotate(-1deg);
+}
+.section-head {
+  max-width: 900px;
+  margin: 0 auto 80px;
+  text-align: center;
+  position: relative;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.6vw, 72px);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  margin-bottom: 20px;
+}
+.section-sub {
+  font-size: 19px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 620px;
+  margin: 0 auto;
+  font-weight: 450;
+}
+.section-sub strong { color: var(--ink); font-weight: 700; }
+
+/* ──────── FOOTER ──────── */
+footer.site-footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 80px 0 0;
+  margin-top: 100px;  /* spacing from preceding CTA card */
+  position: relative;
+  overflow: hidden;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 2;
+}
+footer .logo { color: var(--paper); }
+footer .logo:hover { color: var(--lime); }
+
+.footer-tagline {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(246,242,233,0.7);
+  margin-top: 20px;
+  max-width: 280px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.footer-social { display: flex; gap: 10px; margin-top: 20px; }
+.footer-social a {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  display: grid; place-items: center;
+  color: var(--paper);
+  text-decoration: none;
+  transition: all 200ms var(--ease-spring);
+}
+.footer-social a:hover {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+  transform: translateY(-3px) rotate(-4deg);
+}
+.footer-social svg { width: 18px; height: 18px; }
+
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lime);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.footer-col a {
+  display: block;
+  color: rgba(246,242,233,0.7);
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom: 12px;
+  transition: color 150ms ease, transform 150ms ease;
+  font-weight: 500;
+}
+.footer-col a:hover { color: var(--lime); transform: translateX(2px); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0 48px;
+  border-top: 1px solid rgba(246,242,233,0.1);
+  font-size: 13px;
+  color: rgba(246,242,233,0.5);
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(246,242,233,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.powered-by .solana-logo {
+  height: 18px;
+  width: auto;
+}
+
+/* ──────── REVEAL & ANIMATION ──────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 700ms var(--ease-smooth), transform 700ms var(--ease-smooth);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms var(--ease-smooth), transform 600ms var(--ease-smooth);
+}
+.reveal-stagger.in > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.in > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.in > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger.in > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger.in > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger.in > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger.in > *:nth-child(6) { transition-delay: 400ms; }
+
+.spring-in {
+  opacity: 0;
+  transform: scale(0.85) translateY(20px);
+  transition: opacity 600ms var(--ease-spring), transform 600ms var(--ease-spring);
+}
+.spring-in.in { opacity: 1; transform: scale(1) translateY(0); }
+
+/* Keyframes */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes breathe {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 0 var(--ink); }
+  50% { transform: scale(1.005); box-shadow: 0 12px 0 var(--ink); }
+}
+
+/* ──────── WAVY RIBBON (unified for SectionDivider + Marquee) ──────── */
+/* All ribbons share identical geometry, height, and typography.
+   Only colours change. The aspect-ratio CSS keeps the SVG in sync
+   with the viewBox so the wave never gets cropped at any viewport width. */
+.ribbon {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  line-height: 0;
+}
+.ribbon svg {
+  width: 100%;
+  /* viewBox is 1400×220 → aspect 6.36:1. CSS aspect-ratio keeps the SVG
+     height = width / 6.36 at every viewport, so the wave NEVER clips. */
+  aspect-ratio: 1400 / 220;
+  height: auto;
+  display: block;
+  /* Hard cap so on ultra-wide screens the ribbon doesn't get gigantic */
+  max-height: 240px;
+}
+.ribbon__text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  letter-spacing: 0.005em;
+}
+@media (max-width: 900px) {
+  .ribbon svg {
+    aspect-ratio: 1400 / 280;
+    max-height: 200px;
+  }
+  .ribbon__text { font-size: 30px; }
+}
+@media (max-width: 600px) {
+  .ribbon svg {
+    aspect-ratio: 1400 / 360;
+    max-height: 170px;
+  }
+  .ribbon__text { font-size: 22px; }
+}
+
+/* ──────── CTA STICKER POSITIONING ──────── */
+/* These need to be global because StickerMark component wraps them
+   and Astro's CSS scoping wouldn't match across components. */
+.cta-stage {
+  position: relative;
+}
+.sticker-mark.cta-sticker {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+}
+.sticker-mark.cta-sticker--left {
+  left: 4%;
+  bottom: 20%;
+  transform: rotate(-12deg) !important;
+  animation: sticker-bob-1 7s ease-in-out infinite;
+}
+.sticker-mark.cta-sticker--right {
+  right: 4%;
+  top: 12%;
+  transform: rotate(14deg) !important;
+  animation: sticker-bob-2 8s ease-in-out infinite;
+}
+@keyframes sticker-bob-1 {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50%      { transform: rotate(-9deg) translateY(-10px); }
+}
+@keyframes sticker-bob-2 {
+  0%, 100% { transform: rotate(14deg) translateY(0); }
+  50%      { transform: rotate(11deg) translateY(-8px); }
+}
+@media (max-width: 1024px) {
+  .sticker-mark.cta-sticker--left,
+  .sticker-mark.cta-sticker--right { display: none !important; }
+}
+
+/* ──────── RESPONSIVE ──────── */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .nav-cta .btn-ghost { display: none; }
+  /* Hide primary CTA whenever burger menu shows — avoids cluttered header */
+  .nav-cta .btn-primary { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 460px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}

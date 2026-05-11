@@ -1,0 +1,47 @@
+---
+interface Props {
+  active?: 'how' | 'why' | 'earn' | 'faq' | null;
+}
+const { active = null } = Astro.props;
+---
+
+<nav class="site-nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark"><svg><use href="#sorted-mark"/></svg></span>
+      sorted.
+    </a>
+    <div class="nav-links">
+      <a href="/how-it-works" class:list={[{ active: active === 'how' }]}>How it works</a>
+      <a href="/why-sorted" class:list={[{ active: active === 'why' }]}>Why Sorted</a>
+      <a href="/earn" class:list={[{ active: active === 'earn' }]}>Earn 3.33%</a>
+      <a href="/faq" class:list={[{ active: active === 'faq' }]}>FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a data-claim href="#" class="btn btn-primary">Claim your handle</a>
+      <button class="nav-burger" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<aside class="mobile-nav" aria-hidden="true">
+  <div class="mobile-nav-head">
+    <a href="/" class="logo">
+      <span class="logo-mark"><svg><use href="#sorted-mark"/></svg></span>
+      sorted.
+    </a>
+    <button class="mobile-nav-close" aria-label="Close menu"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="/how-it-works">How it works <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/why-sorted">Why Sorted <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/earn">Earn 3.33% <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/faq">FAQ <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/contact">Contact <svg><use href="#i-arrow-up-right"/></svg></a>
+  </div>
+  <div class="mobile-nav-cta">
+    <a href="#" class="btn btn-secondary btn-lg">Sign in</a>
+    <a data-claim href="#" class="btn btn-primary btn-lg">Claim your handle</a>
+  </div>
+</aside>

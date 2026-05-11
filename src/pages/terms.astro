@@ -1,0 +1,98 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Terms — Sorted';
+const description = 'The agreement between you and Sorted. Plain-language summary at the top, full legal version below.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid dotgrid-hero">
+  <div class="container">
+    <div class="crumbs">
+      <a href="/">Home</a><span class="sep"></span><span>Legal</span><span class="sep"></span><span>Terms</span>
+    </div>
+    <span class="subhero-eyebrow">Terms</span>
+    <h1 style="max-width:14ch;">The deal, in <span class="hl">plain English.</span></h1>
+    <p class="subhero-sub">What you can expect from us, what we expect from you, what happens if either side stuffs up. Last updated <strong>April 2026</strong>.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="prose">
+      <h2>The plain-English version</h2>
+
+      <h3>What Sorted is</h3>
+      <p>A peer-to-peer payments app for Australian residents. We let you top up AUD from your bank, hold it as AUDD (an Aussie-dollar stablecoin issued by Novatti, AFSL #463 998), send to other Sorted users instantly, and earn 3.33% p.a. variable yield on your balance.</p>
+
+      <h3>What you agree to</h3>
+      <ul>
+        <li><strong>Be eligible.</strong> 18+, Australian resident, with a valid Australian government ID.</li>
+        <li><strong>Be honest.</strong> Use real information at signup. Lying on KYC is fraud.</li>
+        <li><strong>Don't use Sorted for crime.</strong> Money laundering, sanctions evasion, fraud, and similar are prohibited and reportable to AUSTRAC.</li>
+        <li><strong>Keep your account secure.</strong> Don't share your phone, biometric, or PIN. If your phone is lost or stolen, tell us immediately.</li>
+        <li><strong>Pay back what you owe.</strong> If a top-up reverses (rare; happens with disputed transactions on the bank side), you owe us the equivalent.</li>
+      </ul>
+
+      <h3>What we agree to</h3>
+      <ul>
+        <li><strong>Custody your AUDD properly.</strong> Wallet keys are protected by a secure-enclave architecture. We can't unilaterally move your money.</li>
+        <li><strong>Pay 3.33% (variable).</strong> Daily, every morning at 9am AEST. We'll give 14 days' notice before any rate change.</li>
+        <li><strong>Charge you nothing for normal use.</strong> No fees on top up, send, receive, or hold. Forever.</li>
+        <li><strong>Be transparent</strong> about what we're doing, why, and when something changes.</li>
+        <li><strong>Reply to support</strong> within 4 business hours where possible, never longer than a working day.</li>
+      </ul>
+
+      <h3>What happens if there's a problem</h3>
+      <ul>
+        <li><strong>Sent to the wrong person?</strong> Sends are final, same as bank transfers — ask the recipient to send it back.</li>
+        <li><strong>Account frozen?</strong> Usually because of an AUSTRAC flag. We'll tell you what we can; sometimes legal restrictions limit detail.</li>
+        <li><strong>Sorted goes down?</strong> Your AUDD is on Solana, not Sorted's servers. Still yours; redeem directly through Novatti if needed.</li>
+        <li><strong>Disagreement with us?</strong> Email <a href="mailto:complaints@sortedaud.app">complaints@sortedaud.app</a>. Unresolved complaints can go to AFCA, Australia's external dispute resolution scheme for financial services.</li>
+      </ul>
+
+      <h2>The full legal version</h2>
+
+      <h3>1. Acceptance</h3>
+      <p>By creating a Sorted account, you agree to these Terms of Service ("Terms"), our <a href="/privacy">Privacy Policy</a>, and our <a href="/compliance">Compliance</a> obligations. You also agree to the AUDD Terms of Service published by Novatti.</p>
+
+      <h3>2. Eligibility</h3>
+      <p>You must be at least 18 years old, a permanent resident or citizen of Australia, and able to verify your identity to standards set by AUSTRAC. We may refuse or suspend an account where verification cannot be completed or where we have reasonable concerns about lawful use.</p>
+
+      <h3>3. The Service</h3>
+      <p>Sorted facilitates the holding, sending, and receiving of AUDD. AUDD is issued by Novatti and is not a Sorted obligation. The yield ("3.33% p.a." at the time of writing) is variable and may be changed with at least 14 days' notice. The yield is sourced from interest on AUD reserves backing AUDD; it is not credit or a deposit obligation of Sorted.</p>
+
+      <h3>4. Fees</h3>
+      <p>Sorted does not charge transaction fees on top-up, send, receive, or hold during the period of these Terms. Sorted reserves the right to introduce fees with at least 30 days' notice; in that event you may withdraw your full balance free of charge.</p>
+
+      <h3>5. Limits</h3>
+      <p>Default account limits during beta: $25,000/day top-up, $10,000/day send, $250,000 maximum balance. Limits may be raised on request following enhanced verification. Sorted may apply lower limits where AML/CTF risk indicators warrant.</p>
+
+      <h3>6. Liability</h3>
+      <p>Subject to non-excludable consumer guarantees under the Australian Consumer Law, Sorted's liability for any claim arising under these Terms is limited to the greater of (a) the value of transactions affected by the claim, or (b) AUD $1,000.</p>
+
+      <h3>7. Termination</h3>
+      <p>You may close your account at any time. Sorted may close your account where you breach these Terms, where required by law, or where we exit the market. In the event of Sorted's exit, you will receive at least 60 days' notice and full ability to withdraw your balance.</p>
+
+      <h3>8. Disputes</h3>
+      <p>Complaints should first be directed to <a href="mailto:complaints@sortedaud.app">complaints@sortedaud.app</a>. Unresolved complaints relating to financial services may be escalated to the Australian Financial Complaints Authority (AFCA, afca.org.au). These Terms are governed by the laws of Queensland, Australia.</p>
+
+      <h3>9. Changes</h3>
+      <p>Sorted may update these Terms when our practices change or the law changes. Material changes will be notified in-app and by email at least 14 days before they take effect; you may close your account before the change takes effect if you don't agree.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Got a complaint?<br>We genuinely want to hear it.</h2>
+      <p class="page-cta-sub">Email <strong>complaints@sortedaud.app</strong>. Read by a real person, every one.</p>
+      <div class="page-cta-actions">
+        <a href="mailto:complaints@sortedaud.app" class="btn btn-dark btn-lg">complaints@sortedaud.app <svg class="icon"><use href="#i-arrow-up-right"/></svg></a>
+        <a href="/contact" class="btn btn-secondary btn-lg">Other contacts</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

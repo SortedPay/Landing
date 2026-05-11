@@ -1,0 +1,283 @@
+---
+// P2PAnimation — visualises the core P2P story.
+// Avatar A (coral, @maya) sends $20 → Avatar B (lime, @jack) instantly.
+// Pure CSS keyframes, no JS required. Brand: flat fills, ink borders, hard shadows.
+---
+
+<div class="p2p-anim" aria-hidden="true">
+  <!-- LEFT: sender card -->
+  <div class="p2p-card p2p-card--from">
+    <div class="p2p-avatar p2p-avatar--coral">M</div>
+    <div class="p2p-meta">
+      <div class="p2p-name">@maya</div>
+      <div class="p2p-line">Sending</div>
+    </div>
+    <div class="p2p-amount p2p-amount--out">−$20.00</div>
+  </div>
+
+  <!-- TRACK between cards -->
+  <div class="p2p-track" aria-hidden="true">
+    <!-- The money token -->
+    <div class="p2p-coin">
+      <span class="p2p-coin-amount">$20</span>
+    </div>
+    <!-- The trail (drawn behind the coin) -->
+    <svg class="p2p-trail" viewBox="0 0 400 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <line x1="20" y1="30" x2="380" y2="30" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8" />
+    </svg>
+  </div>
+
+  <!-- RIGHT: receiver card -->
+  <div class="p2p-card p2p-card--to">
+    <div class="p2p-avatar p2p-avatar--lime">J</div>
+    <div class="p2p-meta">
+      <div class="p2p-name">@jack</div>
+      <div class="p2p-line">Received</div>
+    </div>
+    <div class="p2p-amount p2p-amount--in">+$20.00</div>
+    <div class="p2p-pop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+  </div>
+
+  <!-- Floating "<2 sec" callout -->
+  <div class="p2p-callout">
+    <span class="p2p-callout-num">&lt;2</span>
+    <span class="p2p-callout-unit">sec</span>
+  </div>
+</div>
+
+<style>
+  .p2p-anim {
+    --cycle: 3.6s;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 60px 24px 80px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* ── Cards ── */
+  .p2p-card {
+    background: var(--paper-elevated);
+    border: 2.5px solid var(--ink);
+    border-radius: 20px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 6px 0 var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .p2p-card--from {
+    transform: rotate(-2.5deg);
+    animation: p2p-from-pulse var(--cycle) ease-in-out infinite;
+  }
+  .p2p-card--to {
+    transform: rotate(2.5deg);
+    animation: p2p-to-pulse var(--cycle) ease-in-out infinite;
+  }
+  @keyframes p2p-from-pulse {
+    0%, 8%      { transform: rotate(-2.5deg) scale(1); box-shadow: 0 6px 0 var(--ink); }
+    14%         { transform: rotate(-2.5deg) scale(1.04); box-shadow: 0 8px 0 var(--ink); }
+    24%, 100%   { transform: rotate(-2.5deg) scale(1); box-shadow: 0 6px 0 var(--ink); }
+  }
+  @keyframes p2p-to-pulse {
+    0%, 64%     { transform: rotate(2.5deg) scale(1); box-shadow: 0 6px 0 var(--ink); }
+    70%         { transform: rotate(2.5deg) scale(1.05); box-shadow: 0 8px 0 var(--ink); }
+    78%, 100%   { transform: rotate(2.5deg) scale(1); box-shadow: 0 6px 0 var(--ink); }
+  }
+
+  .p2p-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2.5px solid var(--ink);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .p2p-avatar--coral { background: var(--coral); color: var(--paper); }
+  .p2p-avatar--lime { background: var(--lime); }
+
+  .p2p-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .p2p-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .p2p-line {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .p2p-amount {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .p2p-amount--out { color: var(--ink); }
+  .p2p-amount--in {
+    color: var(--lime-deep, #8fb91d);
+    /* Receiver amount appears at the moment the coin lands */
+    opacity: 0;
+    animation: p2p-in-show var(--cycle) ease-out infinite;
+  }
+  @keyframes p2p-in-show {
+    0%, 64%   { opacity: 0; transform: scale(0.7); }
+    72%       { opacity: 1; transform: scale(1.08); }
+    80%, 100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Tick badge on receiver card */
+  .p2p-pop {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 36px;
+    height: 36px;
+    background: var(--lime);
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--ink);
+    box-shadow: 0 3px 0 var(--ink);
+    opacity: 0;
+    transform: scale(0.4) rotate(-30deg);
+    animation: p2p-pop var(--cycle) ease-out infinite;
+  }
+  .p2p-pop svg { width: 18px; height: 18px; }
+  @keyframes p2p-pop {
+    0%, 66%    { opacity: 0; transform: scale(0.4) rotate(-30deg); }
+    72%        { opacity: 1; transform: scale(1.2) rotate(8deg); }
+    80%        { opacity: 1; transform: scale(1) rotate(0); }
+    100%       { opacity: 1; transform: scale(1) rotate(0); }
+  }
+
+  /* ── Track and coin ── */
+  .p2p-track {
+    position: relative;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  .p2p-trail {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--ink-faint);
+    opacity: 0.6;
+  }
+  .p2p-coin {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    background: var(--lime);
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 0 var(--ink);
+    z-index: 5;
+    animation: p2p-coin-fly var(--cycle) ease-in-out infinite;
+    transform-origin: center;
+  }
+  .p2p-coin-amount {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  @keyframes p2p-coin-fly {
+    /* Hidden at start */
+    0%, 16%   { left: 0%;   transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    /* Pop into existence on the LEFT */
+    22%       { left: 0%;   transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    /* Hold briefly */
+    32%       { left: 0%;   transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    /* Zoom across */
+    66%       { left: 100%; transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 1; }
+    /* Land on the RIGHT and fade */
+    72%       { left: 100%; transform: translate(-50%, -50%) scale(1.2) rotate(360deg); opacity: 1; }
+    78%       { left: 100%; transform: translate(-50%, -50%) scale(0) rotate(360deg); opacity: 0; }
+    100%      { left: 100%; transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  }
+
+  /* ── <2 sec callout ── */
+  .p2p-callout {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 2px solid var(--ink);
+    box-shadow: 0 3px 0 var(--lime);
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-display);
+    z-index: 10;
+  }
+  .p2p-callout-num {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .p2p-callout-unit {
+    font-size: 13px;
+    color: var(--lime);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Mobile: stack vertically ── */
+  @media (max-width: 720px) {
+    .p2p-anim {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 16px;
+      padding: 40px 16px 60px;
+    }
+    .p2p-track {
+      height: 100px;
+      transform: rotate(90deg);
+    }
+    .p2p-callout { top: -8px; }
+  }
+</style>

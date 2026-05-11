@@ -1,0 +1,70 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Contact — Sorted';
+const description = 'Real humans, real replies, usually within a few hours. Email, DM, or drop a line via the form.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>Company</span><span class="sep"></span><span>Contact</span></div>
+    <span class="subhero-eyebrow">Company · Contact</span>
+    <h1>Talk to <span class="hl">us.</span></h1>
+    <p class="subhero-sub">No automated triage, no AI chatbot, no "your call is important to us". A small team reads every email and gets back within a business day. Usually faster.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="two-col">
+      <div>
+        <h2 style="font-family:var(--font-display);font-size:36px;font-weight:700;letter-spacing:-0.025em;margin-bottom:24px;">By topic.</h2>
+        <div class="info-card">
+          <div class="info-card-eyebrow">Support</div>
+          <h3 class="info-card-title">Something broken or weird?</h3>
+          <p style="margin-bottom:14px;color:var(--ink-soft);">Email <a href="mailto:hello@sortedaud.app" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">hello@sortedaud.app</a> with a description and a screenshot. Most replies under 4 business hours.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-eyebrow">Press</div>
+          <h3 class="info-card-title">Working on a story?</h3>
+          <p style="margin-bottom:14px;color:var(--ink-soft);">Email <a href="mailto:press@sortedaud.app" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">press@sortedaud.app</a>. Brand kit, founder bios, and quick facts on the <a href="/press" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">press page</a>.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-eyebrow">Careers</div>
+          <h3 class="info-card-title">Want to work here?</h3>
+          <p style="margin-bottom:14px;color:var(--ink-soft);">Open roles on the <a href="/careers" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">careers page</a>. Or email <a href="mailto:jobs@sortedaud.app" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">jobs@sortedaud.app</a> with a 1-page note about you.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-eyebrow">Partnerships & integrations</div>
+          <h3 class="info-card-title">Got an integration in mind?</h3>
+          <p style="margin-bottom:14px;color:var(--ink-soft);">Email <a href="mailto:partners@sortedaud.app" style="color:var(--ink);text-decoration:underline;text-decoration-color:var(--lime);text-decoration-thickness:2px;font-weight:600;">partners@sortedaud.app</a> with a brief on what you're building.</p>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-family:var(--font-display);font-size:36px;font-weight:700;letter-spacing:-0.025em;margin-bottom:24px;">Or just write.</h2>
+        <div class="info-card">
+          <div class="form-group">
+            <label class="form-label">Your name</label>
+            <input class="form-input" type="text" placeholder="Hannah Wright">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">What's on your mind?</label>
+            <textarea class="form-textarea" placeholder="As much detail as you like. We read everything."></textarea>
+          </div>
+          <button class="btn btn-primary btn-lg" style="width:100%;">Send <svg class="icon"><use href="#i-send"/></svg></button>
+        </div>
+        <div class="callout" style="margin-top:24px;">
+          <div class="callout-icon"><svg><use href="#i-clock"/></svg></div>
+          <div class="callout-body"><strong>Response time:</strong> Usually under 4 business hours. Always under 1 business day.</div>
+        </div>
+      </div>
+    </div></div></section><section class="section alt reveal"><div class="container">
+    <div class="prose" style="text-align:center;max-width:720px;">
+      <h2>Or come visit.</h2>
+      <p>Sorted Pty Ltd<br>Level 3, 100 Brunswick Street<br>Fortitude Valley QLD 4006<br>Australia</p>
+      <p style="font-family:var(--font-mono);font-size:13px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.08em;">ABN 12 345 678 901</p>
+    </div></div></section>
+</Base>

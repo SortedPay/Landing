@@ -1,0 +1,68 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Blog — Sorted';
+const description = 'Updates, deep-dives, and honest takes from the Sorted team. Product changes, opinions on Aussie payments.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>Company</span><span class="sep"></span><span>Blog</span></div>
+    <span class="subhero-eyebrow">Company · Blog</span>
+    <h1>Notes from <span class="hl">building</span> Sorted.</h1>
+    <p class="subhero-sub">How we think about money, why we made the choices we did, and the bits we got wrong along the way. <strong>Long-form, no-fluff posts</strong> from people actually shipping the thing.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="card-grid">
+      <a class="tile-card" href="#">
+        <span class="tile-card-tag">Engineering</span>
+        <h3 class="tile-card-title">Why we settled on Solana (and what we tried first)</h3>
+        <p class="tile-card-desc">An honest writeup of the four chains we benchmarked, the failure modes we hit, and why sub-second settlement matters more than gas optimisation.</p>
+        <div class="tile-card-meta">12 min read · 2 weeks ago</div>
+      </a>
+      <a class="tile-card coral" href="#">
+        <span class="tile-card-tag">Money</span>
+        <h3 class="tile-card-title">The maths behind 3.33%</h3>
+        <p class="tile-card-desc">Where the rate comes from, why we settled on it, and what would have to happen for it to change. With actual spreadsheets.</p>
+        <div class="tile-card-meta">8 min read · 3 weeks ago</div>
+      </a>
+      <a class="tile-card sky" href="#">
+        <span class="tile-card-tag">Design</span>
+        <h3 class="tile-card-title">Designing for "boring on purpose"</h3>
+        <p class="tile-card-desc">Why money apps shouldn't gamify, why we cut the streaks feature in week 2, and how to make calm feel premium.</p>
+        <div class="tile-card-meta">6 min read · 1 month ago</div>
+      </a>
+      <a class="tile-card butter" href="#">
+        <span class="tile-card-tag">Compliance</span>
+        <h3 class="tile-card-title">What it actually took to launch under an AFSL</h3>
+        <p class="tile-card-desc">The 18-month-long answer to "why don't more startups do this". Spoiler: it's the audit committee meetings.</p>
+        <div class="tile-card-meta">14 min read · 1 month ago</div>
+      </a>
+      <a class="tile-card" href="#">
+        <span class="tile-card-tag">Product</span>
+        <h3 class="tile-card-title">The 5-second undo: a small feature with a big story</h3>
+        <p class="tile-card-desc">Why we shipped reversibility on a system that's technically irreversible, and what it taught us about user trust.</p>
+        <div class="tile-card-meta">5 min read · 6 weeks ago</div>
+      </a>
+      <a class="tile-card coral" href="#">
+        <span class="tile-card-tag">Operating</span>
+        <h3 class="tile-card-title">Brisbane, not Sydney. Why HQ matters less than people think.</h3>
+        <p class="tile-card-desc">The case for building outside the obvious cities. Talent, cost, and why we ended up in Fortitude Valley.</p>
+        <div class="tile-card-meta">7 min read · 2 months ago</div>
+      </a>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Subscribe to the brief.</h2>
+      <p class="page-cta-sub">One email a fortnight. New posts, what we shipped, what broke. <strong>No marketing fluff.</strong></p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">Follow on Twitter</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

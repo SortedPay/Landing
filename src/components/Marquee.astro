@@ -1,0 +1,46 @@
+---
+import { buildRibbonPaths, VIEW_W, VIEW_H } from '@/lib/ribbon-geometry';
+
+interface Props {
+  bgAbove?: string;
+  bgBelow?: string;
+  ribbon?: string;
+  ink?: string;
+  phrases?: string[];
+  duration?: number;
+}
+const {
+  bgAbove = 'var(--paper)',
+  bgBelow = 'var(--paper)',
+  ribbon = 'var(--lime)',
+  ink = 'var(--ink)',
+  phrases = ['FREE FOREVER', 'INSTANT', 'NO BSB', 'NO FEES', 'NO DRAMA', 'BUILT IN AUSTRALIA'],
+  duration = 30,
+} = Astro.props;
+
+const text = phrases.join(' · ');
+const repeated = (text + ' · ').repeat(8);
+const id = 'mq-' + Math.random().toString(36).slice(2, 9);
+const paths = buildRibbonPaths();
+---
+
+<div class="ribbon" style={`--mq-duration: ${duration}s;`}>
+  <svg
+    viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <path id={id} d={paths.center} fill="none" />
+    </defs>
+    <path d={paths.above} fill={bgAbove} />
+    <path d={paths.below} fill={bgBelow} />
+    <path d={paths.ribbon} fill={ribbon} stroke={ink} stroke-width="3" stroke-linejoin="round" />
+    <text class="ribbon__text" style={`fill: ${ink};`} dominant-baseline="central">
+      <textPath href={`#${id}`} startOffset="0%">
+        {repeated}
+        <animate attributeName="startOffset" from="0%" to="-50%" dur={`${duration}s`} repeatCount="indefinite" />
+      </textPath>
+    </text>
+  </svg>
+</div>

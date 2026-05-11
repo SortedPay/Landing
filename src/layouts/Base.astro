@@ -1,0 +1,195 @@
+---
+import '@/styles/global.css';
+import '@/styles/page.css';
+import IconSprite from '@/components/IconSprite.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import ClaimHandleModal from '@/components/ClaimHandleModal.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: 'how' | 'why' | 'earn' | 'faq' | null;
+}
+const { title, description, active = null } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Sorted — Money, sorted. Free, instant payments for Aussies." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/og-image.png" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="theme-color" content="#C8F154" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <IconSprite />
+  <Header active={active} />
+
+  <slot />
+
+  <Footer />
+  <ClaimHandleModal />
+
+  <script>
+    // ─── Nav scroll state ───
+    const nav = document.querySelector('nav.site-nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 8);
+      }, { passive: true });
+    }
+
+    // ─── Mobile nav toggle ───
+    const burger = document.querySelector('.nav-burger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mobileClose = document.querySelector('.mobile-nav-close');
+    if (burger && mobileNav) {
+      burger.addEventListener('click', () => {
+        mobileNav.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    if (mobileClose && mobileNav) {
+      mobileClose.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+    if (mobileNav) {
+      mobileNav.querySelectorAll('a').forEach((a: any) => {
+        a.addEventListener('click', () => {
+          mobileNav.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    // ─── Reveal on scroll ───
+    const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .spring-in');
+    if (reveals.length) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      reveals.forEach((el) => io.observe(el));
+    }
+
+    // ─── Count-up animation ───
+    const counters = document.querySelectorAll('[data-count]');
+    if (counters.length) {
+      const countObs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const target = parseFloat(el.dataset.count || '0');
+          const decimals = parseInt(el.dataset.decimals || '0', 10);
+          const prefix = el.dataset.prefix || '';
+          const suffix = el.dataset.suffix || '';
+          const duration = parseInt(el.dataset.duration || '1800', 10);
+          const startVal = parseFloat(el.dataset.start || '0');
+          const start = performance.now();
+          function easeOutCubic(t: number) { return 1 - Math.pow(1 - t, 3); }
+          function step(now: number) {
+            const elapsed = now - start;
+            const t = Math.min(elapsed / duration, 1);
+            const eased = easeOutCubic(t);
+            const val = startVal + (target - startVal) * eased;
+            const formatted = decimals === 0
+              ? Math.round(val).toLocaleString('en-AU')
+              : val.toLocaleString('en-AU', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+            el.textContent = prefix + formatted + suffix;
+            if (t < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          countObs.unobserve(el);
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((el) => countObs.observe(el));
+    }
+
+    // ─── Live ticker (continuous) ───
+    const ticker = document.querySelector('[data-ticker]') as HTMLElement | null;
+    const tickerToday = document.querySelector('[data-ticker-today]') as HTMLElement | null;
+    if (ticker) {
+      const PRINCIPAL = parseFloat(ticker.dataset.principal || '1000');
+      const APR = parseFloat(ticker.dataset.apr || '0.0333');
+      const BASE = parseFloat(ticker.dataset.base || '12.4837');
+      const BASE_TODAY = parseFloat(ticker.dataset.baseToday || '0.0625');
+      const PER_MS = (PRINCIPAL * APR) / (365 * 24 * 60 * 60 * 1000);
+      let start: number | null = null;
+      function frame(ts: number) {
+        if (start === null) start = ts;
+        const dt = ts - start;
+        const acc = BASE + dt * PER_MS;
+        if (ticker) ticker.textContent = acc.toFixed(4);
+        if (tickerToday) {
+          const today = BASE_TODAY + dt * PER_MS;
+          tickerToday.textContent = '$' + today.toFixed(4);
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // ─── Mouse parallax for brand curls flagged with .brand-curl--parallax ───
+    // Translates the whole curl wrapper a few px based on cursor position.
+    // Doesn't touch SVG rotation (drift animation owns that).
+    const parallaxEls = document.querySelectorAll<HTMLElement>('.brand-curl--parallax');
+    if (parallaxEls.length && window.matchMedia('(pointer: fine)').matches) {
+      let targetX = 0, targetY = 0;
+      let currX = 0, currY = 0;
+      let raf: number | null = null;
+      function tick() {
+        currX += (targetX - currX) * 0.06;
+        currY += (targetY - currY) * 0.06;
+        parallaxEls.forEach((el) => {
+          el.style.setProperty('--px', `${currX.toFixed(1)}px`);
+          el.style.setProperty('--py', `${currY.toFixed(1)}px`);
+        });
+        if (Math.abs(currX - targetX) > 0.05 || Math.abs(currY - targetY) > 0.05) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          raf = null;
+        }
+      }
+      window.addEventListener('mousemove', (e) => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        // Max 14px shift each axis (subtle)
+        targetX = ((e.clientX / w) - 0.5) * 28;
+        targetY = ((e.clientY / h) - 0.5) * 28;
+        if (raf === null) raf = requestAnimationFrame(tick);
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>

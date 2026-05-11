@@ -1,0 +1,76 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Earn 3.33% — Sorted';
+const description = 'Every dollar in Sorted earns 3.33% p.a., paid every morning at 9am. No tier, no minimum, no lock-up.';
+---
+
+<Base title={title} description={description} active="earn">
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>The app</span><span class="sep"></span><span>Earn</span></div>
+    <span class="subhero-eyebrow">The app · Earn</span>
+    <h1>Always <span class="hl">earning.</span> Paid daily.</h1>
+    <p class="subhero-sub">3.33% p.a. on every dollar in your balance — paid at 9am every morning. <strong>No minimum. No lock-up. No tiered nonsense.</strong></p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="two-col">
+      <div>
+        <h2 class="section-title" style="text-align:left;font-size:48px;">How the maths works.</h2>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">Same model the big neobanks use to fund their interest accounts. The dollars backing your AUDD sit in tier-1 Australian bank deposit accounts, earning the bank-deposit rate (currently around 4% with the RBA cash rate at 4.10%).</p>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">We pay you <strong>3.33%</strong> and keep the spread (~0.6%) to run the company. That's how Sorted makes money, and that's why every other feature is free.</p>
+        <p style="font-size:18px;color:var(--ink-soft);">When the RBA moves the cash rate, our rate moves with it — fairly and on a published schedule. We don't surprise-cut you to pad margins.</p>
+      </div>
+      <div>
+        <div class="info-card lime">
+          <div class="info-card-eyebrow" style="color:var(--ink-soft);">Worked example</div>
+          <h3 class="info-card-title">If you held $5,000 for a year</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;">
+            <div><div style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:6px;">Per day</div><div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);"><span data-count="0.46" data-prefix="$" data-decimals="2">$0.46</span></div></div>
+            <div><div style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:6px;">Per month</div><div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);"><span data-count="13.88" data-prefix="$" data-decimals="2">$13.88</span></div></div>
+            <div><div style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:6px;">Per year</div><div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);"><span data-count="166.50" data-prefix="$" data-decimals="2">$166.50</span></div></div>
+            <div><div style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-soft);margin-bottom:6px;">vs avg bank</div><div style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);">~$0</div></div>
+          </div>
+        </div>
+      </div>
+    </div></div></section><section class="section alt reveal"><div class="container">
+    <div class="section-head"><span class="section-eyebrow">The honest list</span><h2 class="section-title">No catches. <span class="hl">No tiers.</span></h2></div>
+    <div class="prose">
+      <ul>
+        <li><strong>No minimum balance.</strong> Earn from the first cent.</li>
+        <li><strong>No maximum either.</strong> Same 3.33% on $5 or $50,000.</li>
+        <li><strong>No "introductory" rate.</strong> What you sign up to is what you get.</li>
+        <li><strong>No "must spend $X this month" hoops.</strong> Yield resumes from the moment money's back in.</li>
+        <li><strong>No lock-up.</strong> Send or withdraw any second; yield continues on what's left.</li>
+        <li><strong>Compounded daily.</strong> Yesterday's interest earns today's interest.</li>
+        <li><strong>Same rate for everyone.</strong> No separate tier for high-balance customers.</li>
+      </ul>
+    </div></div></section><section class="section reveal"><div class="container">
+    <div class="prose">
+      <h2>What if rates change?</h2>
+      <p>The RBA cash rate moves. Our rate moves with it, on a clear policy:</p>
+      <ul>
+        <li>Within 30 days of any RBA decision, we publish whether and how our rate changes.</li>
+        <li>If we cut, we tell you in-app, by email, and on our blog. No silent changes.</li>
+        <li>If we hike, same deal — proactive notification.</li>
+      </ul>
+      <p>We commit to passing through fairly and being upfront about it. If we ever can't sustain a fair yield, we'll say so plainly — won't dress it up. Right now the maths works comfortably at 3.33% with the RBA at 4.10%.</p>
+      <h2>Is this guaranteed?</h2>
+      <p>The yield rate isn't guaranteed; the principal is. Your AUDD is fully reserved 1:1 by AUD held in tier-1 Australian banks — that doesn't change regardless of rates. The yield is the variable bit.</p>
+      <h2>How is this different from a high-interest savings account?</h2>
+      <p>Conditions. A typical "5% high-interest" savings account requires you to deposit $X/month, never withdraw, and tap the card $Y times. Miss any condition, drop to 0.05%. Sorted has zero conditions — same rate on every dollar, every day, no matter what.</p>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Start earning. Right now.</h2>
+      <p class="page-cta-sub">Top up any amount, balance starts earning the same second. Paid 9am tomorrow.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">How it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

@@ -1,0 +1,71 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Send — Sorted';
+const description = "Send AUD to any @handle in seconds. No BSB, no fees, no waiting. Lands in their balance before you've put your phone down.";
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>The app</span><span class="sep"></span><span>Send</span></div>
+    <span class="subhero-eyebrow">The app · Send</span>
+    <h1>Send to any <span class="hl">@handle.</span> Done.</h1>
+    <p class="subhero-sub">Type a handle, type an amount, slide to send. Lands in their account in under two seconds. <strong>Saturday night, Christmas morning, 3am — same speed.</strong></p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="two-col">
+      <div>
+        <h2 class="section-title" style="text-align:left;font-size:48px;margin-bottom:24px;">No BSB. No drama.</h2>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">Australian banking has trained us to expect three days for a transfer to clear, account numbers we have to text our mum, and "scheduled for next business day" if we're paying after 4pm on a Friday.</p>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">Sorted skips all of that. Every account has a <strong>@handle</strong> — short, memorable, and the only thing you need to send money. <strong>@hannah</strong>, <strong>@maya</strong>, <strong>@jackl</strong>. That's the whole address book.</p>
+        <p style="font-size:18px;color:var(--ink-soft);">Slide to send. Money lands in their balance in roughly 1.4 seconds. Costs you nothing. Doesn't matter what time, what day, or what bank they use.</p>
+      </div>
+      <div>
+        <div class="stat-strip" style="grid-template-columns:1fr 1fr;margin-top:0;">
+          <div class="stat-cell"><div class="stat-num"><span data-count="1.4" data-decimals="1">1.4</span><span class="unit"> sec</span></div><div class="stat-label">Average tap-to-balance settlement time</div></div>
+          <div class="stat-cell"><div class="stat-num"><span data-count="0" data-prefix="$">$0</span></div><div class="stat-label">Per send. Forever.</div></div>
+          <div class="stat-cell"><div class="stat-num"><span data-count="24" data-suffix="/7">24/7</span></div><div class="stat-label">Always on.</div></div>
+          <div class="stat-cell"><div class="stat-num"><span data-count="100" data-prefix="$" data-suffix="K">100</span></div><div class="stat-label">Max single send.</div></div>
+        </div>
+        <div class="callout" style="margin-top:24px;">
+          <div class="callout-icon"><svg><use href="#i-zap"/></svg></div>
+          <div class="callout-body"><strong>How can it be that fast?</strong> Settlement happens on Solana — sub-second blockchain rails. We use it because it works.</div>
+        </div>
+      </div>
+    </div></div></section><section class="section alt reveal"><div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">The flow</span>
+      <h2 class="section-title">Three taps. <span class="hl">Done.</span></h2>
+    </div>
+    <div class="card-grid reveal-stagger">
+      <div class="tile-card"><span class="tile-card-tag">Tap one</span><h3 class="tile-card-title">Pick a handle</h3><p class="tile-card-desc">Type "@" and start spelling. Past contacts pop first. No handle? Hit <strong>Send via SMS</strong> and text them instead.</p><div class="tile-card-meta">~2 sec</div></div>
+      <div class="tile-card coral"><span class="tile-card-tag">Tap two</span><h3 class="tile-card-title">Punch in the amount</h3><p class="tile-card-desc">Big keypad, big numbers. Add a note if you want — entirely optional.</p><div class="tile-card-meta">~3 sec</div></div>
+      <div class="tile-card sky"><span class="tile-card-tag">Tap three</span><h3 class="tile-card-title">Slide to send</h3><p class="tile-card-desc">FaceID confirms, slide releases. Their phone pings. Yours updates.</p><div class="tile-card-meta">~1.4 sec settlement</div></div>
+    </div></div></section><section class="section reveal"><div class="container">
+    <div class="section-head"><span class="section-eyebrow">Honest answers</span><h2 class="section-title">Things people <span class="hl hl-coral">ask.</span></h2></div>
+    <div class="prose">
+      <h3>What if I send to the wrong handle?</h3>
+      <p>Slide-to-send shows you the recipient's name and avatar before you commit. You also get a 5-second "undo" pill at the top of the screen after every send — tap it and the transfer reverses. Past 5 seconds, it's like cash: you'll need to ask for it back.</p>
+      <h3>Is there a daily send limit?</h3>
+      <p>$50,000/day to start, $100,000 per single send. Higher limits available on request — drop us a line at <a href="mailto:hello@sortedaud.app">hello@sortedaud.app</a> with a sentence about why.</p>
+      <h3>Can I send to someone who doesn't have Sorted yet?</h3>
+      <p>Yes — that's where <strong>Send via SMS</strong> comes in. Tap it on the Send screen, type their mobile number, and we'll text them a claim link. They tap it, set up their account in about 60 seconds, and the money lands in their balance.</p>
+      <p>Peace of mind: you can <strong>undo for 24 hours</strong> after sending. We'll ping both of you after 12 hours if it's still unclaimed.</p>
+      <h3>What about scheduled or recurring sends?</h3>
+      <p>v1 is one-shot only. Scheduled and recurring are coming. If you need to pay rent every fortnight, hit the button on the first of the month and pin the recipient.</p>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Right then.<br>Let's get it sorted.</h2>
+      <p class="page-cta-sub">Claim your <strong>@handle</strong>, top up free, and send your first $5 in under 2 minutes.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">How it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

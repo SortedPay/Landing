@@ -1,0 +1,54 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Top up — Sorted';
+const description = 'Move money from your bank into Sorted instantly via PayID. No card surcharge, no 1% loading fee, no waiting.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>The app</span><span class="sep"></span><span>Top up</span></div>
+    <span class="subhero-eyebrow">The app · Top up</span>
+    <h1>Top up free. Via the rails your <span class="hl">bank already uses.</span></h1>
+    <p class="subhero-sub">Link your Aussie bank once, top up via PayID in seconds, balance lands as AUDD ready to send. <strong>No card surcharge. No "1% loading fee" buried in fine print.</strong></p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="prose">
+      <h2>Why PayID, and why not card?</h2>
+      <p>Most "neobank" top-ups happen via debit card, which sounds simple — until you realise the card networks (Visa, Mastercard) take a 1-2% interchange fee on every load. Apps either eat that loss (bleeding cash) or pass it to you ("just a small loading fee").</p>
+      <p>PayID is different. It's the Australian banking system's instant transfer rail — the same one that powers Osko. It costs the bank effectively nothing to settle, runs 24/7, and clears in under 5 seconds. So we use it, and pass that zero cost back to you.</p>
+      <h3>How it works</h3>
+      <ol>
+        <li><strong>Link once.</strong> The first time you top up, we provision a unique PayID for your Sorted account. Add it to your bank app's payee list.</li>
+        <li><strong>Send any amount.</strong> Open your bank app, transfer AUD to your Sorted PayID. PayID clears the bank-side leg in seconds.</li>
+        <li><strong>Lands as AUDD.</strong> The moment your bank confirms, we mint the equivalent AUDD into your Sorted balance. Ready to send, ready to earn.</li>
+      </ol>
+      <blockquote>If your bank supports PayID (every major Australian bank does), top-ups feel like internal transfers — because mechanically, that's what they are.</blockquote>
+      <h2>Top-up limits</h2>
+      <ul>
+        <li><strong>$0 minimum.</strong> Top up a dollar if you want.</li>
+        <li><strong>$50,000/day default.</strong> Higher available on request.</li>
+        <li><strong>$0 fee.</strong> Always. Top-up is a cost centre for us, not a revenue stream.</li>
+      </ul>
+      <h2>Cashing out</h2>
+      <p>Same rail, opposite direction. Tap "withdraw", choose your linked bank account, lands in seconds. No daily withdrawal cap up to your full balance. No fee. No 3-day "cooling off" hold.</p>
+      <div class="callout">
+        <div class="callout-icon"><svg><use href="#i-clock"/></svg></div>
+        <div class="callout-body"><strong>Edge case:</strong> if your bank is having a wobbly day with PayID, the transfer falls back to Direct Entry — usually 1-2 business hours. Rare, but worth knowing.</div>
+      </div>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Get your PayID. Top up. Send.</h2>
+      <p class="page-cta-sub">Three steps. Ninety seconds. No card details, no surcharge, no fine print.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">Read the FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

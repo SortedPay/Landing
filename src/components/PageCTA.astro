@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  sub: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  title,
+  sub,
+  primaryLabel = 'Claim your handle',
+  primaryHref = '#',
+  secondaryLabel,
+  secondaryHref,
+} = Astro.props;
+---
+
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title" set:html={title} />
+      <p class="page-cta-sub" set:html={sub} />
+      <div class="page-cta-actions">
+        <a href={primaryHref} class="btn btn-dark btn-lg">{primaryLabel} <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        {secondaryLabel && (
+          <a href={secondaryHref} class="btn btn-secondary btn-lg">{secondaryLabel}</a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

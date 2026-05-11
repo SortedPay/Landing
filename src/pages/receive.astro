@@ -1,0 +1,68 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Receive — Sorted';
+const description = 'Get paid instantly. Share your @handle, your QR, or a one-tap request. Funds land instantly, $0 to receive.';
+---
+
+<Base title={title} description={description}>
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>The app</span><span class="sep"></span><span>Receive</span></div>
+    <span class="subhero-eyebrow">The app · Receive</span>
+    <h1>Get paid the <span class="hl hl-sky">second</span> they hit send.</h1>
+    <p class="subhero-sub">Share your <strong>@handle</strong>, get the money, watch it earn 3.33% the moment it lands. <strong>No BSB, no account number, no card details.</strong></p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div class="two-col">
+      <div>
+        <h2 class="section-title" style="text-align:left;font-size:48px;margin-bottom:24px;">Your handle is your everything.</h2>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">In the old world, receiving money meant texting someone a 6-digit BSB and an 8-digit account number, then hoping they typed it right and it didn't bounce three days later.</p>
+        <p style="font-size:18px;color:var(--ink-soft);margin-bottom:18px;">In Sorted, receiving money means saying "@hannah" out loud. That's it. Anyone with the app — or anyone willing to download it — can send to you in seconds.</p>
+        <p style="font-size:18px;color:var(--ink-soft);">And the moment funds land, they start earning <strong>3.33% p.a.</strong> Paid daily. No "wait 24 hours for funds to clear", because there's nothing to clear.</p>
+        <div class="callout sky" style="margin-top:24px;">
+          <div class="callout-icon"><svg><use href="#i-at"/></svg></div>
+          <div class="callout-body"><strong>Pick a good one.</strong> Your handle is permanent (well, changeable once a year). First names go fast.</div>
+        </div>
+      </div>
+      <div>
+        <div class="info-card dark">
+          <div class="info-card-eyebrow">Receive options</div>
+          <h3 class="info-card-title" style="color:var(--paper);">Three ways people pay you in.</h3>
+          <ul style="list-style:none;padding:0;margin:24px 0 0;">
+            <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1.5px dashed rgba(246,242,233,0.18);">
+              <span style="flex-shrink:0;width:36px;height:36px;background:var(--lime);border-radius:10px;display:grid;place-items:center;border:1.5px solid var(--ink);"><svg width="18" height="18" stroke="var(--ink)" stroke-width="2" fill="none"><use href="#i-at"/></svg></span>
+              <div><div style="font-weight:700;color:var(--paper);font-family:var(--font-display);">Send to your @handle</div><div style="font-size:14px;color:rgba(246,242,233,0.65);margin-top:4px;">Other Sorted users tap your handle, type the amount, done. Sub-2-second settlement.</div></div>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1.5px dashed rgba(246,242,233,0.18);">
+              <span style="flex-shrink:0;width:36px;height:36px;background:var(--coral);border-radius:10px;display:grid;place-items:center;border:1.5px solid var(--ink);"><svg width="18" height="18" stroke="var(--ink)" stroke-width="2" fill="none"><use href="#i-receive"/></svg></span>
+              <div><div style="font-weight:700;color:var(--paper);font-family:var(--font-display);">Bank transfer in</div><div style="font-size:14px;color:rgba(246,242,233,0.65);margin-top:4px;">Anyone can PayID-transfer AUD to your dedicated PayID. Lands as AUDD instantly.</div></div>
+            </li>
+            <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;">
+              <span style="flex-shrink:0;width:36px;height:36px;background:var(--sky);border-radius:10px;display:grid;place-items:center;border:1.5px solid var(--ink);"><svg width="18" height="18" stroke="var(--ink)" stroke-width="2" fill="none"><use href="#i-card"/></svg></span>
+              <div><div style="font-weight:700;color:var(--paper);font-family:var(--font-display);">Request link</div><div style="font-size:14px;color:rgba(246,242,233,0.65);margin-top:4px;">Generate a payable link. Send to anyone — pay via card or open Sorted.</div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div></div></section><section class="section alt reveal"><div class="container">
+    <div class="section-head"><span class="section-eyebrow">Earning, the moment it lands</span><h2 class="section-title">Money in. <span class="hl">Yield on.</span></h2><p class="section-sub">There's no "settlement period", no "funds clearing", no "available tomorrow". The second your balance ticks up, the meter starts.</p></div>
+    <div class="stat-strip" style="max-width:880px;margin:0 auto;">
+      <div class="stat-cell"><div class="stat-num"><span data-count="0" data-prefix="$">$0</span></div><div class="stat-label">To receive money. Always.</div></div>
+      <div class="stat-cell"><div class="stat-num"><span data-count="0" data-suffix=" sec">0 sec</span></div><div class="stat-label">Hold time before yield kicks in</div></div>
+      <div class="stat-cell"><div class="stat-num"><span data-count="3.33" data-decimals="2">3.33</span><span class="unit">%</span></div><div class="stat-label">Paid daily on the new balance</div></div>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Claim your handle.</h2>
+      <p class="page-cta-sub">Pick before someone else does. <strong>@yourname</strong> is one tap away.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">See how it works</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>

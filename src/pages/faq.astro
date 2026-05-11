@@ -1,0 +1,91 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'FAQ — Sorted';
+const description = 'Honest answers to everything people ask about Sorted. Money, security, fees, the 3.33% yield, what happens if we go under.';
+---
+
+<Base title={title} description={description} active="faq">
+<section class="subhero dotgrid">
+  <div class="container">
+    <div class="crumbs"><a href="/">Sorted</a><span class="sep"></span><span>FAQ</span></div>
+    <span class="subhero-eyebrow">Sorted · FAQ</span>
+    <h1>Fair <span class="hl hl-coral">questions.</span></h1>
+    <p class="subhero-sub">No legalese. No "industry-leading". The 30 most-asked questions, answered the way we'd answer them to our mates.</p>
+  </div>
+</section>
+<section class="section reveal"><div class="container">
+    <div style="max-width:820px;margin:0 auto;">
+      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">The basics</h2>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What is Sorted, in one sentence?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">An Australian peer-to-peer payments app that's free, instant, and pays you 3.33% on idle balances. Sign in with your phone, send to any @handle, lands in seconds.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Wait — is this crypto?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Technically the rails are crypto rails, yeah. But you'll never see a wallet address, a seed phrase, or a gas fee. You sign in with your phone number, type a handle, money moves. The blockchain part is plumbing — same as how you don't think about TCP/IP when you send a text.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">How do I sign up?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Download the app (App Store / Google Play), enter your phone number, claim a handle, complete ID verification (drivers licence + selfie, takes about 90 seconds), link your bank, top up, send. Total time: 2-3 minutes.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Is it actually free? Where's the catch?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">No catch. We make money on the spread between what your reserves earn at tier-1 banks (~4%) and what we pay you (3.33%). That ~0.6% spread funds the company. No transaction fees, no FX margin, no card fluff, no premium tier.</div>
+        </details>
+      </div>
+
+      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">Money & safety</h2>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What happens if Sorted goes under?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Your balance isn't on Sorted's books — it's AUDD, issued by Novatti, backed 1:1 by AUD held in tier-1 Aussie bank accounts. If we vanished tomorrow, your AUDD is still redeemable through Novatti directly. We're the front door, not the vault.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Are deposits insured (FCS / govt guarantee)?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Sorted itself is not an Authorised Deposit-taking Institution (ADI), so the FCS doesn't cover funds in your Sorted balance directly. However, the AUD reserves backing AUDD are held in tier-1 ADI bank accounts which are themselves FCS-protected up to $250k per institution. We're upfront about this — if FCS coverage matters to you, this is something to weigh up.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Is the 3.33% guaranteed?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Nope, and we won't pretend it is. The rate moves with the RBA cash rate — if the RBA cuts, eventually our rate cuts. If they hike, we lift. We commit to passing through fairly and being upfront about it.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What if I get scammed or send to the wrong person?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">5-second undo on every send. Past that, we'll do everything we can to help recover funds, but instant settlement means we can't reverse a transaction unilaterally — same as PayID. Slide-to-send shows the recipient name and avatar before commit so you can sanity-check.</div>
+        </details>
+      </div>
+
+      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">The fine print</h2>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Who regulates you?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Sorted operates as an authorised representative under an AFSL (Australian Financial Services Licence). AUDD is issued by Novatti, also AFSL-licensed. AUSTRAC-registered for AML/CTF. We're not flying solo on a "we'll figure compliance out later" plan.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Can I send money overseas?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Not yet. v1 is intentionally narrow — Australian P2P only. International sends and a debit card are on the roadmap, but we'd rather nail the simple thing first than ship a half-broken everything-app.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Do I owe tax on the 3.33%?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Yes — interest income is assessable. We provide an end-of-financial-year statement summarising what you earned, similar to a bank's interest summary. We can't give you tax advice; for anything specific, check with your accountant.</div>
+        </details>
+        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
+          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Who's behind this?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
+          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Built in Brisbane by a small team that got tired of money taking three days to move between people who already know each other. <a href="/contact" style="color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--lime);">Get in touch</a> if you want a more thorough answer.</div>
+        </details>
+      </div>
+    </div></div></section>
+<section class="page-cta">
+  <div class="container">
+    <div class="page-cta-inner reveal">
+      <h2 class="page-cta-title">Got more questions?</h2>
+      <p class="page-cta-sub">Hit us up at <strong>hello@sortedaud.app</strong> — we read everything.</p>
+      <div class="page-cta-actions">
+        <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
+        <a href="/how-it-works" class="btn btn-secondary btn-lg">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+</Base>
