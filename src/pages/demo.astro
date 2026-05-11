@@ -11,45 +11,21 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
     <div class="demo-bg-blob demo-bg-blob--2"></div>
 
     <div class="demo-frame-wrap">
-      <!-- Caption bubble: top-left -->
-      <div class="caption caption--tl" data-caption="tl" hidden>
-        <div class="caption-arrow caption-arrow--br"></div>
-        <span class="caption-text"></span>
-      </div>
-
-      <!-- Caption bubble: top-right -->
-      <div class="caption caption--tr" data-caption="tr" hidden>
-        <div class="caption-arrow caption-arrow--bl"></div>
-        <span class="caption-text"></span>
-      </div>
-
-      <!-- Caption bubble: bottom-left -->
-      <div class="caption caption--bl" data-caption="bl" hidden>
-        <div class="caption-arrow caption-arrow--tr"></div>
-        <span class="caption-text"></span>
-      </div>
-
-      <!-- Caption bubble: bottom-right -->
-      <div class="caption caption--br" data-caption="br" hidden>
-        <div class="caption-arrow caption-arrow--tl"></div>
-        <span class="caption-text"></span>
-      </div>
+      <!-- Caption bubbles -->
+      <div class="caption caption--tl" data-caption="tl" hidden><div class="caption-arrow caption-arrow--br"></div><span class="caption-text"></span></div>
+      <div class="caption caption--tr" data-caption="tr" hidden><div class="caption-arrow caption-arrow--bl"></div><span class="caption-text"></span></div>
+      <div class="caption caption--bl" data-caption="bl" hidden><div class="caption-arrow caption-arrow--tr"></div><span class="caption-text"></span></div>
+      <div class="caption caption--br" data-caption="br" hidden><div class="caption-arrow caption-arrow--tl"></div><span class="caption-text"></span></div>
 
       <!-- iPhone 15 Pro frame -->
       <div class="iphone" id="iphone">
-        <!-- Side buttons -->
         <div class="iphone-btn iphone-btn--mute"></div>
         <div class="iphone-btn iphone-btn--vol-up"></div>
         <div class="iphone-btn iphone-btn--vol-down"></div>
         <div class="iphone-btn iphone-btn--power"></div>
-
-        <!-- Screen bezel + screen -->
         <div class="iphone-bezel">
           <div class="iphone-screen" id="screen">
-            <!-- Dynamic island -->
             <div class="dynamic-island"></div>
-
-            <!-- Status bar -->
             <div class="status-bar">
               <span class="status-time">9:41</span>
               <span class="status-icons">
@@ -58,37 +34,25 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
                 <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="currentColor" stroke-opacity="0.4"/><rect x="2" y="2" width="17" height="7" rx="1" fill="currentColor"/><rect x="21" y="3.5" width="1.5" height="4" rx="0.5" fill="currentColor" fill-opacity="0.4"/></svg>
               </span>
             </div>
-
-            <!-- Back gesture indicator (shows during swipe) -->
             <div class="back-indicator" id="backIndicator"></div>
-
-            <!-- Screen stage — rendered screens go here -->
             <div class="stage" id="stage"></div>
-
-            <!-- Home indicator -->
             <div class="home-indicator"></div>
           </div>
         </div>
       </div>
 
-      <!-- Demo controls -->
       <div class="demo-controls">
         <button class="demo-control demo-control--reset" id="resetDemo" type="button">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
           <span>Reset demo</span>
         </button>
         <a href="/" class="demo-control demo-control--home">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
           <span>Back to site</span>
         </a>
       </div>
     </div>
 
-    <!-- Footer chip -->
     <div class="demo-footer">
       <span class="demo-footer-dot"></span>
       <span class="demo-footer-text">Live demo · Sorted v0.1 · No real money, tap anything</span>
@@ -96,11 +60,11 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
   </main>
 
   <style is:global>
-    /* Hide the site header/footer on the demo page — full immersion */
     body.demo-mode > nav.site-nav,
     body.demo-mode > footer.site-footer,
-    body.demo-mode > .mobile-nav { display: none !important; }
-    body.demo-mode { background: var(--lime) !important; overflow: hidden; }
+    body.demo-mode > .mobile-nav,
+    body.demo-mode > .claim-modal { display: none !important; }
+    body.demo-mode { background: #C8F154 !important; overflow: hidden; }
     body.demo-mode main { padding: 0; }
   </style>
 
@@ -108,12 +72,52 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
 
   <style>
     /* ============================================================
+       EXACT FIGMA TOKENS
+       ============================================================ */
+    .iphone-screen {
+      --paper: #F6F2E9;
+      --paper-elevated: #FFFCF5;
+      --paper-deep: #EFEADD;
+      --ink: #0E0E18;
+      --ink-soft: #2A2A38;
+      --ink-muted: #6B6B7A;
+      --line: #E5E0D2;
+      --line-soft: #EDE8DA;
+      --lime: #C8F154;
+      --lime-deep: #A8D426;
+      --lime-soft: #ECF8C7;
+      --coral: #FF5A4E;
+      --coral-soft: #FFE4E0;
+      --sky: #5BB7FF;
+      --sky-soft: #D6ECFF;
+      --plum: #6B4EFF;
+      --butter: #FFD66B;
+      --text-primary: #0E0E18;
+      --text-secondary: #2A2A38;
+      --text-tertiary: #6B6B7A;
+      --text-disabled: #B8B5AC;
+      --text-inverse: #F6F2E9;
+      --text-on-accent: #0E0E18;
+      --border-strong: #0E0E18;
+      --action-primary: #C8F154;
+      --action-danger: #FF5A4E;
+      --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --font-numeric: 'Inter', system-ui, sans-serif;
+      --shadow-ink-sm: 0 2px 0 var(--ink);
+      --shadow-ink: 0 4px 0 var(--ink);
+      --shadow-ink-md: 0 6px 0 var(--ink);
+      --shadow-ink-lg: 0 8px 0 var(--ink);
+    }
+
+    /* ============================================================
        DEMO STAGE
        ============================================================ */
     .demo-stage {
       min-height: 100vh;
       min-height: 100dvh;
-      background: var(--lime);
+      background: #C8F154;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -122,82 +126,37 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
       position: relative;
       overflow: hidden;
     }
-    .demo-bg-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.55;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .demo-bg-blob--1 {
-      width: 600px; height: 600px;
-      background: var(--lime-deep);
-      top: -200px; left: -200px;
-    }
-    .demo-bg-blob--2 {
-      width: 500px; height: 500px;
-      background: #d8f87a;
-      bottom: -150px; right: -150px;
-    }
+    .demo-bg-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; pointer-events: none; z-index: 0; }
+    .demo-bg-blob--1 { width: 600px; height: 600px; background: #A8D426; top: -200px; left: -200px; }
+    .demo-bg-blob--2 { width: 500px; height: 500px; background: #d8f87a; bottom: -150px; right: -150px; }
+    .demo-frame-wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 32px; }
 
-    .demo-frame-wrap {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 32px;
-    }
-
-    /* ============================================================
-       IPHONE 15 PRO FRAME — proportions match real device
-       Outer: 430x880, Screen: 390x844
-       ============================================================ */
-    .iphone {
-      position: relative;
-      width: 430px;
-      height: 880px;
-      flex-shrink: 0;
-    }
-    /* Outer titanium chassis */
+    /* iPhone */
+    .iphone { position: relative; width: 430px; height: 880px; flex-shrink: 0; }
     .iphone::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, #2a2a30 0%, #18181c 50%, #2a2a30 100%);
       border-radius: 58px;
-      box-shadow:
-        0 30px 60px -10px rgba(0,0,0,0.4),
-        0 50px 100px -20px rgba(0,0,0,0.3),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
+      box-shadow: 0 30px 60px -10px rgba(0,0,0,0.4), 0 50px 100px -20px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05);
     }
-    /* Subtle outer ring */
     .iphone::after {
-      content: '';
-      position: absolute;
-      inset: 2px;
+      content: ''; position: absolute; inset: 2px;
       border-radius: 56px;
       background: linear-gradient(135deg, #3a3a40 0%, #1a1a1e 50%, #3a3a40 100%);
       z-index: 1;
     }
-
     .iphone-btn {
       position: absolute;
       background: linear-gradient(180deg, #1a1a1e 0%, #28282e 50%, #1a1a1e 100%);
       z-index: 2;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        inset 0 -1px 0 rgba(0,0,0,0.4);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.4);
     }
     .iphone-btn--mute      { left: -3px; top: 110px; width: 4px; height: 28px; border-radius: 2px 0 0 2px; }
     .iphone-btn--vol-up    { left: -3px; top: 170px; width: 4px; height: 60px; border-radius: 2px 0 0 2px; }
     .iphone-btn--vol-down  { left: -3px; top: 248px; width: 4px; height: 60px; border-radius: 2px 0 0 2px; }
     .iphone-btn--power     { right: -3px; top: 180px; width: 4px; height: 100px; border-radius: 0 2px 2px 0; }
-
     .iphone-bezel {
-      position: absolute;
-      inset: 13px;
+      position: absolute; inset: 13px;
       background: #000;
       border-radius: 47px;
       z-index: 3;
@@ -205,292 +164,362 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
       box-shadow: inset 0 0 0 2px rgba(255,255,255,0.04);
     }
     .iphone-screen {
-      position: absolute;
-      inset: 6px;
-      background: var(--paper);
+      position: absolute; inset: 6px;
+      background: #F6F2E9;
       border-radius: 41px;
       overflow: hidden;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: #0E0E18;
     }
     .dynamic-island {
-      position: absolute;
-      top: 11px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 124px;
-      height: 36px;
-      background: #000;
-      border-radius: 999px;
-      z-index: 100;
-      pointer-events: none;
+      position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+      width: 124px; height: 36px;
+      background: #000; border-radius: 999px;
+      z-index: 100; pointer-events: none;
     }
     .status-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      position: absolute; top: 0; left: 0; right: 0;
       height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 18px 32px 0;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 17px;
-      color: var(--ink);
-      z-index: 90;
-      pointer-events: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600; font-size: 17px;
+      color: #0E0E18;
+      z-index: 90; pointer-events: none;
     }
     .status-time { font-variant-numeric: tabular-nums; }
-    .status-icons { display: flex; gap: 5px; align-items: center; color: var(--ink); }
+    .status-icons { display: flex; gap: 5px; align-items: center; color: #0E0E18; }
     .home-indicator {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 134px;
-      height: 5px;
-      background: var(--ink);
-      border-radius: 999px;
-      opacity: 0.4;
-      z-index: 90;
-      pointer-events: none;
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      width: 134px; height: 5px;
+      background: #0E0E18; border-radius: 999px;
+      opacity: 0.4; z-index: 90; pointer-events: none;
     }
     .back-indicator {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 0;
+      position: absolute; left: 0; top: 0; bottom: 0; width: 0;
       background: linear-gradient(90deg, rgba(0,0,0,0.08) 0%, transparent 100%);
-      z-index: 80;
-      pointer-events: none;
+      z-index: 80; pointer-events: none;
       transition: width 0.05s linear;
     }
-
-    /* Stage — where screens render */
-    .stage {
-      position: absolute;
-      inset: 54px 0 28px 0;
-      overflow: hidden;
-    }
+    .stage { position: absolute; inset: 54px 0 28px 0; overflow: hidden; }
     .screen {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: var(--paper);
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow-y: auto; overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      color: var(--text-primary);
     }
     .screen::-webkit-scrollbar { display: none; }
-    .screen[data-state="entering-right"] { animation: slideInRight 0.32s var(--ease-smooth) forwards; }
-    .screen[data-state="entering-left"]  { animation: slideInLeft  0.32s var(--ease-smooth) forwards; }
-    .screen[data-state="exiting-left"]   { animation: slideOutLeft 0.32s var(--ease-smooth) forwards; }
-    .screen[data-state="exiting-right"]  { animation: slideOutRight 0.32s var(--ease-smooth) forwards; }
-    @keyframes slideInRight  { from { transform: translateX(100%);  } to { transform: translateX(0); } }
+    .screen[data-state="entering-right"] { animation: slideInRight 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .screen[data-state="entering-left"]  { animation: slideInLeft  0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .screen[data-state="exiting-left"]   { animation: slideOutLeft 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .screen[data-state="exiting-right"]  { animation: slideOutRight 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes slideInRight  { from { transform: translateX(100%); } to { transform: translateX(0); } }
     @keyframes slideInLeft   { from { transform: translateX(-30%); opacity: 0.5; } to { transform: translateX(0); opacity: 1; } }
     @keyframes slideOutLeft  { from { transform: translateX(0); } to { transform: translateX(-30%); opacity: 0.5; } }
     @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
 
     /* ============================================================
-       SHARED SCREEN PRIMITIVES (matches Figma design system)
+       FIGMA PRIMITIVES — Exact tokens
        ============================================================ */
-    .scr-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 24px 12px;
-    }
+    .scr-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px 12px; }
     .scr-back {
-      width: 40px;
-      height: 40px;
+      width: 40px; height: 40px;
       border-radius: 999px;
       background: var(--paper-elevated);
       border: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--ink);
+      font-family: var(--font-display); font-weight: 700; font-size: 18px;
+      color: var(--text-primary);
       transition: transform 0.1s ease;
+      padding: 0;
     }
     .scr-back:active { transform: scale(0.92); }
-    .scr-eyebrow {
-      font-family: var(--font-mono);
-      font-weight: 500;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      color: var(--ink-muted);
+    .scr-spacer-40 { width: 40px; height: 40px; flex-shrink: 0; }
+
+    /* Eyebrow scales (Figma text styles) */
+    .scr-eyebrow-md {
+      font-family: var(--font-mono); font-weight: 500;
+      font-size: 11px; line-height: 16px;
+      letter-spacing: 1.98px;
+      color: var(--text-tertiary);
       text-transform: uppercase;
     }
-    .scr-spacer { width: 40px; height: 40px; }
-
-    .scr-title-block {
-      padding: 8px 24px 16px;
-    }
-    .scr-title-h1 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 56px;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      margin: 0;
-    }
-    .scr-title-h2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 40px;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin: 0;
-    }
-    .scr-subtitle {
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 1.45;
-      color: var(--ink-soft);
-      margin: 8px 0 0;
+    .scr-eyebrow-sm {
+      font-family: var(--font-mono); font-weight: 500;
+      font-size: 10px; line-height: 14px;
+      letter-spacing: 1.6px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
     }
 
-    /* Hero block (centered tile + title + subtitle) */
-    .scr-hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      padding: 32px 24px;
-      text-align: center;
-    }
-    .scr-hero-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 44px;
-      line-height: 1;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-      margin: 0;
-      white-space: pre-line;
-    }
-    .scr-hero-sub {
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 1.45;
-      color: var(--ink-soft);
-      max-width: 320px;
-    }
+    /* Display headings (Figma text styles) */
+    .scr-h1 { font-family: var(--font-display); font-weight: 700; font-size: 56px; line-height: 56px; letter-spacing: -2.24px; margin: 0; }
+    .scr-h2 { font-family: var(--font-display); font-weight: 700; font-size: 40px; line-height: 40px; letter-spacing: -1.4px; margin: 0; }
+    .scr-h3 { font-family: var(--font-display); font-weight: 700; font-size: 32px; line-height: 36px; letter-spacing: -0.96px; margin: 0; }
+    .scr-h4 { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 28px; letter-spacing: -0.6px; margin: 0; }
+    .scr-h5 { font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 24px; letter-spacing: -0.3px; margin: 0; }
+    .scr-h6 { font-family: var(--font-display); font-weight: 700; font-size: 16px; line-height: 20px; letter-spacing: -0.16px; margin: 0; }
 
-    /* Tile (large icon) */
+    .scr-body-md { font-family: var(--font-body); font-weight: 500; font-size: 14px; line-height: 20px; color: var(--text-secondary); }
+    .scr-body-sm { font-family: var(--font-body); font-weight: 500; font-size: 12px; line-height: 18px; color: var(--text-secondary); }
+    .scr-body-xs { font-family: var(--font-body); font-weight: 500; font-size: 11px; line-height: 16px; letter-spacing: -0.11px; color: var(--text-tertiary); }
+    .scr-label-md { font-family: var(--font-body); font-weight: 600; font-size: 14px; line-height: 18px; letter-spacing: -0.14px; color: var(--text-primary); }
+
+    /* Numeric (Inter) */
+    .scr-num-hero { font-family: var(--font-numeric); font-weight: 700; font-size: 92px; line-height: 92px; letter-spacing: -3.68px; }
+    .scr-num-lg   { font-family: var(--font-numeric); font-weight: 700; font-size: 56px; line-height: 56px; letter-spacing: -2.24px; }
+    .scr-num-md   { font-family: var(--font-numeric); font-weight: 700; font-size: 24px; line-height: 28px; letter-spacing: -0.48px; }
+    .scr-num-sm   { font-family: var(--font-numeric); font-weight: 700; font-size: 17px; line-height: 20px; }
+
+    /* Avatar — exact Figma sizes */
+    .scr-avatar {
+      border-radius: 999px;
+      border: 2px solid var(--border-strong);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-body); font-weight: 600; letter-spacing: -0.14px;
+      color: var(--text-on-accent);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .scr-avatar--sm   { width: 28px;  height: 28px;  font-size: 10px; }
+    .scr-avatar--md   { width: 40px;  height: 40px;  font-size: 14px; }
+    .scr-avatar--lg   { width: 56px;  height: 56px;  font-size: 18px; border-width: 2.5px; }
+    .scr-avatar--xl   { width: 76px;  height: 76px;  font-size: 24px; border-width: 2.5px; }
+    .scr-avatar--huge { width: 112px; height: 112px; font-size: 36px; border-width: 3px; box-shadow: var(--shadow-ink-md); }
+    .scr-avatar--lime   { background: var(--lime); color: var(--text-on-accent); }
+    .scr-avatar--coral  { background: var(--coral); color: var(--text-inverse); }
+    .scr-avatar--sky    { background: var(--sky); color: var(--text-on-accent); }
+    .scr-avatar--butter { background: var(--butter); color: var(--text-on-accent); }
+    .scr-avatar--plum   { background: var(--plum); color: var(--text-inverse); }
+
+    /* Tile */
     .scr-tile {
-      width: 80px;
-      height: 80px;
-      border-radius: 24px;
-      border: 2.5px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 5px 0 var(--ink);
-      font-size: 32px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
-    .scr-tile--lime { background: var(--lime); }
-    .scr-tile--sky { background: var(--sky); }
-    .scr-tile--coral { background: var(--coral); }
+    .scr-tile--sm   { width: 56px;  height: 56px;  font-size: 22px; border-radius: 16px; border: 2px solid var(--border-strong); box-shadow: var(--shadow-ink-sm); }
+    .scr-tile--md   { width: 64px;  height: 64px;  font-size: 26px; border-radius: 20px; border: 2px solid var(--border-strong); box-shadow: var(--shadow-ink); }
+    .scr-tile--lg   { width: 80px;  height: 80px;  font-size: 32px; border-radius: 24px; border: 2.5px solid var(--border-strong); box-shadow: var(--shadow-ink-md); }
+    .scr-tile--lime   { background: var(--lime); }
+    .scr-tile--coral  { background: var(--coral); }
+    .scr-tile--sky    { background: var(--sky); }
     .scr-tile--butter { background: var(--butter); }
+    .scr-tile--paper  { background: var(--paper-elevated); }
 
     /* Button */
     .scr-btn {
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: 14px;
-      border: 2.5px solid var(--ink);
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--ink);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      border: 2px solid var(--border-strong);
       cursor: pointer;
-      text-align: center;
-      box-shadow: 0 5px 0 var(--ink);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      text-decoration: none;
       transition: transform 0.08s ease, box-shadow 0.08s ease;
-      display: block;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
     }
-    .scr-btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 0 var(--ink);
-    }
-    .scr-btn--primary { background: var(--lime); }
+    .scr-btn:active { transform: translateY(3px); }
+    .scr-btn--sm { padding: 8px 14px;  border-radius: 10px; font-size: 13px; font-weight: 600; letter-spacing: -0.13px; box-shadow: var(--shadow-ink-sm); }
+    .scr-btn--md { padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; letter-spacing: -0.14px; box-shadow: var(--shadow-ink); }
+    .scr-btn--lg { padding: 16px 20px; border-radius: 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.16px; box-shadow: var(--shadow-ink-md); }
+    .scr-btn--sm:active { box-shadow: 0 0 0 var(--ink); }
+    .scr-btn--md:active { box-shadow: 0 1px 0 var(--ink); }
+    .scr-btn--lg:active { box-shadow: 0 2px 0 var(--ink); }
+    .scr-btn--primary   { background: var(--lime); }
     .scr-btn--secondary { background: var(--paper-elevated); }
-    .scr-btn--danger { background: var(--coral); color: var(--paper); }
-    .scr-btn--md { padding: 12px 16px; font-size: 14px; box-shadow: 0 4px 0 var(--ink); }
+    .scr-btn--ghost     { background: transparent; border-color: transparent; box-shadow: none; }
+    .scr-btn--danger    { background: var(--coral); color: var(--text-inverse); }
 
     /* Input */
     .scr-input {
       width: 100%;
       padding: 14px 18px;
       border-radius: 14px;
-      border: 2px solid var(--ink);
+      border: 1.5px solid var(--line);
       background: var(--paper-elevated);
       font-family: var(--font-body);
       font-weight: 500;
-      font-size: 17px;
-      color: var(--ink);
-      box-shadow: 0 4px 0 var(--ink);
+      font-size: 16px;
+      color: var(--text-primary);
       outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s ease;
     }
-    .scr-input:focus { background: #fff; }
-    .scr-input::placeholder { color: var(--ink-faint); }
-    .scr-input--disabled { background: var(--paper-deep); box-shadow: none; opacity: 0.6; cursor: not-allowed; }
+    .scr-input:focus { border-color: var(--border-strong); }
+    .scr-input::placeholder { color: var(--text-disabled); }
+    .scr-input--filled { border-width: 2px; border-color: var(--border-strong); box-shadow: var(--shadow-ink); }
+    .scr-input--disabled { background: var(--paper-deep); border-style: dashed; color: var(--text-tertiary); cursor: not-allowed; }
 
-    /* Avatar */
-    .scr-avatar {
+    /* Toggle */
+    .scr-toggle {
+      position: relative;
+      width: 50px; height: 30px;
+      background: var(--paper-deep);
+      border: 1.5px solid var(--border-strong);
       border-radius: 999px;
-      border: 2px solid var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-weight: 700;
-      color: var(--ink);
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease;
       flex-shrink: 0;
     }
-    .scr-avatar--sm { width: 32px; height: 32px; font-size: 11px; }
-    .scr-avatar--md { width: 40px; height: 40px; font-size: 13px; }
-    .scr-avatar--lg { width: 56px; height: 56px; font-size: 18px; }
-    .scr-avatar--xl { width: 80px; height: 80px; font-size: 26px; }
-    .scr-avatar--huge { width: 112px; height: 112px; font-size: 36px; box-shadow: 0 5px 0 var(--ink); }
-    .scr-avatar--lime { background: var(--lime); }
-    .scr-avatar--sky { background: var(--sky); }
-    .scr-avatar--coral { background: var(--coral); }
-    .scr-avatar--butter { background: var(--butter); }
-    .scr-avatar--plum { background: var(--plum); color: var(--paper); }
+    .scr-toggle::after {
+      content: '';
+      position: absolute; top: 2px; left: 2px;
+      width: 23px; height: 23px;
+      border-radius: 999px;
+      background: var(--paper-elevated);
+      border: 1.5px solid var(--border-strong);
+      box-shadow: 0 1px 0 var(--ink);
+      transition: left 0.2s ease;
+    }
+    .scr-toggle.is-on { background: var(--lime); }
+    .scr-toggle.is-on::after { left: 24px; }
+
+    /* Chip */
+    .scr-chip {
+      display: inline-flex; align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--paper-elevated);
+      border: 1.5px solid var(--border-strong);
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 13px; letter-spacing: -0.13px;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-ink-sm);
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+    .scr-chip.is-selected { background: var(--lime); }
+
+    /* Status pill */
+    .scr-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      font-family: var(--font-mono); font-weight: 600;
+      font-size: 10px; letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+    .scr-pill--confirmed { background: var(--lime); color: var(--text-primary); }
+    .scr-pill--pending   { background: var(--butter); color: var(--text-primary); }
+    .scr-pill--live      { background: var(--sky); color: var(--text-primary); }
+    .scr-pill--failed    { background: var(--coral); color: var(--text-inverse); }
+    .scr-pill-dot { width: 5px; height: 5px; border-radius: 999px; background: var(--ink); opacity: 0.6; }
+
+    /* Bottom nav */
+    .scr-bottom-nav {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 84px;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px 24px;
+    }
+    .scr-nav-item {
+      display: flex; align-items: center; justify-content: center;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono); font-weight: 500;
+      font-size: 10px; letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--text-inverse);
+      opacity: 0.6;
+      transition: opacity 0.15s ease;
+    }
+    .scr-nav-item.is-active {
+      background: var(--lime);
+      color: var(--text-primary);
+      opacity: 1;
+    }
+
+    /* Activity row */
+    .scr-activity-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: var(--paper-elevated);
+      border: 1px solid var(--line);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .scr-activity-row--pending {
+      background: var(--butter);
+      border: 1.5px solid var(--border-strong);
+    }
+    .scr-activity-details {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .scr-activity-amount {
+      font-family: var(--font-numeric); font-weight: 700;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .scr-activity-amount--out { color: var(--text-secondary); }
+
+    /* Contact row */
+    .scr-contact-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: var(--paper-elevated);
+      border: 1px solid var(--line);
+      width: 100%;
+      cursor: pointer;
+      box-sizing: border-box;
+      text-align: left;
+    }
+    .scr-contact-chevron {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 20px; color: var(--text-tertiary);
+    }
+
+    /* Keypad */
+    .scr-keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 18px;
+      user-select: none;
+    }
+    .scr-keypad-key {
+      padding: 16px 0;
+      background: transparent;
+      border: none;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 26px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background 0.1s ease;
+      border-radius: 12px;
+    }
+    .scr-keypad-key:active { background: var(--paper-deep); }
 
     /* ============================================================
-       CAPTION BUBBLES — speech-balloon hints around the phone
+       CAPTIONS
        ============================================================ */
     .caption {
       position: absolute;
-      background: var(--ink);
-      color: var(--paper);
+      background: #0E0E18; color: #F6F2E9;
       padding: 14px 18px;
       border-radius: 16px;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600; font-size: 14px; line-height: 1.4;
       max-width: 220px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
       z-index: 50;
-      animation: caption-pop 0.35s var(--ease-spring);
+      animation: caption-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
     }
     .caption[hidden] { display: none; }
-    .caption--tl { top: 60px;  left: -260px; }
-    .caption--tr { top: 60px;  right: -260px; }
+    .caption--tl { top: 60px; left: -260px; }
+    .caption--tr { top: 60px; right: -260px; }
     .caption--bl { bottom: 80px; left: -260px; }
     .caption--br { bottom: 80px; right: -260px; }
     @keyframes caption-pop {
@@ -498,113 +527,54 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
       60%  { opacity: 1; transform: scale(1.02) translateY(-2px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
-    .caption-arrow {
-      position: absolute;
-      width: 0; height: 0;
-      border-style: solid;
-    }
-    .caption-arrow--br {
-      bottom: -10px; right: 30px;
-      border-width: 12px 12px 0 0;
-      border-color: var(--ink) transparent transparent transparent;
-    }
-    .caption-arrow--bl {
-      bottom: -10px; left: 30px;
-      border-width: 0 12px 12px 0;
-      border-color: transparent var(--ink) transparent transparent;
-      transform: scaleX(-1);
-    }
-    .caption-arrow--tr {
-      top: -10px; right: 30px;
-      border-width: 0 12px 12px 0;
-      border-color: transparent var(--ink) transparent transparent;
-    }
-    .caption-arrow--tl {
-      top: -10px; left: 30px;
-      border-width: 12px 0 0 12px;
-      border-color: var(--ink) transparent transparent transparent;
-      transform: scaleX(-1);
-    }
+    .caption-arrow { position: absolute; width: 0; height: 0; border-style: solid; }
+    .caption-arrow--br { bottom: -10px; right: 30px; border-width: 12px 12px 0 0; border-color: #0E0E18 transparent transparent transparent; }
+    .caption-arrow--bl { bottom: -10px; left: 30px; border-width: 12px 0 0 12px; border-color: #0E0E18 transparent transparent transparent; }
+    .caption-arrow--tr { top: -10px; right: 30px; border-width: 0 12px 12px 0; border-color: transparent #0E0E18 transparent transparent; }
+    .caption-arrow--tl { top: -10px; left: 30px; border-width: 12px 0 0 12px; border-color: #0E0E18 transparent transparent transparent; transform: scaleX(-1); }
 
-    /* ============================================================
-       DEMO CONTROLS + FOOTER
-       ============================================================ */
-    .demo-controls {
-      display: flex;
-      gap: 12px;
-      z-index: 10;
-    }
+    /* Demo controls + footer */
+    .demo-controls { display: flex; gap: 12px; z-index: 10; }
     .demo-control {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 16px;
       border-radius: 999px;
-      background: var(--ink);
-      color: var(--paper);
-      font-family: var(--font-mono);
-      font-weight: 500;
-      font-size: 12px;
-      letter-spacing: 0.08em;
+      background: #0E0E18; color: #F6F2E9;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500; font-size: 12px; letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 2px solid var(--ink);
+      border: 2px solid #0E0E18;
       cursor: pointer;
       transition: transform 0.1s ease;
     }
     .demo-control:hover { transform: translateY(-2px); }
-    .demo-control--reset { background: var(--paper-elevated); color: var(--ink); }
-
+    .demo-control--reset { background: #FFFCF5; color: #0E0E18; }
     .demo-footer {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: inline-flex; align-items: center; gap: 10px;
       padding: 10px 18px;
       border-radius: 999px;
       background: rgba(14,14,24,0.06);
       backdrop-filter: blur(10px);
-      color: var(--ink);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
+      color: #0E0E18;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
       text-transform: uppercase;
       z-index: 100;
     }
-    .demo-footer-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--ink);
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
-    }
+    .demo-footer-dot { width: 6px; height: 6px; border-radius: 999px; background: #0E0E18; animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-    /* ============================================================
-       RESPONSIVE
-       ============================================================ */
+    /* Responsive */
     @media (max-width: 900px) {
       .caption--tl, .caption--bl { left: 10px; }
       .caption--tr, .caption--br { right: 10px; }
-      .caption {
-        max-width: 160px;
-        font-size: 12px;
-        padding: 10px 12px;
-      }
+      .caption { max-width: 160px; font-size: 12px; padding: 10px 12px; }
     }
     @media (max-width: 540px) {
       .demo-stage { padding: 20px 10px; }
-      .iphone {
-        transform: scale(0.85);
-        transform-origin: center top;
-      }
+      .iphone { transform: scale(0.85); transform-origin: center top; }
       .demo-frame-wrap { gap: 0; }
       .caption { display: none !important; }
       .demo-controls { transform: scale(0.9); margin-top: -60px; }
@@ -618,6 +588,5 @@ const description = "Tap through Sorted. Send a payment, top up, check yield. No
     }
   </style>
 
-  <!-- Demo logic + screen renderers -->
   <script src="/demo.js" is:inline></script>
 </Base>
