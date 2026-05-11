@@ -1,0 +1,623 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const title = 'Try Sorted — Live Demo';
+const description = "Tap through Sorted. Send a payment, top up, check yield. No signup, just a click-through demo on your screen.";
+---
+
+<Base title={title} description={description}>
+  <main class="demo-stage">
+    <div class="demo-bg-blob demo-bg-blob--1"></div>
+    <div class="demo-bg-blob demo-bg-blob--2"></div>
+
+    <div class="demo-frame-wrap">
+      <!-- Caption bubble: top-left -->
+      <div class="caption caption--tl" data-caption="tl" hidden>
+        <div class="caption-arrow caption-arrow--br"></div>
+        <span class="caption-text"></span>
+      </div>
+
+      <!-- Caption bubble: top-right -->
+      <div class="caption caption--tr" data-caption="tr" hidden>
+        <div class="caption-arrow caption-arrow--bl"></div>
+        <span class="caption-text"></span>
+      </div>
+
+      <!-- Caption bubble: bottom-left -->
+      <div class="caption caption--bl" data-caption="bl" hidden>
+        <div class="caption-arrow caption-arrow--tr"></div>
+        <span class="caption-text"></span>
+      </div>
+
+      <!-- Caption bubble: bottom-right -->
+      <div class="caption caption--br" data-caption="br" hidden>
+        <div class="caption-arrow caption-arrow--tl"></div>
+        <span class="caption-text"></span>
+      </div>
+
+      <!-- iPhone 15 Pro frame -->
+      <div class="iphone" id="iphone">
+        <!-- Side buttons -->
+        <div class="iphone-btn iphone-btn--mute"></div>
+        <div class="iphone-btn iphone-btn--vol-up"></div>
+        <div class="iphone-btn iphone-btn--vol-down"></div>
+        <div class="iphone-btn iphone-btn--power"></div>
+
+        <!-- Screen bezel + screen -->
+        <div class="iphone-bezel">
+          <div class="iphone-screen" id="screen">
+            <!-- Dynamic island -->
+            <div class="dynamic-island"></div>
+
+            <!-- Status bar -->
+            <div class="status-bar">
+              <span class="status-time">9:41</span>
+              <span class="status-icons">
+                <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5"/><rect x="4" y="5" width="3" height="6" rx="0.5"/><rect x="8" y="3" width="3" height="8" rx="0.5"/><rect x="12" y="1" width="3" height="10" rx="0.5"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 0C4.5 0 1.86 1.06 0 2.75l1.06 1.06A8.45 8.45 0 0 1 7.5 1.5c2.55 0 4.86.94 6.44 2.31L15 2.75A11.45 11.45 0 0 0 7.5 0Zm0 3C5.34 3 3.45 3.75 2.1 4.95l1.06 1.06A6.45 6.45 0 0 1 7.5 4.5c1.73 0 3.3.64 4.34 1.51L12.9 4.95A8.45 8.45 0 0 0 7.5 3Zm0 3a2.99 2.99 0 0 0-2.12.88l1.06 1.06A1.5 1.5 0 0 1 7.5 7.5c.41 0 .78.17 1.06.44l1.06-1.06A2.99 2.99 0 0 0 7.5 6Z"/></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="currentColor" stroke-opacity="0.4"/><rect x="2" y="2" width="17" height="7" rx="1" fill="currentColor"/><rect x="21" y="3.5" width="1.5" height="4" rx="0.5" fill="currentColor" fill-opacity="0.4"/></svg>
+              </span>
+            </div>
+
+            <!-- Back gesture indicator (shows during swipe) -->
+            <div class="back-indicator" id="backIndicator"></div>
+
+            <!-- Screen stage — rendered screens go here -->
+            <div class="stage" id="stage"></div>
+
+            <!-- Home indicator -->
+            <div class="home-indicator"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo controls -->
+      <div class="demo-controls">
+        <button class="demo-control demo-control--reset" id="resetDemo" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+          </svg>
+          <span>Reset demo</span>
+        </button>
+        <a href="/" class="demo-control demo-control--home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>
+          </svg>
+          <span>Back to site</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer chip -->
+    <div class="demo-footer">
+      <span class="demo-footer-dot"></span>
+      <span class="demo-footer-text">Live demo · Sorted v0.1 · No real money, tap anything</span>
+    </div>
+  </main>
+
+  <style is:global>
+    /* Hide the site header/footer on the demo page — full immersion */
+    body.demo-mode > nav.site-nav,
+    body.demo-mode > footer.site-footer,
+    body.demo-mode > .mobile-nav { display: none !important; }
+    body.demo-mode { background: var(--lime) !important; overflow: hidden; }
+    body.demo-mode main { padding: 0; }
+  </style>
+
+  <script is:inline>document.body.classList.add('demo-mode');</script>
+
+  <style>
+    /* ============================================================
+       DEMO STAGE
+       ============================================================ */
+    .demo-stage {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--lime);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .demo-bg-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .demo-bg-blob--1 {
+      width: 600px; height: 600px;
+      background: var(--lime-deep);
+      top: -200px; left: -200px;
+    }
+    .demo-bg-blob--2 {
+      width: 500px; height: 500px;
+      background: #d8f87a;
+      bottom: -150px; right: -150px;
+    }
+
+    .demo-frame-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* ============================================================
+       IPHONE 15 PRO FRAME — proportions match real device
+       Outer: 430x880, Screen: 390x844
+       ============================================================ */
+    .iphone {
+      position: relative;
+      width: 430px;
+      height: 880px;
+      flex-shrink: 0;
+    }
+    /* Outer titanium chassis */
+    .iphone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #2a2a30 0%, #18181c 50%, #2a2a30 100%);
+      border-radius: 58px;
+      box-shadow:
+        0 30px 60px -10px rgba(0,0,0,0.4),
+        0 50px 100px -20px rgba(0,0,0,0.3),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    /* Subtle outer ring */
+    .iphone::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 56px;
+      background: linear-gradient(135deg, #3a3a40 0%, #1a1a1e 50%, #3a3a40 100%);
+      z-index: 1;
+    }
+
+    .iphone-btn {
+      position: absolute;
+      background: linear-gradient(180deg, #1a1a1e 0%, #28282e 50%, #1a1a1e 100%);
+      z-index: 2;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -1px 0 rgba(0,0,0,0.4);
+    }
+    .iphone-btn--mute      { left: -3px; top: 110px; width: 4px; height: 28px; border-radius: 2px 0 0 2px; }
+    .iphone-btn--vol-up    { left: -3px; top: 170px; width: 4px; height: 60px; border-radius: 2px 0 0 2px; }
+    .iphone-btn--vol-down  { left: -3px; top: 248px; width: 4px; height: 60px; border-radius: 2px 0 0 2px; }
+    .iphone-btn--power     { right: -3px; top: 180px; width: 4px; height: 100px; border-radius: 0 2px 2px 0; }
+
+    .iphone-bezel {
+      position: absolute;
+      inset: 13px;
+      background: #000;
+      border-radius: 47px;
+      z-index: 3;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.04);
+    }
+    .iphone-screen {
+      position: absolute;
+      inset: 6px;
+      background: var(--paper);
+      border-radius: 41px;
+      overflow: hidden;
+    }
+    .dynamic-island {
+      position: absolute;
+      top: 11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 124px;
+      height: 36px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px 0;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--ink);
+      z-index: 90;
+      pointer-events: none;
+    }
+    .status-time { font-variant-numeric: tabular-nums; }
+    .status-icons { display: flex; gap: 5px; align-items: center; color: var(--ink); }
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: var(--ink);
+      border-radius: 999px;
+      opacity: 0.4;
+      z-index: 90;
+      pointer-events: none;
+    }
+    .back-indicator {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.08) 0%, transparent 100%);
+      z-index: 80;
+      pointer-events: none;
+      transition: width 0.05s linear;
+    }
+
+    /* Stage — where screens render */
+    .stage {
+      position: absolute;
+      inset: 54px 0 28px 0;
+      overflow: hidden;
+    }
+    .screen {
+      position: absolute;
+      inset: 0;
+      background: var(--paper);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screen::-webkit-scrollbar { display: none; }
+    .screen[data-state="entering-right"] { animation: slideInRight 0.32s var(--ease-smooth) forwards; }
+    .screen[data-state="entering-left"]  { animation: slideInLeft  0.32s var(--ease-smooth) forwards; }
+    .screen[data-state="exiting-left"]   { animation: slideOutLeft 0.32s var(--ease-smooth) forwards; }
+    .screen[data-state="exiting-right"]  { animation: slideOutRight 0.32s var(--ease-smooth) forwards; }
+    @keyframes slideInRight  { from { transform: translateX(100%);  } to { transform: translateX(0); } }
+    @keyframes slideInLeft   { from { transform: translateX(-30%); opacity: 0.5; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOutLeft  { from { transform: translateX(0); } to { transform: translateX(-30%); opacity: 0.5; } }
+    @keyframes slideOutRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+
+    /* ============================================================
+       SHARED SCREEN PRIMITIVES (matches Figma design system)
+       ============================================================ */
+    .scr-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px 12px;
+    }
+    .scr-back {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--paper-elevated);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--ink);
+      transition: transform 0.1s ease;
+    }
+    .scr-back:active { transform: scale(0.92); }
+    .scr-eyebrow {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+    .scr-spacer { width: 40px; height: 40px; }
+
+    .scr-title-block {
+      padding: 8px 24px 16px;
+    }
+    .scr-title-h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0;
+    }
+    .scr-title-h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0;
+    }
+    .scr-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 8px 0 0;
+    }
+
+    /* Hero block (centered tile + title + subtitle) */
+    .scr-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .scr-hero-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0;
+      white-space: pre-line;
+    }
+    .scr-hero-sub {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      max-width: 320px;
+    }
+
+    /* Tile (large icon) */
+    .scr-tile {
+      width: 80px;
+      height: 80px;
+      border-radius: 24px;
+      border: 2.5px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 0 var(--ink);
+      font-size: 32px;
+    }
+    .scr-tile--lime { background: var(--lime); }
+    .scr-tile--sky { background: var(--sky); }
+    .scr-tile--coral { background: var(--coral); }
+    .scr-tile--butter { background: var(--butter); }
+
+    /* Button */
+    .scr-btn {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 2.5px solid var(--ink);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 5px 0 var(--ink);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      display: block;
+    }
+    .scr-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 var(--ink);
+    }
+    .scr-btn--primary { background: var(--lime); }
+    .scr-btn--secondary { background: var(--paper-elevated); }
+    .scr-btn--danger { background: var(--coral); color: var(--paper); }
+    .scr-btn--md { padding: 12px 16px; font-size: 14px; box-shadow: 0 4px 0 var(--ink); }
+
+    /* Input */
+    .scr-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 2px solid var(--ink);
+      background: var(--paper-elevated);
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--ink);
+      box-shadow: 0 4px 0 var(--ink);
+      outline: none;
+    }
+    .scr-input:focus { background: #fff; }
+    .scr-input::placeholder { color: var(--ink-faint); }
+    .scr-input--disabled { background: var(--paper-deep); box-shadow: none; opacity: 0.6; cursor: not-allowed; }
+
+    /* Avatar */
+    .scr-avatar {
+      border-radius: 999px;
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .scr-avatar--sm { width: 32px; height: 32px; font-size: 11px; }
+    .scr-avatar--md { width: 40px; height: 40px; font-size: 13px; }
+    .scr-avatar--lg { width: 56px; height: 56px; font-size: 18px; }
+    .scr-avatar--xl { width: 80px; height: 80px; font-size: 26px; }
+    .scr-avatar--huge { width: 112px; height: 112px; font-size: 36px; box-shadow: 0 5px 0 var(--ink); }
+    .scr-avatar--lime { background: var(--lime); }
+    .scr-avatar--sky { background: var(--sky); }
+    .scr-avatar--coral { background: var(--coral); }
+    .scr-avatar--butter { background: var(--butter); }
+    .scr-avatar--plum { background: var(--plum); color: var(--paper); }
+
+    /* ============================================================
+       CAPTION BUBBLES — speech-balloon hints around the phone
+       ============================================================ */
+    .caption {
+      position: absolute;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 220px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 50;
+      animation: caption-pop 0.35s var(--ease-spring);
+      pointer-events: none;
+    }
+    .caption[hidden] { display: none; }
+    .caption--tl { top: 60px;  left: -260px; }
+    .caption--tr { top: 60px;  right: -260px; }
+    .caption--bl { bottom: 80px; left: -260px; }
+    .caption--br { bottom: 80px; right: -260px; }
+    @keyframes caption-pop {
+      0%   { opacity: 0; transform: scale(0.85) translateY(8px); }
+      60%  { opacity: 1; transform: scale(1.02) translateY(-2px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .caption-arrow {
+      position: absolute;
+      width: 0; height: 0;
+      border-style: solid;
+    }
+    .caption-arrow--br {
+      bottom: -10px; right: 30px;
+      border-width: 12px 12px 0 0;
+      border-color: var(--ink) transparent transparent transparent;
+    }
+    .caption-arrow--bl {
+      bottom: -10px; left: 30px;
+      border-width: 0 12px 12px 0;
+      border-color: transparent var(--ink) transparent transparent;
+      transform: scaleX(-1);
+    }
+    .caption-arrow--tr {
+      top: -10px; right: 30px;
+      border-width: 0 12px 12px 0;
+      border-color: transparent var(--ink) transparent transparent;
+    }
+    .caption-arrow--tl {
+      top: -10px; left: 30px;
+      border-width: 12px 0 0 12px;
+      border-color: var(--ink) transparent transparent transparent;
+      transform: scaleX(-1);
+    }
+
+    /* ============================================================
+       DEMO CONTROLS + FOOTER
+       ============================================================ */
+    .demo-controls {
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+    .demo-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .demo-control:hover { transform: translateY(-2px); }
+    .demo-control--reset { background: var(--paper-elevated); color: var(--ink); }
+
+    .demo-footer {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(14,14,24,0.06);
+      backdrop-filter: blur(10px);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 100;
+    }
+    .demo-footer-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--ink);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .caption--tl, .caption--bl { left: 10px; }
+      .caption--tr, .caption--br { right: 10px; }
+      .caption {
+        max-width: 160px;
+        font-size: 12px;
+        padding: 10px 12px;
+      }
+    }
+    @media (max-width: 540px) {
+      .demo-stage { padding: 20px 10px; }
+      .iphone {
+        transform: scale(0.85);
+        transform-origin: center top;
+      }
+      .demo-frame-wrap { gap: 0; }
+      .caption { display: none !important; }
+      .demo-controls { transform: scale(0.9); margin-top: -60px; }
+    }
+    @media (max-height: 940px) and (min-width: 901px) {
+      .iphone { transform: scale(0.88); transform-origin: center; }
+      .demo-frame-wrap { gap: 8px; }
+    }
+    @media (max-height: 820px) and (min-width: 901px) {
+      .iphone { transform: scale(0.78); }
+    }
+  </style>
+
+  <!-- Demo logic + screen renderers -->
+  <script src="/demo.js" is:inline></script>
+</Base>
