@@ -282,8 +282,7 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
       </div>
       <div class="earn-card spring-in">
         <div class="scard">
-          <span class="scard-word" aria-hidden="true">Sorted</span>
-          <span class="scard-chip"></span>
+          <span class="scard-word" aria-hidden="true">sorted.</span>
           <div class="scard-handle">@hannah</div>
           <div class="scard-bottom">
             <span class="scard-tap"><svg class="icon"><use href="#i-zap"/></svg> Tap to pay</span>
@@ -1812,18 +1811,18 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     z-index: 0;
     top: 0;
     left: 50%;
-    transform: translate(-50%, -52%);
+    transform: translate(-50%, -46%);
     font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 30.5cqw;
+    font-weight: 700;
+    font-variation-settings: "opsz" 30;
+    font-size: 26.5cqw;
     line-height: 1;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.045em;
     color: var(--lime);
     white-space: nowrap;
     user-select: none;
     pointer-events: none;
   }
-  .scard-chip { display: block; width: 13cqw; height: 9cqw; margin-top: 23cqw; border-radius: 2cqw; background: var(--lime); border: 1.5px solid rgba(14, 14, 24, 0.4); }
   .scard-handle { margin-top: auto; margin-bottom: 3cqw; font-family: var(--font-mono); font-size: 6.6cqw; letter-spacing: 0.08em; opacity: 0.94; }
   .scard-bottom { display: flex; justify-content: space-between; align-items: center; }
   .scard-tap { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 3.2cqw; text-transform: uppercase; letter-spacing: 0.14em; opacity: 0.8; }
