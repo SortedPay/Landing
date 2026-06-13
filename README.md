@@ -1,179 +1,71 @@
-# Sorted — Marketing Site
+# Sorted Site — Pivot Release (yield removal + card/perks)
 
-The marketing site for [Sorted](https://sortedaud.app), Australia's P2P payments app.
+Drop-in update for SortedPay/Landing. **12 files.** Aligns the entire public
+site with the post-legal-review direction in SORTED-PIVOT-BRIEF.md.
 
-Built with [Astro](https://astro.build). Deploys statically to Vercel.
+## URGENT CONTEXT
+The live site advertises a 3.00% return across ~28 places. Legal advice says
+Sorted cannot offer yield in Australia at this stage. Deploy this ASAP.
 
-## Quick deploy
+## What changed
+- ALL yield/rate/interest claims removed from every page (verified by
+  automated banned-language scan: zero remaining user-facing hits)
+- New pillars: SEND -> TAP -> SORTED. Card/tap-to-pay is now a core feature
+- New /card page (Card & Perks) replaces /earn; /earn now redirects to /card
+- Nav + footer: "Earn 3.00%" -> "Card & Perks"
+- Homepage: phone mockup shows a card tap + Sorted Points (no yield UI),
+  earn section replaced by a Card section with CSS-drawn Sorted card mockup,
+  marquee now "SEND · TAP · SORTED · FREE P2P · MADE IN AUS"
+- Sorted Points introduced (subtle): points come from ACTIONS (sends, taps,
+  referrals) — never from balance held. This wording is deliberate; keep it.
+- Sorted Perks mentioned softly ("perks at local Aussie businesses")
+- Sorted+ teaser rescoped: no yield hook (boosted points, free instant
+  cashouts, custom handle colours)
+- One roadmap-only yield mention (FAQ + /card page): "exploring ways to make
+  idle balances do more, subject to the right regulatory settings. No
+  promises, no fine print." NO rates, NO timelines. Do not strengthen this.
+- Multi-currency: one subtle line — "AUDD-first, with USDC and USDT supported."
+- why-sorted rewritten where it contradicted the new direction ("we don't
+  have a card yet", "no streaks/gamification", savings-rate comparisons)
+- receive: "Money in. Yield on." -> "Money in. Money usable."
+- compliance: tax section now references a transaction statement (not
+  interest); AFSL/AUSTRAC wording untouched pending lawyer review
 
-```bash
-# 1. Clone and install
-git clone <your-repo-url>
-cd sorted-astro
-npm install
+## Files in this zip
+src/components/Header.astro      (nav -> Card & Perks, type union 'earn'->'card')
+src/components/Footer.astro      (tagline + link)
+src/pages/index.astro            (homepage — biggest change)
+src/pages/card.astro             (NEW — Card & Perks page)
+src/pages/earn.astro             (now a meta-refresh redirect to /card)
+src/pages/faq.astro              (rate Qs replaced w/ card + points Qs)
+src/pages/why-sorted.astro
+src/pages/how-it-works.astro
+src/pages/compliance.astro
+src/pages/security.astro
+src/pages/receive.astro
+src/pages/topup.astro
+(send.astro untouched — verified clean)
 
-# 2. Develop locally
-npm run dev      # http://localhost:4321
+## Deploy (same drag-drop flow as always)
+1. github.com/SortedPay/Landing -> src -> components -> "Add file" ->
+   "Upload files" -> drag BOTH files from src/components/ -> commit
+2. Back to src -> pages -> "Add file" -> "Upload files" -> drag ALL TEN
+   files from src/pages/ -> commit
+   (card.astro shows as NEW/green; the rest show as modified/yellow)
+3. Vercel deploys in ~60s. Verify in INCOGNITO.
 
-# 3. Build for production
-npm run build    # outputs to dist/
+## Post-deploy checklist
+- Nav reads "Card & Perks" and routes to /card
+- /earn redirects to /card
+- Homepage: no rate anywhere; card mockup section renders; marquee updated
+- Phone mockup: "+12 Sorted Points" pill, "Corner Cafe / Card tap" row
+- FAQ "Will my balance ever earn anything?" gives the roadmap answer
+- Hard-search the rendered pages for "3.00", "yield", "interest", "p.a." — zero hits
 
-# 4. Deploy to Vercel
-#    Push to GitHub, import the repo in Vercel — auto-detects Astro and just works.
-```
-
-The `vercel.json` is already configured. No further setup needed.
-
-## Stack
-
-- **Framework**: Astro 6.2
-- **Language**: TypeScript (strict)
-- **Styling**: Vanilla CSS with design tokens (no preprocessor)
-- **Fonts**: Bricolage Grotesque (display), Plus Jakarta Sans (body), JetBrains Mono (mono) — loaded from Google Fonts
-- **Output**: Static HTML, deployed to Vercel
-
-## Project structure
-
-```
-sorted-astro/
-├── public/                  # Static assets served as-is
-│   ├── sorted-mark.svg      # Brand mark
-│   ├── solana-logo.svg      # Official Solana wordmark
-│   ├── favicon.svg          # Favicon source
-│   ├── favicon-*.png        # Generated raster favicons
-│   └── manifest.webmanifest
-├── src/
-│   ├── components/
-│   │   ├── Header.astro     # Top nav (with active-state prop)
-│   │   ├── Footer.astro     # Footer (incl. Solana badge + watermark)
-│   │   ├── IconSprite.astro # All UI icons + Sorted mark sprite
-│   │   ├── Marquee.astro    # Scrolling brand strip
-│   │   └── PageCTA.astro    # Reusable bottom-of-page CTA card
-│   ├── layouts/
-│   │   └── Base.astro       # Top-level layout (head, fonts, scripts)
-│   ├── pages/               # One file per route
-│   │   ├── index.astro      # Landing page
-│   │   ├── send.astro       # /send
-│   │   ├── receive.astro    # /receive
-│   │   ├── topup.astro      # /topup
-│   │   ├── earn.astro       # /earn
-│   │   ├── how-it-works.astro
-│   │   ├── why-sorted.astro
-│   │   ├── faq.astro
-│   │   ├── blog.astro
-│   │   ├── careers.astro
-│   │   ├── press.astro
-│   │   ├── contact.astro
-│   │   ├── privacy.astro
-│   │   ├── terms.astro
-│   │   ├── compliance.astro
-│   │   └── security.astro
-│   └── styles/
-│       ├── global.css       # Design tokens + global elements
-│       └── page.css         # Inner page styles (subhero, prose, callouts)
-├── astro.config.mjs
-├── tsconfig.json
-├── vercel.json              # Deploy config (clean URLs)
-└── package.json
-```
-
-## Local development
-
-```bash
-npm install
-npm run dev      # http://localhost:4321
-```
-
-## Build
-
-```bash
-npm run build    # outputs to dist/
-npm run preview  # preview the built output locally
-```
-
-## Deploy
-
-This repo is set up for automatic Vercel deployment. The `vercel.json` config:
-
-- Detects Astro framework
-- Runs `npm run build`
-- Serves `dist/`
-- Uses clean URLs (`/send` not `/send.html`)
-
-To deploy:
-
-1. Push this repo to GitHub
-2. Import the repo in Vercel
-3. Vercel auto-detects everything — no further config needed
-
-## Brand system
-
-See `src/styles/global.css` for the full design tokens. Key colours:
-
-- **Paper** (`#F6F2E9`) — warm cream background
-- **Ink** (`#0E0E18`) — primary text and borders
-- **Lime** (`#C8F154`) — primary brand colour, ALWAYS with ink-coloured text on top
-- **Coral** (`#FF5A4E`) — accent (with paper-coloured text on top)
-- **Sky** (`#5BB7FF`) — secondary accent
-- **Butter** (`#FFD66B`) — tertiary accent
-
-Core principles:
-
-- Flat sticker fills, never gradients in UI surfaces
-- Hard ink shadows (`0 3px 0 var(--ink)`)
-- Bricolage Grotesque for display, ~700 weight, tight tracking (`-0.04em`)
-- Lucide-style 1.8px stroke icons
-- Dot-grid backgrounds (radial-gradient ink dots, fades at edges)
-
-## Email capture / "Claim your handle" modal
-
-Every "Claim your handle" button across the site opens a modal that captures
-**email + desired @handle** and submits the payload to a configurable endpoint.
-
-### Setup
-
-The modal posts to whatever URL is set in the `PUBLIC_CLAIM_ENDPOINT`
-environment variable. If unset, it logs the payload to the browser console
-(useful for development). Set it in Vercel's Environment Variables UI, or in a
-local `.env` file:
-
-```bash
-PUBLIC_CLAIM_ENDPOINT="https://your-webhook-or-form-endpoint"
-```
-
-### What gets sent
-
-The modal sends a JSON POST with:
-
-```json
-{
-  "handle": "hannah",
-  "email": "hannah@example.com",
-  "timestamp": "2026-05-06T03:42:11.123Z",
-  "source": "sorted-landing"
-}
-```
-
-### Where to point it
-
-Pick whatever fits your stack:
-
-- **Formspree** — easiest. Sign up, get a form ID, set
-  `PUBLIC_CLAIM_ENDPOINT="https://formspree.io/f/{your-form-id}"`. Submissions
-  show up in their dashboard, optionally forwarded to your inbox.
-- **Zapier / Make** — webhook URL. Submissions can land in Google Sheets,
-  Notion, Slack, Mailchimp, etc.
-- **Your own API** — anything that accepts a JSON POST. For Vercel Serverless
-  Functions, switch Astro to `output: 'hybrid'` mode and add an `/api/claim.ts`
-  endpoint.
-
-### Triggering the modal
-
-Any element with the `data-claim` attribute opens the modal on click. Already
-applied to all "Claim your handle" buttons globally (16 pages). To trigger
-from a custom button:
-
-```html
-<a href="#" data-claim>Sign up</a>
-```
-
+## LAWYER SIGN-OFF NEEDED (before or immediately after deploy)
+1. compliance.astro — AFSL "authorised representative" + AUSTRAC claims are
+   still present-tense; confirm or supply approved wording
+2. terms + privacy pages — not yet drafted/reviewed; conservative drafts
+   coming as the next deliverable for lawyer markup
+3. The X pinned article still publicly promises 3.00% — replacement copy
+   coming in the docs pass; consider unpinning today
