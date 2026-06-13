@@ -1802,7 +1802,6 @@ const description = 'Send to any @handle, anywhere in Australia. Free. Instant. 
     padding: 22px 24px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     color: var(--paper);
     box-shadow: 0 6px 0 rgba(14, 14, 24, 0.18);
     position: relative;
@@ -1818,11 +1817,13 @@ const description = 'Send to any @handle, anywhere in Australia. Free. Instant. 
     border-radius: 50%;
     background: var(--lime);
     opacity: 0.14;
+    z-index: 0;
   }
+  .scard > * { position: relative; z-index: 1; }
   .scard-top { display: flex; justify-content: space-between; align-items: center; }
   .scard-logo { font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: -0.03em; }
   .scard-chip { width: 34px; height: 24px; border-radius: 6px; background: var(--lime); border: 1.5px solid rgba(14, 14, 24, 0.4); }
-  .scard-handle { font-family: var(--font-mono); font-size: 15px; letter-spacing: 0.06em; opacity: 0.85; }
+  .scard-handle { font-family: var(--font-mono); font-size: 17px; letter-spacing: 0.08em; opacity: 0.9; margin-top: auto; margin-bottom: 12px; }
   .scard-bottom { display: flex; justify-content: space-between; align-items: center; }
   .scard-tap { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.8; }
   .scard-tap .icon { width: 14px; height: 14px; stroke: var(--lime); fill: none; }
