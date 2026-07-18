@@ -103,7 +103,7 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
         <div class="float-icon lime"><svg class="icon"><use href="#i-zap"/></svg></div>
         <div>
           <div class="float-text">$50 sent</div>
-          <div class="float-sub">Settled in 1.4s</div>
+          <div class="float-sub">Settled in under 2 seconds</div>
         </div>
       </div>
       <div class="float-card float-card-2">
@@ -250,7 +250,7 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
       </div>
       <div class="anyone-callout-body">
-        <strong>You can undo for 24 hours.</strong> Changed your mind? Tap undo, money's back in your balance. Reminder pings both of you after 12 hours if it's still unclaimed.
+        <strong>Unclaimed sends can be undone for 24 hours.</strong> Sent to a number and changed your mind? While it's unclaimed, tap undo and it's back in your balance. A reminder pings both of you after 12 hours.
       </div>
     </div>
   </div>
@@ -336,8 +336,8 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
           <div class="ss-label">Fees to send, receive, top up, or hold</div>
         </div>
         <div class="ss-cell">
-          <div class="ss-num"><span data-count="1.4" data-decimals="1">1.4</span><span class="unit"> sec</span></div>
-          <div class="ss-label">Average tap-to-balance time</div>
+          <div class="ss-num"><span data-count="2" data-prefix="<" data-decimals="0">&lt;2</span><span class="unit"> sec</span></div>
+          <div class="ss-label">From tap to balance, every send</div>
         </div>
         <div class="ss-cell">
           <div class="ss-num">24/7</div>
@@ -1327,91 +1327,11 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
   }
   .earn-card:hover { transform: rotate(0); }
 
-  /* Massive rate number — the star of the show */
-  .earn-card-rate {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    margin-bottom: 24px;
-    line-height: 0.85;
-  }
-  .earn-card-rate-num {
-    font-family: var(--font-display);
-    font-size: clamp(96px, 14vw, 180px);
-    font-weight: 700;
-    letter-spacing: -0.06em;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-    line-height: 0.85;
-  }
-  .earn-card-rate-unit {
-    font-size: 0.5em;
-    margin-left: 4px;
-  }
-  .earn-card-rate-pa {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    opacity: 0.65;
-    align-self: flex-end;
-    padding-bottom: 18px;
-  }
-
   .earn-card-divider {
     height: 2.5px;
     background: var(--ink);
     margin: 0 0 22px;
     border-radius: 2px;
-  }
-
-  /* Legacy rows (unused) */
-  .earn-card-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .earn-card-row {
-    display: grid;
-    grid-template-columns: 70px 24px 1fr;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background: rgba(14, 14, 24, 0.04);
-    border-radius: 12px;
-    border: 1.5px solid rgba(14, 14, 24, 0.1);
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--ink);
-  }
-  .earn-card-row--feature {
-    background: var(--ink);
-    color: var(--lime);
-    border-color: var(--ink);
-  }
-  .earn-card-row-amt {
-    font-size: 18px;
-    letter-spacing: -0.02em;
-  }
-  .earn-card-row-arrow {
-    font-size: 18px;
-    opacity: 0.45;
-    text-align: center;
-  }
-  .earn-card-row--feature .earn-card-row-arrow { opacity: 0.5; }
-  .earn-card-row-yield {
-    font-size: 22px;
-    letter-spacing: -0.02em;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
-  .earn-card-row-yield .dim {
-    font-size: 0.72em;
-    opacity: 0.55;
-    font-weight: 600;
   }
 
   .earn-card-foot {
@@ -1701,8 +1621,6 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     .float-card-2 { left: -10px; bottom: 60px; }
     .earn-card { padding: 32px 24px; }
     .trust-card { padding: 28px; }
-    .earn-card-rate { gap: 8px; }
-    .earn-card-rate-pa { padding-bottom: 12px; }
   }
   @media (max-width: 420px) {
     /* Tighter buttons + stacked layout for small phones */
@@ -1714,8 +1632,6 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     /* Hero trust strip — 3 columns squished, switch to stacked rows */
     .hero-trust { gap: 18px; }
     .trust-num { font-size: 28px; }
-    /* Earn card rate scales down */
-    .earn-card-rate-num { font-size: 88px; }
     /* USP cards: tighter padding */
     .usp-card { padding: 24px; }
   }
@@ -1902,4 +1818,58 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
   @media (max-width: 880px) {
     .locals-grid { grid-template-columns: repeat(2, 1fr); }
   }
+
+  /* ========== Mobile-first refinements (r2.1) ========== */
+
+  /* In-page anchors land clear of the sticky nav, and the trip there is smooth */
+  section[id] { scroll-margin-top: 96px; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) { overflow-x: hidden; }
+
+  /* Small phones: keep the hero tight and everything inside the viewport */
+  @media (max-width: 480px) {
+    /* Floating chips poke past the edge on narrow screens — tuck them in */
+    .float-card-1 { right: 4px; top: 16px; transform: rotate(2deg) scale(0.9); }
+    .float-card-2 { left: 4px; bottom: 40px; transform: rotate(-2deg) scale(0.9); }
+    /* Phone mockup: let height follow width so it never towers */
+    .phone-screen { height: min(640px, 152vw); }
+    .phone { animation: none; }
+    /* Hero trust strip reads as a tidy 3-up grid */
+    .hero-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .trust-num { font-size: 24px; }
+    .trust-label { font-size: 11px; }
+    /* Big statement scales down without losing the punch */
+    .big-quote .word { font-size: clamp(44px, 15vw, 72px); }
+    .ss-num { font-size: 40px; }
+    /* Section headers breathe less on small screens */
+    .section-head { margin-bottom: 8px; }
+    .section-sub { font-size: 15px; }
+    /* Locals wall: two columns, shorter tiles */
+    .locals-tile { min-height: 96px; }
+    .locals-section { padding: 60px 0; }
+    /* Sticker card in the fix section sits flatter so it can't clip */
+    .anyone-card { padding: 22px 18px; }
+    .nan-shot-amount { font-size: 32px; }
+    /* FAQ questions wrap comfortably */
+    .faq-q { font-size: 16px; padding: 18px 18px; }
+    .faq-a { padding: 0 18px 18px; font-size: 14.5px; }
+  }
+
+  /* Comfortable tap targets everywhere a thumb goes */
+  @media (pointer: coarse) {
+    .faq-q { min-height: 52px; }
+    .ph-action { min-width: 64px; }
+  }
+
+  /* Respect reduced-motion: everything settles instantly, nothing floats */
+  @media (prefers-reduced-motion: reduce) {
+    :global(*), :global(*::before), :global(*::after) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    :global(html) { scroll-behavior: auto; }
+    .phone { animation: none; transform: rotate(-2deg); }
+  }
+
 </style>

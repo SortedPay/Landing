@@ -17,12 +17,12 @@ const description = 'How Sorted operates within Australian financial regulation.
 <section class="section reveal"><div class="container">
     <div class="prose">
       <h2>The licensing stack.</h2>
-      <p>Sorted operates as an <strong>authorised representative</strong> under an Australian Financial Services Licence (AFSL). The licensee is responsible for our conduct under the Corporations Act, has audit rights over our operations, and approves the financial products we distribute. The AUDD token itself is issued by AUDC Pty Ltd — a separately AFSL-licensed entity (AFSL granted by ASIC in February 2026). Both businesses are registered with AUSTRAC for AML/CTF purposes.</p>
+      <p>Sorted operates as an <strong>authorised representative</strong> under an Australian Financial Services Licence (AFSL). The licensee is responsible for our conduct under the Corporations Act, has audit rights over our operations, and approves the financial products we distribute. The AUDD token itself is issued by AUDC Pty Ltd — a separately AFSL-licensed entity (AFSL granted by ASIC in February 2026). Our AML/CTF program is built to AUSTRAC's standards, with registration progressing as part of the launch track.</p>
       <h2>What this means in practice.</h2>
       <ul>
         <li><strong>Customer due diligence.</strong> Every account holder is identity-verified at signup (Frankie KYC). High-value transactions trigger enhanced due diligence.</li>
-        <li><strong>Transaction monitoring.</strong> Real-time fraud / sanctions screening. Suspicious activity reports lodged with AUSTRAC where required.</li>
-        <li><strong>Reserves audits.</strong> AUDC publishes monthly attestations of AUDD reserves, reviewed by an independent registered auditor. <a href="#">Latest attestation</a>.</li>
+        <li><strong>Transaction monitoring.</strong> Real-time fraud / sanctions screening, with suspicious-matter reporting to AUSTRAC built into the program.</li>
+        <li><strong>Reserves audits.</strong> AUDC publishes monthly attestations of AUDD reserves, reviewed by an independent registered auditor. <a href="https://audd.digital" target="_blank" rel="noopener">Latest attestation via AUDC</a>.</li>
         <li><strong>Complaints handling.</strong> Internal dispute resolution within 30 days. Unresolved complaints can be escalated to AFCA.</li>
         <li><strong>Capital adequacy.</strong> The AFSL holder maintains regulatory capital well above ASIC minimums.</li>
       </ul>
@@ -35,7 +35,7 @@ const description = 'How Sorted operates within Australian financial regulation.
         <li><strong>Not a credit provider.</strong> No lending. No buy-now-pay-later. No overdraft.</li>
       </ul>
       <h2>Anti-money laundering.</h2>
-      <p>Standard AUSTRAC-regulated AML/CTF program: customer due diligence, ongoing monitoring, threshold transaction reporting (TTRs), suspicious matter reports (SMRs), and annual program review. We screen against the Australian and UN/OFAC sanctions lists.</p>
+      <p>Our AML/CTF program follows the standard AUSTRAC framework: customer due diligence, ongoing monitoring, threshold transaction reporting (TTRs), suspicious matter reports (SMRs), and annual program review. We screen against the Australian and UN/OFAC sanctions lists.</p>
       <h2>Tax reporting.</h2>
       <p>We provide an end-of-financial-year transaction statement, suitable for your records. We don't withhold tax at source — that's your responsibility, and for anything specific, talk to your accountant.</p>
     </div></div></section>
@@ -43,12 +43,39 @@ const description = 'How Sorted operates within Australian financial regulation.
   <div class="container">
     <div class="page-cta-inner reveal">
       <h2 class="page-cta-title">Need a specific compliance doc?</h2>
-      <p class="page-cta-sub">Email <strong>compliance@sortedaud.app</strong>. Auditors and legal counsel encouraged.</p>
+      <p class="page-cta-sub">Email <strong>compliance@paymentsorted.com</strong>. Auditors and legal counsel encouraged.</p>
       <div class="page-cta-actions">
         <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
-        <a href="/how-it-works" class="btn btn-secondary btn-lg">Read security</a>
+        <a href="/security" class="btn btn-secondary btn-lg">Read security</a>
       </div>
     </div>
   </div>
 </section>
 </Base>
+
+<style>
+  /* ── Mobile-first refinements (r2.1) — shared subpage layer ── */
+  section[id], .section { scroll-margin-top: 96px; }
+  :global(body) { overflow-x: hidden; }
+  @media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    .subhero h1 { font-size: clamp(38px, 11vw, 56px); }
+    .subhero-sub { font-size: 16px; }
+    .section { padding: 56px 0; }
+    .section-title { font-size: clamp(30px, 8.5vw, 44px) !important; }
+    .stat-strip { grid-template-columns: 1fr; gap: 18px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .prose { font-size: 16px; }
+    .prose h2 { font-size: 26px; }
+    .info-card { margin-top: 8px; }
+    .page-cta-actions { flex-direction: column; }
+    .page-cta-actions .btn { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(*), :global(*::before), :global(*::after) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
