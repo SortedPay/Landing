@@ -9,27 +9,34 @@ import ClaimHandleModal from '@/components/ClaimHandleModal.astro';
 interface Props {
   title: string;
   description: string;
-  active?: 'how' | 'why' | 'earn' | 'faq' | null;
+  active?: 'how' | 'why' | 'card' | 'faq' | null;
 }
 const { title, description, active = null } = Astro.props;
+const site = Astro.site ?? new URL('https://www.paymentsorted.com');
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonical = new URL(path, site).href;
+const ogImage = new URL('/og-image.png', site).href;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Sorted" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/og-image.png" />
+  <meta property="og:image" content={ogImage} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Sorted — Money, sorted. Free, instant payments for Aussies." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="/og-image.png" />
+  <meta name="twitter:image" content={ogImage} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#C8F154" />
@@ -44,7 +51,7 @@ const { title, description, active = null } = Astro.props;
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
   <IconSprite />
@@ -70,19 +77,25 @@ const { title, description, active = null } = Astro.props;
     const mobileClose = document.querySelector('.mobile-nav-close');
     if (burger && mobileNav) {
       burger.addEventListener('click', () => {
+        burger.setAttribute('aria-expanded', 'true');
+        mobileNav.setAttribute('aria-hidden', 'false');
         mobileNav.classList.add('open');
         document.body.style.overflow = 'hidden';
       });
     }
     if (mobileClose && mobileNav) {
       mobileClose.addEventListener('click', () => {
+        burger?.setAttribute('aria-expanded', 'false');
+        mobileNav.setAttribute('aria-hidden', 'true');
         mobileNav.classList.remove('open');
         document.body.style.overflow = '';
       });
     }
     if (mobileNav) {
-      mobileNav.querySelectorAll('a').forEach((a: any) => {
+      mobileNav.querySelectorAll('a').forEach((a) => {
         a.addEventListener('click', () => {
+          burger?.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
           mobileNav.classList.remove('open');
           document.body.style.overflow = '';
         });
@@ -134,61 +147,6 @@ const { title, description, active = null } = Astro.props;
         });
       }, { threshold: 0.4 });
       counters.forEach((el) => countObs.observe(el));
-    }
-
-    // ─── Live ticker (continuous) ───
-    const ticker = document.querySelector('[data-ticker]') as HTMLElement | null;
-    const tickerToday = document.querySelector('[data-ticker-today]') as HTMLElement | null;
-    if (ticker) {
-      const PRINCIPAL = parseFloat(ticker.dataset.principal || '1000');
-      const APR = parseFloat(ticker.dataset.apr || '0.0333');
-      const BASE = parseFloat(ticker.dataset.base || '12.4837');
-      const BASE_TODAY = parseFloat(ticker.dataset.baseToday || '0.0625');
-      const PER_MS = (PRINCIPAL * APR) / (365 * 24 * 60 * 60 * 1000);
-      let start: number | null = null;
-      function frame(ts: number) {
-        if (start === null) start = ts;
-        const dt = ts - start;
-        const acc = BASE + dt * PER_MS;
-        if (ticker) ticker.textContent = acc.toFixed(4);
-        if (tickerToday) {
-          const today = BASE_TODAY + dt * PER_MS;
-          tickerToday.textContent = '$' + today.toFixed(4);
-        }
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    }
-
-    // ─── Mouse parallax for brand curls flagged with .brand-curl--parallax ───
-    // Translates the whole curl wrapper a few px based on cursor position.
-    // Doesn't touch SVG rotation (drift animation owns that).
-    const parallaxEls = document.querySelectorAll<HTMLElement>('.brand-curl--parallax');
-    if (parallaxEls.length && window.matchMedia('(pointer: fine)').matches) {
-      let targetX = 0, targetY = 0;
-      let currX = 0, currY = 0;
-      let raf: number | null = null;
-      function tick() {
-        currX += (targetX - currX) * 0.06;
-        currY += (targetY - currY) * 0.06;
-        parallaxEls.forEach((el) => {
-          el.style.setProperty('--px', `${currX.toFixed(1)}px`);
-          el.style.setProperty('--py', `${currY.toFixed(1)}px`);
-        });
-        if (Math.abs(currX - targetX) > 0.05 || Math.abs(currY - targetY) > 0.05) {
-          raf = requestAnimationFrame(tick);
-        } else {
-          raf = null;
-        }
-      }
-      window.addEventListener('mousemove', (e) => {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        // Max 14px shift each axis (subtle)
-        targetX = ((e.clientX / w) - 0.5) * 28;
-        targetY = ((e.clientY / h) - 0.5) * 28;
-        if (raf === null) raf = requestAnimationFrame(tick);
-      }, { passive: true });
     }
   </script>
 </body>

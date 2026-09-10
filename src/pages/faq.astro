@@ -2,7 +2,77 @@
 import Base from '@/layouts/Base.astro';
 
 const title = 'FAQ — Sorted';
-const description = 'Honest answers to the questions people actually ask about Sorted. Money, security, fees, the card, what happens if we go under.';
+const description = 'Honest answers to the questions people actually ask about Sorted. Money, safety, fees, the card, what happens if we go under.';
+
+const groups = [
+  {
+    title: 'The basics',
+    items: [
+      {
+        q: 'What is Sorted, in one sentence?',
+        a: 'An Australian peer-to-peer payments app that\'s free and instant. Sign in with your phone, send to any @handle, lands in seconds. The Sorted card lets you tap to pay with your balance anywhere Mastercard works.',
+      },
+      {
+        q: 'Wait, is this crypto?',
+        a: 'The rails are, technically. But you\'ll never see a wallet address, a seed phrase or a gas fee. You sign in with your phone number, type a handle, money moves. The blockchain is plumbing, the same way you don\'t think about TCP/IP when you send a text.',
+      },
+      {
+        q: 'How do I sign up?',
+        a: 'No app store needed. Sorted runs from your browser and adds to your home screen like any app. Enter your number, claim a handle, verify your ID (driver\'s licence or passport plus a selfie), top up via PayID, send. About two minutes end to end.',
+      },
+      {
+        q: 'Is it actually free? Where\'s the catch?',
+        a: 'Not from your pocket. We earn on card transactions, optional extras like instant cash-outs, and partnerships with the businesses in Sorted Perks. Sending money to mates is free and stays free. No transaction fees, no FX margin on Aussie sends.',
+      },
+    ],
+  },
+  {
+    title: 'Money & safety',
+    items: [
+      {
+        q: 'What happens if Sorted goes under?',
+        a: 'Your balance isn\'t on Sorted\'s books. It\'s AUDD, issued by AUDC Pty Ltd and backed 1:1 by Australian dollars in tier-1 Australian bank accounts. If we vanished tomorrow your AUDD is still yours and still redeemable through the issuer. We\'re the front door, not the vault.',
+      },
+      {
+        q: 'Are deposits insured (FCS / government guarantee)?',
+        a: 'Sorted is not an Authorised Deposit-taking Institution, so the Financial Claims Scheme doesn\'t cover a Sorted balance directly. The AUD reserves backing AUDD are held in tier-1 ADI accounts, which are themselves FCS-protected at the issuer level. We\'re upfront about this: if FCS coverage matters to you, weigh it up.',
+      },
+      {
+        q: 'Is there really a card?',
+        a: 'Yes. The Sorted card, on the Mastercard network. Tap your phone or the physical card anywhere Mastercard is accepted, straight from your balance. Freeze and unfreeze it from the app in one tap. It rolls out with launch; claim your handle to be first in line.',
+      },
+      {
+        q: 'Will my balance ever earn anything?',
+        a: 'Not right now, and we won\'t pretend otherwise. Down the track we\'re exploring ways to make idle balances do more, subject to the right regulatory settings. Today the deal is simple: free sends to mates, the Sorted card, and Sorted Points for doing normal stuff.',
+      },
+      {
+        q: 'What if I get scammed or send to the wrong person?',
+        a: 'Slide-to-send shows the recipient\'s name and avatar before you commit. Unclaimed sends to a phone number can be pulled back for 24 hours. Past that, instant settlement means we can\'t reverse a send on our own, same as PayID, but we\'ll do everything we can to help recover funds.',
+      },
+    ],
+  },
+  {
+    title: 'The fine print',
+    items: [
+      {
+        q: 'Who regulates you?',
+        a: 'Sorted operates as an authorised representative under an Australian Financial Services Licence. AUDD is issued by AUDC Pty Ltd, which holds its own AFSL, granted by ASIC in February 2026. Our AML/CTF program is built to AUSTRAC\'s standards as part of the launch track.',
+      },
+      {
+        q: 'Can I send money overseas?',
+        a: 'Not yet. We\'re nailing Australian P2P and the Sorted card first. International sends are next on the list; claim a handle to be first to hear.',
+      },
+      {
+        q: 'What are Sorted Points?',
+        a: 'Doing normal stuff earns points: sending to mates, tapping your card, referring a friend. Points unlock perks at local Aussie businesses. They\'re tied to what you do, never to how much you hold. No purchase-this, no maintain-that.',
+      },
+      {
+        q: 'Who\'s behind this?',
+        a: 'A small team in Brisbane who got tired of money taking three days to move between people who already know each other. Get in touch via the contact page if you want a more thorough answer.',
+      },
+    ],
+  },
+];
 ---
 
 <Base title={title} description={description} active="faq">
@@ -15,104 +85,31 @@ const description = 'Honest answers to the questions people actually ask about S
   </div>
 </section>
 <section class="section reveal"><div class="container">
-    <div style="max-width:820px;margin:0 auto;">
-      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">The basics</h2>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What is Sorted, in one sentence?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">An Australian peer-to-peer payments app that's free and instant. Sign in with your phone, send to any @handle, lands in seconds — and the Sorted card lets you tap to pay with your balance anywhere Mastercard works.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Wait — is this crypto?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Technically the rails are crypto rails, yeah. But you'll never see a wallet address, a seed phrase, or a gas fee. You sign in with your phone number, type a handle, money moves. The blockchain part is plumbing — same as how you don't think about TCP/IP when you send a text.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">How do I sign up?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">No app store needed — Sorted runs straight from your browser and adds to your home screen like any app. Enter your phone number, claim a handle, complete ID verification (drivers licence + selfie), link your bank, top up, send. About 2 minutes end to end.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Is it actually free? Where's the catch?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Not from your pocket. We earn on card transactions, optional extras like instant cashouts, and partnerships with the businesses in Sorted Perks. Sending money to mates is free and stays free — no transaction fees, no FX margin on Aussie sends.</div>
-        </details>
-      </div>
-
-      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">Money & safety</h2>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What happens if Sorted goes under?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Your balance isn't on Sorted's books — it's AUDD, issued by AUDC Pty Ltd, backed 1:1 by AUD held in tier-1 Aussie bank accounts. If we vanished tomorrow, your AUDD is still redeemable through AUDC directly. We're the front door, not the vault.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Are deposits insured (FCS / govt guarantee)?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Sorted itself is not an Authorised Deposit-taking Institution (ADI), so the FCS doesn't cover funds in your Sorted balance directly. However, the AUD reserves backing AUDD are held in tier-1 ADI bank accounts which are themselves FCS-protected up to $250k per institution. We're upfront about this — if FCS coverage matters to you, this is something to weigh up.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Is there really a card?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Yes — the Sorted card, on the Mastercard network. Tap your phone or the physical card anywhere Mastercard is accepted, straight from your Sorted balance. Freeze and unfreeze it from the app in one tap. It's rolling out with launch — claim your handle to be first in line.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What if I get scammed or send to the wrong person?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">5-second undo on every direct send (and unclaimed sends to a phone number can be pulled back for 24 hours). Past that, we'll do everything we can to help recover funds, but instant settlement means we can't reverse a transaction unilaterally — same as PayID. Slide-to-send shows the recipient name and avatar before commit so you can sanity-check.</div>
-        </details>
-      </div>
-
-      <h2 style="font-family:var(--font-display);font-size:32px;font-weight:700;margin-bottom:24px;letter-spacing:-0.025em;">The fine print</h2>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:48px;">
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Who regulates you?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Sorted operates as an authorised representative under an AFSL (Australian Financial Services Licence). AUDD is issued by AUDC Pty Ltd, which holds its own AFSL granted by ASIC in February 2026. Our AML/CTF program is built to AUSTRAC's standards as part of our launch track. We're not flying solo on a "we'll figure compliance out later" plan.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Can I send money overseas?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Not yet. v1 is intentionally narrow — Australian P2P only. International sends and a debit card are on the roadmap, but we'd rather nail the simple thing first than ship a half-broken everything-app.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">What are Sorted Points?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Doing normal stuff earns points — sending to mates, tapping your card, referring a friend. Points unlock perks at local Aussie businesses. They're a thank-you tied to what you do, never to how much you hold. No purchase-this, no maintain-that.</div>
-        </details>
-        <details class="faq-item" style="background:var(--paper-elevated);border:2px solid var(--ink);border-radius:18px;box-shadow:0 3px 0 var(--ink);overflow:hidden;">
-          <summary style="cursor:pointer;padding:22px 26px;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-0.015em;display:flex;justify-content:space-between;align-items:center;list-style:none;">Who's behind this?<span style="width:32px;height:32px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:grid;place-items:center;"><svg width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><use href="#i-chevron-down"/></svg></span></summary>
-          <div style="padding:0 26px 24px;font-size:16px;line-height:1.6;color:var(--ink-soft);">Built in Brisbane by a small team that got tired of money taking three days to move between people who already know each other. <a href="/contact" style="color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--lime);">Get in touch</a> if you want a more thorough answer.</div>
-        </details>
-      </div>
+    <div class="faq-page">
+      {groups.map((group) => (
+        <div class="faq-group">
+          <h2 class="faq-group-title">{group.title}</h2>
+          <div class="faq-list faq-list--flush">
+            {group.items.map((item) => (
+              <details class="faq-item">
+                <summary class="faq-q">{item.q}<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
+                <div class="faq-a">{item.a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
     </div></div></section>
 <section class="page-cta">
   <div class="container">
     <div class="page-cta-inner reveal">
       <h2 class="page-cta-title">Got more questions?</h2>
-      <p class="page-cta-sub">Hit us up at <strong>hello@paymentsorted.com</strong> — we read everything.</p>
+      <p class="page-cta-sub">Hit us up at <strong>hello@paymentsorted.com</strong>. We read everything.</p>
       <div class="page-cta-actions">
         <a data-claim href="#" class="btn btn-dark btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
-        <a href="mailto:hello@paymentsorted.com" class="btn btn-secondary btn-lg">Contact us</a>
+        <a href="/contact" class="btn btn-secondary btn-lg">Contact us</a>
       </div>
     </div>
   </div>
 </section>
 </Base>
-
-<style>
-  /* ── Mobile-first refinements (r2.1) — shared subpage layer ── */
-  section[id], .section { scroll-margin-top: 96px; }
-  :global(body) { overflow-x: hidden; }
-  @media (max-width: 720px) {
-    .two-col { grid-template-columns: 1fr; gap: 32px; }
-    .subhero h1 { font-size: clamp(38px, 11vw, 56px); }
-    .subhero-sub { font-size: 16px; }
-    .section { padding: 56px 0; }
-    .section-title { font-size: clamp(30px, 8.5vw, 44px) !important; }
-    .stat-strip { grid-template-columns: 1fr; gap: 18px; }
-    .card-grid { grid-template-columns: 1fr; }
-    .prose { font-size: 16px; }
-    .prose h2 { font-size: 26px; }
-    .info-card { margin-top: 8px; }
-    .page-cta-actions { flex-direction: column; }
-    .page-cta-actions .btn { width: 100%; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    :global(*), :global(*::before), :global(*::after) {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-</style>

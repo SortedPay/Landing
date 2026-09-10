@@ -1,8 +1,8 @@
 ---
 // ClaimHandleModal — opens when any [data-claim] element is clicked.
-// Captures email + desired @handle, posts to PUBLIC_CLAIM_ENDPOINT env var.
-// If endpoint is not configured, logs to console (dev/preview behaviour).
-const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '';
+// Captures email + desired @handle and posts to the claim API (same-origin
+// /api/claim unless PUBLIC_CLAIM_ENDPOINT overrides it).
+const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '/api/claim';
 ---
 
 <div class="claim-modal" id="claim-modal" aria-hidden="true" role="dialog" aria-labelledby="claim-modal-title" data-endpoint={endpoint}>
@@ -99,47 +99,34 @@ const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '';
 
 <script>
   (() => {
-    const modal = document.getElementById('claim-modal');
-    if (!modal) return;
-    const endpoint = (modal as HTMLElement).dataset.endpoint || '';
+    const modalEl = document.getElementById('claim-modal');
+    if (!modalEl) return;
+    const modal: HTMLElement = modalEl;
+    const endpoint = modal.dataset.endpoint || '/api/claim';
 
     const form = modal.querySelector<HTMLFormElement>('[data-claim-form]');
-    const stateForm = modal.querySelector<HTMLElement>('[data-claim-state="form"]');
-    const stateLoading = modal.querySelector<HTMLElement>('[data-claim-state="loading"]');
-    const stateSuccess = modal.querySelector<HTMLElement>('[data-claim-state="success"]');
-    const stateTaken = modal.querySelector<HTMLElement>('[data-claim-state="taken"]');
-    const stateError = modal.querySelector<HTMLElement>('[data-claim-state="error"]');
+    const states = Array.from(modal.querySelectorAll<HTMLElement>('[data-claim-state]'));
     const successEmail = modal.querySelector<HTMLElement>('[data-claim-success-email]');
     const successHandle = modal.querySelector<HTMLElement>('[data-claim-success-handle]');
     const takenHandle = modal.querySelector<HTMLElement>('[data-claim-taken-handle]');
     const suggestionsEl = modal.querySelector<HTMLElement>('[data-claim-suggestions]');
     const errorMsg = modal.querySelector<HTMLElement>('[data-claim-error-message]');
     const handleInput = modal.querySelector<HTMLInputElement>('input[name="handle"]');
+    const HANDLE_RE = /^[a-z0-9_]{3,20}$/;
 
-    // Demo reserved handles — used when no endpoint is configured.
-    // Real implementation: backend should return { taken: true } for any of these.
-    const RESERVED_HANDLES = new Set([
-      'admin', 'support', 'help', 'info', 'sorted', 'team', 'official',
-      'hannah', 'maya', 'jack', 'jackl', 'sarah', 'tom', 'ben', 'alex',
-      'chris', 'liam', 'oliver', 'noah', 'ethan', 'mike', 'james', 'will',
-      'emma', 'olivia', 'ava', 'mia', 'isabella', 'sophia', 'charlotte',
-      'aussie', 'mate', 'bro', 'cooper', 'jackson', 'lachlan', 'hunter',
-      'test', 'demo', 'example', 'user', 'me', 'you', 'sortedaud',
-    ]);
-
-    function setState(s: 'form' | 'loading' | 'success' | 'taken' | 'error') {
-      [stateForm, stateLoading, stateSuccess, stateTaken, stateError].forEach((el) => {
-        if (!el) return;
-        el.hidden = el.dataset.claimState !== s;
-      });
+    type State = 'form' | 'loading' | 'success' | 'taken' | 'error';
+    function setState(s: State) {
+      states.forEach((el) => { el.hidden = el.dataset.claimState !== s; });
     }
-
+    function focusHandle(delay = 50) {
+      setTimeout(() => handleInput?.focus(), delay);
+    }
     function open() {
       modal.classList.add('claim-modal--open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       setState('form');
-      setTimeout(() => handleInput?.focus(), 100);
+      focusHandle(100);
     }
     function close() {
       modal.classList.remove('claim-modal--open');
@@ -150,46 +137,36 @@ const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '';
     document.querySelectorAll('[data-claim]').forEach((el) => {
       el.addEventListener('click', (e) => { e.preventDefault(); open(); });
     });
-    modal.querySelectorAll('[data-claim-close]').forEach((el) => {
-      el.addEventListener('click', close);
-    });
+    modal.querySelectorAll('[data-claim-close]').forEach((el) => el.addEventListener('click', close));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('claim-modal--open')) close();
     });
-    modal.querySelector('[data-claim-retry]')?.addEventListener('click', () => {
-      setState('form');
-      setTimeout(() => handleInput?.focus(), 50);
+    modal.querySelectorAll('[data-claim-retry]').forEach((el) => {
+      el.addEventListener('click', () => { setState('form'); focusHandle(); });
     });
 
-    // Generate handle suggestions when one is taken
-    function generateSuggestions(base: string): string[] {
-      const suggestions = new Set<string>();
-      // _au, _aussie variants
-      suggestions.add(`${base}_au`);
-      suggestions.add(`${base}au`);
-      // numbered variants
+    function suggestionsFor(base: string): string[] {
       const year = new Date().getFullYear() % 100;
-      suggestions.add(`${base}${year}`);
-      suggestions.add(`${base}${Math.floor(Math.random() * 90 + 10)}`);
-      // the_ prefix
-      suggestions.add(`the${base}`);
-      // Filter out any that are in the reserved set
-      return Array.from(suggestions).filter(h => !RESERVED_HANDLES.has(h)).slice(0, 4);
+      const out = new Set<string>([`${base}_au`, `${base}au`, `${base}${year}`, `the${base}`, `${base}_`]);
+      return Array.from(out).filter((h) => HANDLE_RE.test(h)).slice(0, 4);
     }
 
     function showTaken(handle: string) {
       if (takenHandle) takenHandle.textContent = '@' + handle;
       if (suggestionsEl) {
         suggestionsEl.innerHTML = '';
-        generateSuggestions(handle).forEach(s => {
+        suggestionsFor(handle).forEach((s) => {
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'claim-suggestion';
-          btn.innerHTML = `<span class="claim-suggestion-at">@</span>${s}`;
+          const at = document.createElement('span');
+          at.className = 'claim-suggestion-at';
+          at.textContent = '@';
+          btn.append(at, document.createTextNode(s));
           btn.addEventListener('click', () => {
             if (handleInput) handleInput.value = s;
             setState('form');
-            setTimeout(() => handleInput?.focus(), 50);
+            focusHandle();
           });
           suggestionsEl.appendChild(btn);
         });
@@ -197,81 +174,47 @@ const endpoint = import.meta.env.PUBLIC_CLAIM_ENDPOINT || '';
       setState('taken');
     }
 
-    // Check if a handle is taken. With a real endpoint configured, server
-    // decides. Without, fall back to hardcoded reserved set.
-    async function checkAvailability(handle: string): Promise<boolean> {
-      if (!endpoint) {
-        return !RESERVED_HANDLES.has(handle);
-      }
+    async function post(payload: Record<string, string>) {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => null)) as
+        | { ok?: boolean; taken?: boolean; error?: string }
+        | null;
+      return { res, data };
+    }
+
+    async function isTaken(handle: string): Promise<boolean> {
       try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ check: handle }),
-        });
-        if (!res.ok) return true; // treat ambiguous as available, server will reject on real submit
-        const data = await res.json().catch(() => null);
-        if (data && typeof data.taken === 'boolean') return !data.taken;
-        return true;
+        const { data } = await post({ check: handle });
+        return !!(data && data.taken === true);
       } catch {
-        return true;
+        return false; // server decides on submit
       }
     }
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
-      const handle = (fd.get('handle') as string || '').trim().toLowerCase();
-      const email = (fd.get('email') as string || '').trim().toLowerCase();
-
+      const handle = String(fd.get('handle') || '').trim().toLowerCase().replace(/^@/, '');
+      const email = String(fd.get('email') || '').trim().toLowerCase();
       if (!handle || !email) return;
-      if (!/^[a-zA-Z0-9_]{3,20}$/.test(handle)) {
-        if (errorMsg) errorMsg.textContent = 'Handles can only have letters, numbers, and underscores. 3–20 characters.';
+      if (!HANDLE_RE.test(handle)) {
+        if (errorMsg) errorMsg.textContent = 'Handles can only have letters, numbers and underscores. 3–20 characters.';
         setState('error');
         return;
       }
 
       setState('loading');
-
-      // 1. Availability check
-      const available = await checkAvailability(handle);
-      if (!available) {
-        showTaken(handle);
-        return;
-      }
-
-      // 2. Submit
-      const payload = {
-        handle, email,
-        timestamp: new Date().toISOString(),
-        source: 'sorted-landing',
-      };
+      if (await isTaken(handle)) { showTaken(handle); return; }
 
       try {
-        if (endpoint) {
-          const res = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          // If server returns { taken: true } even on submit, treat as taken
-          const data = await res.json().catch(() => null);
-          if (data && data.taken === true) {
-            showTaken(handle);
-            return;
-          }
-        } else {
-          console.info('[Sorted] Handle claim (no PUBLIC_CLAIM_ENDPOINT set, logging only):', payload);
-          await new Promise((r) => setTimeout(r, 600));
-        }
-
-        try {
-          if (typeof window !== 'undefined' && window.localStorage) {
-            localStorage.setItem('sorted-claimed', JSON.stringify(payload));
-          }
-        } catch {}
-
+        const { res, data } = await post({ handle, email, source: 'sorted-landing' });
+        if (data && data.taken === true) { showTaken(handle); return; }
+        if (!res.ok || !data || !data.ok) throw new Error((data && data.error) || `HTTP ${res.status}`);
+        try { localStorage.setItem('sorted-claimed', JSON.stringify({ handle, email })); } catch {}
         if (successEmail) successEmail.textContent = email;
         if (successHandle) successHandle.textContent = '@' + handle;
         setState('success');
