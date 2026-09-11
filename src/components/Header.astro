@@ -1,33 +1,35 @@
 ---
+import { APP_URL } from '@/lib/site';
+
 interface Props {
   active?: 'how' | 'why' | 'card' | 'faq' | null;
 }
 const { active = null } = Astro.props;
 ---
 
-<nav class="site-nav" id="nav">
+<nav class="site-nav" id="nav" aria-label="Main">
   <div class="container nav-inner">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Sorted home">
       <span class="logo-mark"><svg><use href="#sorted-mark"/></svg></span>
       sorted.
     </a>
     <div class="nav-links">
       <a href="/how-it-works" class:list={[{ active: active === 'how' }]}>How it works</a>
       <a href="/why-sorted" class:list={[{ active: active === 'why' }]}>Why Sorted</a>
-      <a href="/card" class:list={[{ active: active === 'card' }]}>Card & Perks</a>
+      <a href="/card" class:list={[{ active: active === 'card' }]}>Card &amp; Perks</a>
       <a href="/faq" class:list={[{ active: active === 'faq' }]}>FAQ</a>
     </div>
     <div class="nav-cta">
-      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href={APP_URL} class="btn btn-ghost">Sign in</a>
       <a data-claim href="#" class="btn btn-primary">Claim your handle</a>
-      <button class="nav-burger" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+      <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><svg><use href="#i-menu"/></svg></button>
     </div>
   </div>
 </nav>
 
-<aside class="mobile-nav" aria-hidden="true">
+<aside class="mobile-nav" id="mobile-nav" aria-hidden="true">
   <div class="mobile-nav-head">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Sorted home">
       <span class="logo-mark"><svg><use href="#sorted-mark"/></svg></span>
       sorted.
     </a>
@@ -36,12 +38,12 @@ const { active = null } = Astro.props;
   <div class="mobile-nav-links">
     <a href="/how-it-works">How it works <svg><use href="#i-arrow-up-right"/></svg></a>
     <a href="/why-sorted">Why Sorted <svg><use href="#i-arrow-up-right"/></svg></a>
-    <a href="/card">Card & Perks <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/card">Card &amp; Perks <svg><use href="#i-arrow-up-right"/></svg></a>
     <a href="/faq">FAQ <svg><use href="#i-arrow-up-right"/></svg></a>
-    <a href="mailto:hello@paymentsorted.com">Contact <svg><use href="#i-arrow-up-right"/></svg></a>
+    <a href="/contact">Contact <svg><use href="#i-arrow-up-right"/></svg></a>
   </div>
   <div class="mobile-nav-cta">
-    <a href="#" class="btn btn-secondary btn-lg">Sign in</a>
+    <a href={APP_URL} class="btn btn-secondary btn-lg">Sign in</a>
     <a data-claim href="#" class="btn btn-primary btn-lg">Claim your handle</a>
   </div>
 </aside>

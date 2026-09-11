@@ -1,7 +1,7 @@
 {
   "name": "Sorted",
   "short_name": "Sorted",
-  "description": "Money, sorted. Free instant payments. Earning 3.33% on every dollar still.",
+  "description": "Money, sorted. Send to any @handle in seconds, tap to pay everywhere else. Free. Instant.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F6F2E9",

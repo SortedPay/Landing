@@ -1,102 +1,116 @@
-// api/claim.js
-// ─────────────────────────────────────────────────────────────
-// Vercel Serverless Function (Node runtime). Lives at repo root in /api/.
-// Receives handle-claim submissions from the marketing modal,
-// stores them in Neon Postgres.
+// POST /api/claim
+//   { check: "handle" }            -> { ok, taken }
+//   { handle, email, source? }     -> { ok } | { ok:false, taken:true } | { ok:false, error }
+// GET  /api/claim?init=<INIT_SECRET> -> one-time schema setup (idempotent)
 //
-// Env vars required (set in Vercel dashboard):
-//   DATABASE_URL    — auto-set by the Neon integration
-//   INIT_SECRET     — any random string, used once to create the table
-//
-// One-time setup: visit /api/claim?init=<INIT_SECRET> once to create the
-// table. After that, the POST endpoint is live.
-// ─────────────────────────────────────────────────────────────
+// Env: DATABASE_URL (Neon), INIT_SECRET.
 
-import { neon } from '@neondatabase/serverless';
+import { getSql, send, parseBody, clientMeta, EMAIL_RE, HANDLE_RE, RESERVED_HANDLES } from './_db.js';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const HANDLE_RE = /^[a-zA-Z0-9_.]{3,20}$/;
+async function initSchema(sql) {
+  await sql`
+    CREATE TABLE IF NOT EXISTS handle_claims (
+      id           bigserial PRIMARY KEY,
+      handle       text NOT NULL,
+      email        text NOT NULL,
+      source       text DEFAULT 'sorted-landing',
+      status       text DEFAULT 'new',
+      notes        text,
+      ip           text,
+      user_agent   text,
+      created_at   timestamptz NOT NULL DEFAULT now()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_handle_claims_email ON handle_claims (lower(email))`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_handle_claims_created ON handle_claims (created_at DESC)`;
+  // Earlier rows never enforced uniqueness. Keep the first claim of each
+  // handle live, mark the rest as duplicates, then enforce going forward.
+  await sql`
+    UPDATE handle_claims SET status = 'duplicate'
+    WHERE status <> 'duplicate' AND id NOT IN (
+      SELECT DISTINCT ON (lower(handle)) id FROM handle_claims
+      WHERE status <> 'duplicate'
+      ORDER BY lower(handle), created_at ASC, id ASC
+    )
+  `;
+  await sql`
+    CREATE UNIQUE INDEX IF NOT EXISTS uq_handle_claims_handle
+    ON handle_claims (lower(handle)) WHERE status <> 'duplicate'
+  `;
+  await sql`
+    CREATE TABLE IF NOT EXISTS contact_messages (
+      id           bigserial PRIMARY KEY,
+      name         text NOT NULL,
+      email        text NOT NULL,
+      message      text NOT NULL,
+      status       text DEFAULT 'new',
+      ip           text,
+      user_agent   text,
+      created_at   timestamptz NOT NULL DEFAULT now()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_contact_messages_created ON contact_messages (created_at DESC)`;
+}
 
-function send(res, status, payload) {
-  res.status(status);
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store');
-  res.end(JSON.stringify(payload));
+function normaliseHandle(raw) {
+  return String(raw || '').trim().toLowerCase().replace(/^@/, '');
+}
+
+async function isTaken(sql, handle) {
+  if (RESERVED_HANDLES.has(handle)) return true;
+  const rows = await sql`
+    SELECT 1 FROM handle_claims
+    WHERE lower(handle) = ${handle} AND status <> 'duplicate'
+    LIMIT 1
+  `;
+  return rows.length > 0;
 }
 
 export default async function handler(req, res) {
-  const url = process.env.DATABASE_URL;
-  if (!url) {
-    return send(res, 500, { ok: false, error: 'DATABASE_URL not configured' });
-  }
-  const sql = neon(url);
+  const sql = getSql();
+  if (!sql) return send(res, 500, { ok: false, error: 'DATABASE_URL not configured' });
 
-  // ─── One-time table init via GET /api/claim?init=<secret> ──────
   if (req.method === 'GET') {
     const init = (req.query && req.query.init) || '';
     const secret = process.env.INIT_SECRET;
-    if (!secret || init !== secret) {
-      return send(res, 404, { ok: false, error: 'Not found' });
-    }
+    if (!secret || init !== secret) return send(res, 404, { ok: false, error: 'Not found' });
     try {
-      await sql`
-        CREATE TABLE IF NOT EXISTS handle_claims (
-          id           bigserial PRIMARY KEY,
-          handle       text NOT NULL,
-          email        text NOT NULL,
-          source       text DEFAULT 'sorted-landing',
-          status       text DEFAULT 'new',
-          notes        text,
-          ip           text,
-          user_agent   text,
-          created_at   timestamptz NOT NULL DEFAULT now()
-        )
-      `;
-      await sql`CREATE INDEX IF NOT EXISTS idx_handle_claims_email ON handle_claims (lower(email))`;
-      await sql`CREATE INDEX IF NOT EXISTS idx_handle_claims_handle ON handle_claims (lower(handle))`;
-      await sql`CREATE INDEX IF NOT EXISTS idx_handle_claims_created ON handle_claims (created_at DESC)`;
-      return send(res, 200, { ok: true, message: 'Table created. Setup complete.' });
+      await initSchema(sql);
+      return send(res, 200, { ok: true, message: 'Schema ready.' });
     } catch (err) {
       console.error('Init failed', err);
       return send(res, 500, { ok: false, error: String(err && err.message ? err.message : err) });
     }
   }
 
-  // ─── POST: receive a claim ─────────────────────────────────────
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST, GET');
     return send(res, 405, { ok: false, error: 'Method not allowed' });
   }
 
-  // Parse JSON body — Vercel parses it for us if Content-Type is JSON,
-  // but we handle the string case defensively.
-  let body = req.body;
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body); } catch { body = null; }
-  }
-  if (!body || typeof body !== 'object') {
-    return send(res, 400, { ok: false, error: 'Invalid JSON body' });
+  const body = parseBody(req);
+  if (!body) return send(res, 400, { ok: false, error: 'Invalid JSON body' });
+
+  if (typeof body.check === 'string') {
+    const handle = normaliseHandle(body.check);
+    if (!HANDLE_RE.test(handle)) return send(res, 200, { ok: true, taken: true, reason: 'invalid' });
+    try {
+      return send(res, 200, { ok: true, taken: await isTaken(sql, handle) });
+    } catch (err) {
+      console.error('Check failed', err);
+      return send(res, 500, { ok: false, error: 'Could not check that handle' });
+    }
   }
 
-  const handle = String(body.handle || '').trim().replace(/^@/, '');
+  const handle = normaliseHandle(body.handle);
   const email = String(body.email || '').trim().toLowerCase();
   const source = String(body.source || 'sorted-landing').trim().slice(0, 100);
 
-  if (!handle || !HANDLE_RE.test(handle)) {
-    return send(res, 400, { ok: false, error: 'Invalid handle' });
-  }
-  if (!email || !EMAIL_RE.test(email) || email.length > 254) {
-    return send(res, 400, { ok: false, error: 'Invalid email' });
-  }
+  if (!HANDLE_RE.test(handle)) return send(res, 400, { ok: false, error: 'Invalid handle' });
+  if (!EMAIL_RE.test(email) || email.length > 254) return send(res, 400, { ok: false, error: 'Invalid email' });
+  if (RESERVED_HANDLES.has(handle)) return send(res, 409, { ok: false, taken: true });
 
-  const userAgent = (req.headers['user-agent'] || '').toString().slice(0, 500);
-  const ip = (
-    req.headers['x-forwarded-for'] ||
-    req.headers['x-real-ip'] ||
-    req.socket?.remoteAddress ||
-    ''
-  ).toString().split(',')[0].trim().slice(0, 100);
-
+  const { ip, userAgent } = clientMeta(req);
   try {
     await sql`
       INSERT INTO handle_claims (handle, email, source, ip, user_agent)
@@ -104,13 +118,13 @@ export default async function handler(req, res) {
     `;
     return send(res, 200, { ok: true });
   } catch (err) {
+    if (err && (err.code === '23505' || /duplicate key/i.test(String(err.message)))) {
+      return send(res, 409, { ok: false, taken: true });
+    }
     console.error('Insert failed', err);
     const msg = String(err && err.message ? err.message : err);
     if (msg.includes('does not exist')) {
-      return send(res, 500, {
-        ok: false,
-        error: 'Database not initialised. Visit /api/claim?init=<INIT_SECRET> once.',
-      });
+      return send(res, 500, { ok: false, error: 'Database not initialised. Visit /api/claim?init=<INIT_SECRET> once.' });
     }
     return send(res, 500, { ok: false, error: 'Could not save submission' });
   }
