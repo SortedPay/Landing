@@ -6,21 +6,44 @@ import SectionDivider from '@/components/SectionDivider.astro';
 import StickerMark from '@/components/StickerMark.astro';
 import P2PAnimation from '@/components/P2PAnimation.astro';
 
-const title = 'Sorted — Money. Sorted. Free, instant payments for Aussies.';
+const title = 'Sorted — Money, sorted. Free, instant payments for Aussies.';
 const description = 'Send to any @handle in seconds, then tap to pay everywhere else with the Sorted card. The peer-to-peer payments app built for everyday Aussies.';
+
+const faqs = [
+  {
+    q: 'How fast is "instant"?',
+    a: 'Under two seconds, tap to balance. Not "next business day". Saturday night, Boxing Day, 3am on a Tuesday. Same speed.',
+  },
+  {
+    q: 'Do I need a wallet or anything crypto-y?',
+    a: 'Nope. Sign in with your phone, pick a @handle, you\'re in. The settlement layer is plumbing. We do the boring bits.',
+  },
+  {
+    q: 'How is it free? Where\'s the catch?',
+    a: 'Not from your pocket. We earn on card transactions, optional extras like instant cash-outs, and Sorted Perks partnerships. Sending to mates is free and stays free.',
+  },
+  {
+    q: 'Where\'s my money actually kept?',
+    a: 'In tier-1 Australian bank accounts, backed 1:1 by AUDD, the Australian-dollar stablecoin issued by AUDC Pty Ltd under an AFSL. Redeemable for real AUD any time.',
+  },
+  {
+    q: 'Will my balance ever earn anything?',
+    a: 'Not right now, and we won\'t pretend otherwise. Today the deal is free sends, the Sorted card, and Sorted Points for doing normal stuff.',
+  },
+];
+
+const perks = ['Cafés', 'Pubs', 'Bakeries', 'Grocers', 'Barbers', 'Bookshops'];
 ---
 
 <Base title={title} description={description}>
 
+<!-- ───────────── HERO ───────────── -->
 <section class="hero dotgrid dotgrid-hero">
   <div class="container hero-grid">
-    <div>
-      <h1 class="hero-title">
-        Money,<br><span class="hl">sorted.</span>
-      </h1>
-      <p class="hero-sub">
-        Send to any <strong>@handle</strong> in seconds. Tap to pay everywhere else.<br><strong>Free. Instant. Sorted.</strong>
-      </p>
+    <div class="hero-copy">
+      <span class="hero-badge"><svg class="hero-badge-mark" aria-hidden="true"><use href="#sorted-mark"/></svg> Beta · Made in Brisbane</span>
+      <h1 class="hero-title">Money,<br><span class="hl">sorted.</span></h1>
+      <p class="hero-sub">Send to any <strong>@handle</strong> in seconds. Tap to pay everywhere else.<br><strong>Free. Instant. Sorted.</strong></p>
       <div class="hero-actions">
         <a data-claim href="#" class="btn btn-primary btn-lg">Claim your handle <svg class="icon"><use href="#i-arrow-right"/></svg></a>
         <a href="/how-it-works" class="btn btn-secondary btn-lg">How it works</a>
@@ -28,169 +51,133 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
       <div class="hero-trust">
         <div class="trust-item">
           <div class="trust-num"><span data-count="0" data-prefix="$">$0</span></div>
-          <div class="trust-label">Send. Receive.<br>Top up. Forever.</div>
+          <div class="trust-label">Fees. Ever.</div>
         </div>
         <div class="trust-item">
-          <div class="trust-num"><span data-count="2" data-prefix="<" data-decimals="0">&lt;2</span><span class="unit">sec</span></div>
-          <div class="trust-label">From tap<br>to balance</div>
+          <div class="trust-num"><span data-count="2" data-prefix="<">&lt;2</span><span class="unit">sec</span></div>
+          <div class="trust-label">Tap to balance</div>
         </div>
         <div class="trust-item">
           <div class="trust-num">24/7</div>
-          <div class="trust-label">Saturday night,<br>Christmas morning</div>
+          <div class="trust-label">Even Christmas morning</div>
         </div>
       </div>
     </div>
 
     <div class="hero-visual">
-      <div class="phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
-          <div class="phone-header">
-            <div class="ph-greet-block">
-              <span class="ph-handle">@hannah</span>
-              <span class="ph-greeting">G'day, Hannah</span>
+      <div class="hero-parallax">
+        <div class="hero-tilt" data-tilt="7">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+              <div class="phone-header">
+                <div class="ph-greet-block">
+                  <span class="ph-handle">@hannah</span>
+                  <span class="ph-greeting">G'day, Hannah</span>
+                </div>
+                <div class="ph-bell"><svg class="icon"><use href="#i-bell"/></svg></div>
+              </div>
+              <div class="ph-balance">
+                <div class="ph-balance-label">Available balance</div>
+                <div class="ph-balance-amt">$1,247<span class="cents">.50</span><span class="ccy">AUD</span></div>
+                <div class="ph-earn-pill"><span class="live-tick"></span> +12 Sorted Points</div>
+              </div>
+              <div class="ph-actions">
+                <div class="ph-action"><div class="ph-action-icon send"><svg class="icon"><use href="#i-send"/></svg></div><span class="ph-action-label">Send</span></div>
+                <div class="ph-action"><div class="ph-action-icon receive"><svg class="icon"><use href="#i-receive"/></svg></div><span class="ph-action-label">Receive</span></div>
+                <div class="ph-action"><div class="ph-action-icon topup"><svg class="icon"><use href="#i-plus"/></svg></div><span class="ph-action-label">Top up</span></div>
+              </div>
+              <div class="ph-section-label">Recent</div>
+              <div class="ph-activity-row">
+                <div class="ph-act-avatar a1">MT</div>
+                <div class="ph-act-info"><div class="ph-act-name">Maya Thompson</div><div class="ph-act-meta">@maya · 2 min ago</div></div>
+                <div class="ph-act-amt out">−$24.00</div>
+              </div>
+              <div class="ph-activity-row">
+                <div class="ph-act-avatar a2">JL</div>
+                <div class="ph-act-info"><div class="ph-act-name">Jack Lawson</div><div class="ph-act-meta">@jackl · 18 min ago</div></div>
+                <div class="ph-act-amt in">+$85.00</div>
+              </div>
+              <div class="ph-activity-row">
+                <div class="ph-act-avatar a3">CC</div>
+                <div class="ph-act-info"><div class="ph-act-name">Corner Cafe</div><div class="ph-act-meta">Card tap · 9:41 am</div></div>
+                <div class="ph-act-amt out">−$5.50</div>
+              </div>
             </div>
-            <div class="ph-bell"><svg class="icon"><use href="#i-bell"/></svg></div>
-          </div>
-          <div class="ph-balance">
-            <div class="ph-balance-label">Available balance</div>
-            <div class="ph-balance-amt">$1,247<span class="cents">.50</span><span class="ccy">AUD</span></div>
-            <div class="ph-earn-pill"><span class="live-tick"></span> +12 Sorted Points</div>
-          </div>
-          <div class="ph-actions">
-            <div class="ph-action">
-              <div class="ph-action-icon send"><svg class="icon"><use href="#i-send"/></svg></div>
-              <span class="ph-action-label">Send</span>
-            </div>
-            <div class="ph-action">
-              <div class="ph-action-icon receive"><svg class="icon"><use href="#i-receive"/></svg></div>
-              <span class="ph-action-label">Receive</span>
-            </div>
-            <div class="ph-action">
-              <div class="ph-action-icon topup"><svg class="icon"><use href="#i-plus"/></svg></div>
-              <span class="ph-action-label">Top up</span>
-            </div>
-          </div>
-          <div class="ph-section-label">Recent</div>
-          <div class="ph-activity-row">
-            <div class="ph-act-avatar a1">MT</div>
-            <div class="ph-act-info">
-              <div class="ph-act-name">Maya Thompson</div>
-              <div class="ph-act-meta">@maya · 2 min ago</div>
-            </div>
-            <div class="ph-act-amt out">−$24.00</div>
-          </div>
-          <div class="ph-activity-row">
-            <div class="ph-act-avatar a2">JL</div>
-            <div class="ph-act-info">
-              <div class="ph-act-name">Jack Lawson</div>
-              <div class="ph-act-meta">@jackl · 18 min ago</div>
-            </div>
-            <div class="ph-act-amt in">+$85.00</div>
-          </div>
-          <div class="ph-activity-row">
-            <div class="ph-act-avatar a3">CC</div>
-            <div class="ph-act-info">
-              <div class="ph-act-name">Corner Cafe</div>
-              <div class="ph-act-meta">Card tap · 9:41 am</div>
-            </div>
-            <div class="ph-act-amt out">−$5.50</div>
           </div>
         </div>
-      </div>
-      <div class="float-card float-card-1">
-        <div class="float-icon lime"><svg class="icon"><use href="#i-zap"/></svg></div>
-        <div>
-          <div class="float-text">$50 sent</div>
-          <div class="float-sub">Settled in under 2 seconds</div>
+        <div class="float-card float-card-1">
+          <div class="float-icon lime"><svg class="icon"><use href="#i-zap"/></svg></div>
+          <div><div class="float-text">$50 sent</div><div class="float-sub">Settled in 1.8s</div></div>
         </div>
-      </div>
-      <div class="float-card float-card-2">
-        <div class="float-icon coral"><svg class="icon"><use href="#i-trending"/></svg></div>
-        <div>
-          <div class="float-text">+24 Sorted Points</div>
-          <div class="float-sub">Earned this week</div>
+        <div class="float-card float-card-2">
+          <div class="float-icon coral"><svg class="icon"><use href="#i-spark"/></svg></div>
+          <div><div class="float-text">+24 Sorted Points</div><div class="float-sub">Earned this week</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<Marquee
-  bgAbove="var(--paper)"
-  bgBelow="var(--paper)"
-  ribbon="var(--lime)"
-  ink="var(--ink)"
-  phrases={[
-    'FREE FOREVER',
-    'INSTANT',
-    'NO BSB',
-    'NO FEES',
-    'NO DRAMA',
-    'BUILT IN AUSTRALIA',
-  ]}
-/>
+<Marquee bgAbove="var(--paper)" bgBelow="var(--paper)" ribbon="var(--lime)" ink="var(--ink)"
+  phrases={['FREE FOREVER', 'INSTANT', 'NO BSB', 'NO FEES', 'NO DRAMA', 'BUILT IN AUSTRALIA']} />
 
-<!-- Why Sorted -->
-<section class="why-us reveal" id="why">
+<!-- ───────────── WHY ───────────── -->
+<section class="why-us" id="why">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <h2 class="section-title">Built for everyday <span class="hl">Aussies.</span></h2>
-      <p class="section-sub">Shouting Maccas. Paying your mate back. Sending Mum a hundred for her birthday. None of it should cost you a cent.</p>
+      <p class="section-sub">Shouting Maccas. Paying your mate back. Sending Mum a hundred for her birthday. None of it should cost a cent.</p>
     </div>
 
     <P2PAnimation />
 
-    <div class="usp-stack">
-      <div class="usp-card">
+    <div class="usp-stack slap-stagger">
+      <article class="usp-card">
+        <span class="usp-sticker usp-sticker--lime">01</span>
         <h3 class="usp-headline">No BSBs. <span class="stress">No drama.</span></h3>
-        <p class="usp-body">Every account has a <strong>@handle</strong>. Short, memorable, yours. No more texting Mum for her account number for the fifth time. Type a handle, slide to send — lands before you've put your phone down.</p>
-      </div>
-
-      <div class="usp-card">
-        <h3 class="usp-headline">Just open it. <span class="stress">And send.</span></h3>
-        <p class="usp-body">No wallets. No seed phrases. No gas fees. Sign in with your number, pick a handle, you're done. We do all the boring bits.</p>
-      </div>
-
-      <div class="usp-card">
-        <h3 class="usp-headline">Real Aussie dollars. <span class="stress">Real Aussie banks.</span></h3>
-        <p class="usp-body">Your money sits in tier-1 Australian banks. Backed 1:1, redeemable any time. Not offshore. Not crypto. Just dollars.</p>
-      </div>
-
-      <div class="usp-card">
-        <h3 class="usp-headline">Oh, and normal stuff <span class="stress">earns points.</span></h3>
-        <p class="usp-body">Sending mates, tapping your card — it all stacks <strong>Sorted Points</strong>, and points unlock perks at local Aussie businesses. <a href="#locals" class="audd-link">Meet the locals →</a></p>
-      </div>
+        <p class="usp-body">Every account has a <strong>@handle</strong>. Type it, slide to send, it lands before you've put your phone down. No wallets, no seed phrases, no gas fees.</p>
+      </article>
+      <article class="usp-card">
+        <span class="usp-sticker usp-sticker--sky">02</span>
+        <h3 class="usp-headline">Real dollars. <span class="stress">Real banks.</span></h3>
+        <p class="usp-body">Backed 1:1 by AUDD, held in tier-1 Australian banks. Not offshore. Not a coin you have to think about. Just dollars.</p>
+      </article>
+      <article class="usp-card">
+        <span class="usp-sticker usp-sticker--butter">03</span>
+        <h3 class="usp-headline">Normal stuff <span class="stress">earns points.</span></h3>
+        <p class="usp-body">Sending mates, tapping your card. All of it stacks <strong>Sorted Points</strong>, and points unlock perks at the locals. <a href="#locals" class="audd-link">Meet the locals →</a></p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- How it works -->
-<section class="how-section reveal" id="how">
+<!-- ───────────── HOW ───────────── -->
+<section class="how-section" id="how">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <h2 class="section-title">Easy as. <span class="hl">Three taps.</span></h2>
-      <p class="section-sub">Whether it's a $5 coffee debt or splitting rent with three flatmates — same flow, same speed, same zero fees.</p>
+      <p class="section-sub">A $5 coffee debt or rent with three flatmates. Same flow, same speed, same zero fees.</p>
     </div>
-    <div class="how-grid reveal-stagger">
+    <div class="how-grid slap-stagger">
       <div class="how-step">
         <div class="how-icon"><svg class="icon"><use href="#i-plus"/></svg></div>
         <div class="how-num">01</div>
         <h3 class="how-title">Top up free</h3>
-        <p class="how-desc">Link your bank once. Move money in instantly via PayID. No card surcharge, no "1% loading fee".</p>
+        <p class="how-desc">Link your bank once. PayID in, lands in seconds. No card surcharge, no "loading fee".</p>
       </div>
       <div class="how-step">
         <div class="how-icon"><svg class="icon"><use href="#i-at"/></svg></div>
         <div class="how-num">02</div>
         <h3 class="how-title">Send to @anyone</h3>
-        <p class="how-desc">Type a handle, slide to send. Lands in under two seconds. Saturday night, Christmas morning, doesn't matter.</p>
+        <p class="how-desc">Type a handle, slide to send. Under two seconds, any hour of any day.</p>
       </div>
       <div class="how-step">
-        <div class="how-icon"><svg class="icon"><use href="#i-trending"/></svg></div>
+        <div class="how-icon"><svg class="icon"><use href="#i-card"/></svg></div>
         <div class="how-num">03</div>
         <h3 class="how-title">Tap to pay</h3>
-        <p class="how-desc">The Sorted card turns your balance into everyday money — the cafe, the servo, online. Anywhere Mastercard works.</p>
+        <p class="how-desc">The Sorted card turns your balance into everyday money. Anywhere Mastercard works.</p>
       </div>
     </div>
   </div>
@@ -198,44 +185,39 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
 
 <SectionDivider bgAbove="var(--ink)" bgBelow="var(--paper)" ribbon="var(--butter)" ink="var(--ink)" label="SEND TO ANYONE · EVEN YOUR NAN" />
 
-<!-- Send to anyone — SMS flow -->
-<section class="anyone-section reveal" id="anyone">
+<!-- ───────────── ANYONE (SMS) ───────────── -->
+<section class="anyone-section" id="anyone">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="section-eyebrow">No app required</span>
       <h2 class="section-title">Send to <span class="hl hl-butter">anyone.</span><br>Even your nan.</h2>
-      <p class="section-sub">They don't need the app. They don't need a handle. They don't need to know what Solana is.<br><strong>Just type their number. We do the rest.</strong></p>
+      <p class="section-sub">No handle? No worries. <strong>Type their number. We do the rest.</strong></p>
     </div>
 
-    <div class="anyone-grid reveal-stagger">
-      <!-- Step 1: You send -->
+    <div class="anyone-grid slap-stagger">
       <div class="anyone-card">
         <span class="anyone-tag">01 · You</span>
         <h3 class="anyone-title">Type their number.<br>Tap send.</h3>
-        <p class="anyone-desc">No handle? No worries. Pop in their mobile and you're done in three taps.</p>
+        <p class="anyone-desc">Three taps and you're done.</p>
         <div class="nan-shot">
           <div class="nan-shot-row"><span class="nan-shot-label">To</span><span class="nan-shot-value">Mum · 0412 345 678</span></div>
           <div class="nan-shot-amount">$100<span class="dim">.00</span></div>
           <div class="nan-shot-btn nan-shot-btn--ink">Hold to send →</div>
         </div>
       </div>
-
-      <!-- Step 2: They get a text -->
       <div class="anyone-card anyone-card--sky">
         <span class="anyone-tag">02 · They get a text</span>
-        <h3 class="anyone-title">Auto-text<br>does the heavy lifting.</h3>
-        <p class="anyone-desc">From a real Aussie number. Reads like a friend sent it — because, well, a friend did.</p>
+        <h3 class="anyone-title">A text does the<br>heavy lifting.</h3>
+        <p class="anyone-desc">From a real Aussie number. Reads like a mate sent it.</p>
         <div class="nan-shot">
           <div class="nan-shot-row"><span class="nan-shot-label">SMS</span><span class="nan-shot-value">From Sorted · now</span></div>
           <div class="nan-bubble"><strong>Hannah sent you $100.</strong> Tap to&nbsp;claim&nbsp;→<br><span class="nan-bubble-link">sorted.au/c/9F2X</span></div>
         </div>
       </div>
-
-      <!-- Step 3: They claim -->
       <div class="anyone-card anyone-card--lime">
         <span class="anyone-tag">03 · They claim</span>
         <h3 class="anyone-title">60 seconds<br>and it's theirs.</h3>
-        <p class="anyone-desc">Tap the link. Pick a handle. Money's in their balance. They keep it forever — or send it on.</p>
+        <p class="anyone-desc">Tap, pick a handle, money's in their balance.</p>
         <div class="nan-shot nan-shot--ink">
           <div class="nan-shot-row"><span class="nan-shot-label nan-shot-label--lime">Claim</span><span class="nan-shot-value nan-shot-value--paper">from @hannah</span></div>
           <div class="nan-shot-amount nan-shot-amount--paper">$100<span class="dim">.00</span></div>
@@ -244,149 +226,83 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
       </div>
     </div>
 
-    <!-- Peace of mind callout -->
     <div class="anyone-callout reveal">
-      <div class="anyone-callout-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      </div>
-      <div class="anyone-callout-body">
-        <strong>Unclaimed sends can be undone for 24 hours.</strong> Sent to a number and changed your mind? While it's unclaimed, tap undo and it's back in your balance. A reminder pings both of you after 12 hours.
-      </div>
+      <div class="anyone-callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div class="anyone-callout-body"><strong>Changed your mind?</strong> Undo for 24 hours while it's unclaimed. We remind both of you after 12.</div>
     </div>
   </div>
 </section>
 
 <SectionDivider bgAbove="var(--paper)" bgBelow="var(--paper)" ribbon="var(--coral)" ink="var(--ink)" label="SEND · TAP · SORTED · FREE P2P · MADE IN AUS" />
 
-<!-- Card — tap to pay -->
-<section class="earn-section dotgrid reveal" id="card">
+<!-- ───────────── CARD + PERKS ───────────── -->
+<section class="card-section dotgrid" id="card">
   <div class="container">
-    <div class="earn-grid">
-      <div class="earn-copy">
+    <div class="card-grid">
+      <div class="card-copy reveal">
         <h2>Tap to pay, <span class="hl">everywhere.</span></h2>
-        <p>Your balance isn't stuck in an app. The Sorted card turns it into everyday money — the cafe, the servo, the big shop, online. Anywhere Mastercard works, your money works.</p>
-        <ul class="earn-bullets">
-          <li>
-            <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><strong>Anywhere Mastercard works.</strong> Tap your phone or the card itself. In store, online, here or overseas.</span>
-          </li>
-          <li>
-            <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><strong>Freeze it in one tap.</strong> Misplaced the card? Freeze it from the app in a second. Unfreeze just as fast.</span>
-          </li>
-          <li>
-            <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span>
-            <span><strong>Every tap earns Sorted Points.</strong> Doing normal stuff earns points — points unlock perks at local Aussie businesses.</span>
-          </li>
+        <p>Your balance isn't stuck in an app. The Sorted card spends it at the cafe, the servo, online. Anywhere Mastercard works.</p>
+        <ul class="card-bullets">
+          <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span><span><strong>Tap your phone or the card.</strong> In store, online, here or overseas.</span></li>
+          <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span><span><strong>Freeze it in one tap.</strong> Unfreeze just as fast.</span></li>
+          <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span><span><strong>Every tap earns Sorted Points.</strong> One point per dollar.</span></li>
         </ul>
       </div>
-      <div class="earn-card spring-in">
-        <div class="scard">
-          <span class="scard-word" aria-hidden="true">sorted.</span>
-          <div class="scard-handle">@hannah</div>
-          <div class="scard-bottom">
-            <span class="scard-tap"><svg class="icon"><use href="#i-zap"/></svg> Tap to pay</span>
-            <span class="scard-mc"><i></i><i></i></span>
+      <div class="card-stage">
+        <div class="scard-wrap" data-tilt="10">
+          <div class="scard">
+            <span class="scard-word" aria-hidden="true">sorted.</span>
+            <div class="scard-handle">@hannah</div>
+            <div class="scard-bottom">
+              <span class="scard-tap"><svg class="icon"><use href="#i-zap"/></svg> Tap to pay</span>
+              <span class="scard-mc"><i></i><i></i></span>
+            </div>
           </div>
         </div>
-        <div class="scard-meta">Mastercard network · Freeze anytime · Earns Sorted Points</div>
-        <div class="earn-card-divider"></div>
-        <div class="earn-card-foot">
-          <span class="live"></span>
-          <span>Rolling out with launch. Claim your handle to be first.</span>
-        </div>
+        <div class="scard-meta reveal"><span class="live"></span> Rolling out with launch. Claim your handle to be first.</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Locals — Sorted Perks backs local Aussie businesses -->
-<section class="locals-section reveal" id="locals">
-  <div class="container">
-    <div class="section-head">
-      <span class="section-eyebrow">Sorted Perks</span>
-      <h2 class="section-title">Backing the <span class="hl hl-butter">locals.</span></h2>
-      <p class="section-sub">Your Sorted Points unlock perks at local Aussie businesses — the cafes, pubs and bakeries that make your suburb yours.<br><strong>Every perk puts a customer through a local door.</strong></p>
-    </div>
-    <div class="locals-grid reveal-stagger">
-      <div class="locals-tile"><span class="locals-cat">Cafes</span><span class="locals-soon">Perks soon</span></div>
-      <div class="locals-tile"><span class="locals-cat">Pubs</span><span class="locals-soon">Perks soon</span></div>
-      <div class="locals-tile"><span class="locals-cat">Bakeries</span><span class="locals-soon">Perks soon</span></div>
-      <div class="locals-tile"><span class="locals-cat">Grocers</span><span class="locals-soon">Perks soon</span></div>
-      <div class="locals-tile"><span class="locals-cat">Barbers</span><span class="locals-soon">Perks soon</span></div>
-      <div class="locals-tile"><span class="locals-cat">Bookshops</span><span class="locals-soon">Perks soon</span></div>
-    </div>
-    <p class="locals-note">Run a local? Partnerships open with launch — say g'day on X and get in early.</p>
-  </div>
-</section>
-
-<!-- Big statement -->
-<section class="statement-section reveal">
-  <div class="container">
-    <div class="statement-block">
-      <h2 class="big-quote">
-        <span class="word w-lime">FAST.</span>
-        <span class="word w-coral">FREE.</span>
-        <span class="word w-sky">SORTED.</span>
-      </h2>
-      <p class="section-sub" style="font-size: 20px;">No fees. No BSBs. No three-day waits. Just send.</p>
-      <div class="statement-stats">
-        <div class="ss-cell">
-          <div class="ss-num"><span data-count="0" data-prefix="$">$0</span></div>
-          <div class="ss-label">Fees to send, receive, top up, or hold</div>
-        </div>
-        <div class="ss-cell">
-          <div class="ss-num"><span data-count="2" data-prefix="<" data-decimals="0">&lt;2</span><span class="unit"> sec</span></div>
-          <div class="ss-label">From tap to balance, every send</div>
-        </div>
-        <div class="ss-cell">
-          <div class="ss-num">24/7</div>
-          <div class="ss-label">Saturday night, Boxing Day, 3am</div>
-        </div>
+    <div class="perks-strip reveal" id="locals">
+      <div class="perks-lead">
+        <span class="section-eyebrow">Sorted Perks</span>
+        <p class="perks-text">Points unlock perks at the locals. <strong>Every perk puts a customer through a local door.</strong></p>
       </div>
+      <div class="perks-chips slap-stagger">
+        {perks.map((p) => <span class="perk-chip">{p}<em>soon</em></span>)}
+      </div>
+      <p class="perks-note">Run a local? <a class="audd-link" href="/contact">Say g'day →</a></p>
     </div>
   </div>
 </section>
 
-<!-- Trust -->
-<section class="trust-section reveal">
+<!-- ───────────── STATEMENT ───────────── -->
+<section class="statement-section">
+  <div class="container">
+    <h2 class="big-quote" aria-label="Fast. Free. Sorted.">
+      <span class="word w-lime" style="--tilt:-2deg">FAST.</span>
+      <span class="word w-coral" style="--tilt:1.5deg">FREE.</span>
+      <span class="word w-sky" style="--tilt:-1deg">SORTED.</span>
+    </h2>
+    <p class="section-sub reveal">No fees. No BSBs. No three-day waits. Just send.</p>
+  </div>
+</section>
+
+<!-- ───────────── TRUST ───────────── -->
+<section class="trust-section">
   <div class="container">
     <div class="trust-grid">
-      <div class="trust-section-copy">
+      <div class="trust-copy reveal">
         <h2>Fair dinkum <span class="hl hl-sky">AUD.</span></h2>
-        <p>Your balance is backed 1:1 by AUDD, the Australian dollar stablecoin issued by AUDC Pty Ltd under an Australian Financial Services Licence. Reserves sit in <strong>tier-1 Aussie banks</strong>. Real dollars. Real banks. Real Australia. AUDD-first, with USDC and USDT supported.</p>
-        <p>Solana's just the rails — fast, cheap, invisible. It's what makes the under-two-second sends possible. You'll never see it.</p>
-        <p style="margin-top: 24px;"><a href="https://audd.digital" target="_blank" rel="noopener" class="audd-link">More about AUDD →</a></p>
+        <p>Every dollar is backed 1:1 by AUDD, the Australian-dollar stablecoin issued by AUDC Pty Ltd under an Australian Financial Services Licence, with reserves in <strong>tier-1 Aussie banks</strong>.</p>
+        <p>Solana is just the rails. Fast, cheap, invisible. You'll never see it.</p>
+        <p><a href="https://audd.digital" target="_blank" rel="noopener" class="audd-link">More about AUDD →</a></p>
       </div>
-      <div class="trust-card">
-        <div class="trust-row">
-          <div class="trust-row-icon"><svg class="icon"><use href="#i-shield"/></svg></div>
-          <div class="trust-row-body">
-            <div class="trust-row-title">AFSL-regulated</div>
-            <div class="trust-row-desc">AUDD is issued by AUDC Pty Ltd under an Australian Financial Services Licence.</div>
-          </div>
-        </div>
-        <div class="trust-row">
-          <div class="trust-row-icon"><svg class="icon"><use href="#i-lock"/></svg></div>
-          <div class="trust-row-body">
-            <div class="trust-row-title">1:1 backed</div>
-            <div class="trust-row-desc">Every dollar is a real Australian dollar, redeemable any time.</div>
-          </div>
-        </div>
-        <div class="trust-row">
-          <div class="trust-row-icon"><svg class="icon"><use href="#i-globe"/></svg></div>
-          <div class="trust-row-body">
-            <div class="trust-row-title">Reserves at home</div>
-            <div class="trust-row-desc">Tier-1 Aussie banks, not offshore. Fully reserved, always redeemable.</div>
-          </div>
-        </div>
-        <div class="trust-row">
-          <div class="trust-row-icon"><svg class="icon"><use href="#i-zap"/></svg></div>
-          <div class="trust-row-body">
-            <div class="trust-row-title">Solana rails</div>
-            <div class="trust-row-desc">Sub-second settlement, fractions of a cent in network cost. We cover it.</div>
-          </div>
-        </div>
+      <div class="trust-card slap">
+        <div class="trust-row"><div class="trust-row-icon"><svg class="icon"><use href="#i-shield"/></svg></div><div><div class="trust-row-title">AFSL-regulated</div><div class="trust-row-desc">AUDD is issued under an Australian Financial Services Licence.</div></div></div>
+        <div class="trust-row"><div class="trust-row-icon"><svg class="icon"><use href="#i-lock"/></svg></div><div><div class="trust-row-title">1:1 backed</div><div class="trust-row-desc">Every dollar is a real Australian dollar, redeemable any time.</div></div></div>
+        <div class="trust-row"><div class="trust-row-icon"><svg class="icon"><use href="#i-globe"/></svg></div><div><div class="trust-row-title">Reserves at home</div><div class="trust-row-desc">Tier-1 Aussie banks, not offshore.</div></div></div>
+        <div class="trust-row"><div class="trust-row-icon"><svg class="icon"><use href="#i-zap"/></svg></div><div><div class="trust-row-title">Solana rails</div><div class="trust-row-desc">Sub-second settlement. Network cost covered by us.</div></div></div>
       </div>
     </div>
   </div>
@@ -394,71 +310,34 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
 
 <SectionDivider bgAbove="var(--paper)" bgBelow="var(--paper-deep)" ribbon="var(--sky)" ink="var(--ink)" label="GOT QUESTIONS · WE'VE GOT ANSWERS" />
 
-<!-- FAQ -->
-<section class="faq-section reveal" id="faq">
+<!-- ───────────── FAQ ───────────── -->
+<section class="faq-section" id="faq">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <h2 class="section-title">Got <span class="hl hl-coral">questions?</span></h2>
       <p class="section-sub">No legalese. No fine print. Just the good oil.</p>
     </div>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-q">How fast is "instant"?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">Under two seconds, tap to balance. Not "next business day". Not "between 1–3 business days". Two seconds. Saturday night, Boxing Day, 3am on a Tuesday — same speed.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Do I need a wallet or anything crypto-y?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">Nope. Sign in with your phone, pick a <strong>@handle</strong>, you're in. The Solana settlement layer is just plumbing — same way you don't think about TCP/IP when you send a text. We do the boring bits so you can just send money.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">How does the free model actually work?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">Not from your pocket. We earn on card transactions, optional extras like instant cashouts, and partnerships with the businesses in Sorted Perks. <strong>Sending money to mates is free and stays free.</strong> Send. Receive. Top up. All free, forever.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Where's my money actually kept?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">In <strong>tier-1 Australian bank accounts</strong>, backed 1:1 by AUDD — the Australian dollar stablecoin issued by AUDC Pty Ltd under an Australian Financial Services Licence. Your balance is always redeemable for real AUD, any time. Not offshore. Not in stablecoins of stablecoins. Real Aussie dollars in real Aussie banks.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Will my balance ever earn anything?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">Not right now — and we won't pretend otherwise. Down the track we're exploring ways to make idle balances do more, subject to the right regulatory settings. No promises, no fine print. Today the deal is simple: free sends to mates, the Sorted card, and Sorted Points for doing normal stuff.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Can I send overseas?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">Not yet — but it's coming. We're nailing Aussie P2P and the Sorted card first; international sends are next on the list. Sign up to be first in line.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">How do I get money in and out?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a"><strong>PayID, instantly.</strong> Top up: send from your bank to your Sorted PayID, lands in seconds. Cash out: send back to your bank, same speed, same zero cost. No card surcharges, no "1% loading fee" hiding at the bottom of the screen.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Who's making this?<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
-        <div class="faq-a">A small Aussie team based in Brisbane, who got fed up with money taking three days to move between mates. We operate as an authorised representative under an Australian Financial Services Licence — proper compliance, not a "we'll sort it later" hack.</div>
-      </details>
+    <div class="faq-list slap-stagger">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary class="faq-q">{f.q}<span class="faq-chevron"><svg><use href="#i-chevron-down"/></svg></span></summary>
+          <div class="faq-a">{f.a}</div>
+        </details>
+      ))}
     </div>
+    <p class="faq-more reveal"><a class="audd-link" href="/faq">All the questions →</a></p>
   </div>
 </section>
 
-<Marquee
-  bgAbove="var(--paper-deep)"
-  bgBelow="var(--paper)"
-  ribbon="var(--lime)"
-  ink="var(--ink)"
-  phrases={[
-    "SEND THAT CASH MATE",
-    "DW BRO IT'S SORTED",
-    "EASY MONEY",
-    "SWEET AS",
-    "TOO EASY",
-    "ALL GOOD",
-  ]}
-/>
+<Marquee bgAbove="var(--paper-deep)" bgBelow="var(--paper)" ribbon="var(--lime)" ink="var(--ink)"
+  phrases={['SEND THAT CASH MATE', "DW BRO IT'S SORTED", 'EASY MONEY', 'SWEET AS', 'TOO EASY', 'ALL GOOD']} />
 
 <div class="cta-stage">
   <StickerMark color="var(--coral)" size="160px" rotate={-12} class="cta-sticker cta-sticker--left" />
   <StickerMark color="var(--lime)" size="180px" rotate={14} class="cta-sticker cta-sticker--right" />
   <PageCTA
     title="Right then.<br>Claim your <span class='hl'>@handle.</span>"
-    sub="Takes 90 seconds. No card. No catch. Send your first $20 in the same minute you sign up."
+    sub="Ninety seconds. No card. No catch."
     primaryLabel="Claim your handle"
     secondaryLabel="How it works"
     secondaryHref="/how-it-works"
@@ -468,12 +347,8 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
 </Base>
 
 <style>
-  /* ========== LANDING PAGE STYLES ========== */
-  .hero {
-    padding: 80px 0 120px;
-    position: relative;
-    overflow: hidden;
-  }
+  /* ========== HERO ========== */
+  .hero { padding: 72px 0 110px; position: relative; overflow: hidden; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.05fr 1fr;
@@ -482,7 +357,29 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     position: relative;
     z-index: 2;
   }
-  h1.hero-title {
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--paper-elevated);
+    border: 2px solid var(--ink);
+    border-radius: 100px;
+    padding: 7px 14px 7px 9px;
+    box-shadow: 0 2px 0 var(--ink);
+    transform: rotate(-1.5deg);
+    margin-bottom: 26px;
+    animation: fadeUp 700ms var(--ease-smooth) both;
+    transition: transform 300ms var(--ease-spring);
+  }
+  .hero-badge:hover { transform: rotate(1deg) scale(1.03); }
+  .hero-badge-mark { width: 20px; height: 20px; }
+  .hero-title {
     font-family: var(--font-display);
     font-size: clamp(56px, 13vw, 168px);
     line-height: 0.88;
@@ -492,44 +389,24 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     margin-bottom: 32px;
     animation: fadeUp 800ms var(--ease-smooth) 80ms both;
   }
-  h1.hero-title .hl {
-    position: relative;
-    display: inline-block;
-    z-index: 1;
-    padding: 0 12px;
-    color: var(--ink);
-  }
-  h1.hero-title .hl::before {
-    content: '';
-    position: absolute;
-    inset: 6% -2% 6% -2%;
-    background: var(--lime);
-    z-index: -1;
-    transform: skewX(-4deg) rotate(-1.5deg);
-    border-radius: 12px;
-  }
+  .hero-title .hl { padding: 0 12px; }
+  .hero-title .hl::before { inset: 6% -2% 6% -2%; transform: skewX(-4deg) rotate(-1.5deg); border-radius: 12px; }
   .hero-sub {
     font-size: 21px;
     line-height: 1.5;
     color: var(--ink-soft);
     max-width: 520px;
-    margin-bottom: 44px;
+    margin-bottom: 40px;
     font-weight: 450;
     animation: fadeUp 800ms var(--ease-smooth) 180ms both;
   }
   .hero-sub strong { color: var(--ink); font-weight: 700; }
   .hero-actions {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 64px;
-    flex-wrap: wrap;
+    display: flex; gap: 12px; margin-bottom: 56px; flex-wrap: wrap;
     animation: fadeUp 800ms var(--ease-smooth) 280ms both;
   }
   .hero-trust {
-    display: flex;
-    gap: 28px;
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
     padding-top: 28px;
     border-top: 2px dashed var(--line);
     animation: fadeUp 800ms var(--ease-smooth) 380ms both;
@@ -537,39 +414,24 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
   .trust-item { display: flex; flex-direction: column; gap: 2px; }
   .trust-num {
     font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
+    font-size: 32px; font-weight: 700; letter-spacing: -0.03em;
+    color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums;
   }
   .trust-num .unit { font-size: 18px; color: var(--ink-muted); font-weight: 500; }
-  .trust-label {
-    font-size: 13px;
-    color: var(--ink-muted);
-    font-weight: 500;
-    margin-top: 4px;
-  }
+  .trust-label { font-size: 13px; color: var(--ink-muted); font-weight: 500; margin-top: 4px; }
 
-  /* Phone mockup */
-  .hero-visual {
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 1000ms var(--ease-smooth) 320ms both;
-  }
+  /* Phone */
+  .hero-visual { position: relative; z-index: 1; animation: fadeUp 1000ms var(--ease-smooth) 320ms both; }
+  .hero-parallax { position: relative; }
+  .hero-tilt { transform-style: preserve-3d; }
   .phone {
     background: var(--ink);
     border-radius: 44px;
     padding: 12px;
     width: 360px;
     margin: 0 auto;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.05) inset,
-      0 30px 60px -20px rgba(14, 14, 24, 0.4),
-      0 50px 100px -40px rgba(14, 14, 24, 0.3);
-    position: relative;
-    z-index: 2;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 30px 60px -20px rgba(14,14,24,0.4), 0 50px 100px -40px rgba(14,14,24,0.3);
+    position: relative; z-index: 2;
     transform: rotate(-2deg);
     animation: phone-float 6s ease-in-out infinite;
   }
@@ -577,208 +439,41 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     0%, 100% { transform: rotate(-2deg) translateY(0); }
     50% { transform: rotate(-2deg) translateY(-12px); }
   }
-  .phone-screen {
-    background: var(--paper);
-    border-radius: 32px;
-    height: 660px;
-    overflow: hidden;
-    position: relative;
-  }
-  .phone-notch {
-    position: absolute;
-    top: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 100px; height: 28px;
-    background: var(--ink);
-    border-radius: 100px;
-    z-index: 10;
-  }
-  .phone-status {
-    padding: 16px 22px 8px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink);
-    font-family: var(--font-mono);
-  }
-  .phone-header {
-    padding: 8px 22px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .phone-screen { background: var(--paper); border-radius: 32px; height: 640px; overflow: hidden; position: relative; }
+  .phone-notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 100px; height: 28px; background: var(--ink); border-radius: 100px; z-index: 10; }
+  .phone-status { padding: 16px 22px 8px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--ink); font-family: var(--font-mono); }
+  .phone-header { padding: 8px 22px 14px; display: flex; justify-content: space-between; align-items: center; }
   .ph-greet-block { display: flex; flex-direction: column; }
-  .ph-handle {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    letter-spacing: 0.04em;
-    margin-bottom: 2px;
-  }
-  .ph-greeting {
-    font-family: var(--font-display);
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  .ph-bell {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--paper-elevated);
-    border: 2px solid var(--ink);
-    display: grid; place-items: center;
-    position: relative;
-  }
+  .ph-handle { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.04em; margin-bottom: 2px; }
+  .ph-greeting { font-family: var(--font-display); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .ph-bell { width: 36px; height: 36px; border-radius: 50%; background: var(--paper-elevated); border: 2px solid var(--ink); display: grid; place-items: center; position: relative; }
   .ph-bell svg { width: 16px; height: 16px; }
-  .ph-bell::after {
-    content: '';
-    position: absolute;
-    top: 4px; right: 4px;
-    width: 8px; height: 8px;
-    background: var(--coral);
-    border: 1.5px solid var(--ink);
-    border-radius: 50%;
-  }
-  .ph-balance {
-    margin: 4px 16px 14px;
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 22px;
-    padding: 22px 20px 20px;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid var(--ink);
-  }
-  .ph-balance-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    color: rgba(246,242,233,0.55);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-    position: relative;
-  }
-  .ph-balance-amt {
-    font-family: var(--font-display);
-    font-size: 44px;
-    font-weight: 700;
-    letter-spacing: -0.035em;
-    line-height: 1;
-    margin-bottom: 14px;
-    position: relative;
-    font-variant-numeric: tabular-nums;
-  }
+  .ph-bell::after { content: ''; position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--coral); border: 1.5px solid var(--ink); border-radius: 50%; }
+  .ph-balance { margin: 4px 16px 14px; background: var(--ink); color: var(--paper); border-radius: 22px; padding: 22px 20px 20px; position: relative; overflow: hidden; border: 2px solid var(--ink); }
+  .ph-balance-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: rgba(246,242,233,0.55); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .ph-balance-amt { font-family: var(--font-display); font-size: 44px; font-weight: 700; letter-spacing: -0.035em; line-height: 1; margin-bottom: 14px; font-variant-numeric: tabular-nums; }
   .ph-balance-amt .cents { font-size: 26px; color: rgba(246,242,233,0.6); }
-  .ph-balance-amt .ccy {
-    font-size: 14px;
-    color: rgba(246,242,233,0.5);
-    font-family: var(--font-mono);
-    font-weight: 600;
-    margin-left: 6px;
-    letter-spacing: 0.05em;
-  }
-  .ph-earn-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--lime);
-    color: var(--ink);
-    padding: 5px 11px 5px 9px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: var(--font-mono);
-    border: 1.5px solid var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .ph-earn-pill .live-tick {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--ink);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-  .ph-actions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding: 0 16px;
-    margin-bottom: 16px;
-  }
-  .ph-action {
-    background: var(--paper-elevated);
-    border: 2px solid var(--ink);
-    border-radius: 16px;
-    padding: 14px 8px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 2px 0 var(--ink);
-  }
-  .ph-action-icon {
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    display: grid; place-items: center;
-    border: 1.5px solid var(--ink);
-  }
+  .ph-balance-amt .ccy { font-size: 14px; color: rgba(246,242,233,0.5); font-family: var(--font-mono); font-weight: 600; margin-left: 6px; letter-spacing: 0.05em; }
+  .ph-earn-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--lime); color: var(--ink); padding: 5px 11px 5px 9px; border-radius: 100px; font-size: 11px; font-weight: 700; font-family: var(--font-mono); border: 1.5px solid var(--ink); text-transform: uppercase; letter-spacing: 0.04em; }
+  .ph-earn-pill .live-tick { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); animation: pulse 1.2s ease-in-out infinite; }
+  .ph-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 16px; margin-bottom: 16px; }
+  .ph-action { background: var(--paper-elevated); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 0 var(--ink); }
+  .ph-action-icon { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; border: 1.5px solid var(--ink); }
   .ph-action-icon svg { width: 18px; height: 18px; stroke-width: 2; }
   .ph-action-icon.send { background: var(--lime); }
   .ph-action-icon.receive { background: var(--sky); }
   .ph-action-icon.topup { background: var(--coral); color: var(--paper); }
-  .ph-action-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-  .ph-section-label {
-    padding: 0 22px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-    margin-top: 4px;
-  }
-  .ph-activity-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 22px;
-  }
-  /* FLAT STICKER AVATARS — no gradients */
-  .ph-act-avatar {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    display: grid; place-items: center;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--ink);
-    border: 1.5px solid var(--ink);
-    flex-shrink: 0;
-  }
+  .ph-action-label { font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .ph-section-label { padding: 0 22px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin: 4px 0 8px; }
+  .ph-activity-row { display: flex; align-items: center; gap: 12px; padding: 10px 22px; }
+  .ph-act-avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--ink); border: 1.5px solid var(--ink); flex-shrink: 0; }
   .ph-act-avatar.a1 { background: var(--coral); color: var(--paper); }
-  .ph-act-avatar.a2 { background: var(--lime); color: var(--ink); }
-  .ph-act-avatar.a3 { background: var(--sky); color: var(--ink); }
+  .ph-act-avatar.a2 { background: var(--lime); }
+  .ph-act-avatar.a3 { background: var(--sky); }
   .ph-act-info { flex: 1; min-width: 0; }
   .ph-act-name { font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.2; }
   .ph-act-meta { font-size: 11px; color: var(--ink-muted); margin-top: 1px; font-family: var(--font-mono); }
-  .ph-act-amt {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: -0.02em;
-    flex-shrink: 0;
-    font-variant-numeric: tabular-nums;
-  }
+  .ph-act-amt { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: -0.02em; flex-shrink: 0; font-variant-numeric: tabular-nums; }
   .ph-act-amt.in { color: var(--lime-deep); }
   .ph-act-amt.out { color: var(--ink); }
 
@@ -789,518 +484,139 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     border-radius: 14px;
     padding: 12px 14px;
     box-shadow: 0 4px 0 var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     z-index: 5;
   }
-  .float-card-1 { top: 60px; right: -10px; transform: rotate(4deg); animation: drift1 5s ease-in-out infinite; }
-  .float-card-2 { bottom: 90px; left: -20px; transform: rotate(-4deg); animation: drift2 7s ease-in-out infinite; }
+  .float-card-1 { top: 60px; right: -10px; animation: drift1 5s ease-in-out infinite; }
+  .float-card-2 { bottom: 90px; left: -20px; animation: drift2 7s ease-in-out infinite; }
   @keyframes drift1 { 0%, 100% { transform: rotate(4deg) translateY(0); } 50% { transform: rotate(4deg) translateY(-10px); } }
   @keyframes drift2 { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(-4deg) translateY(-12px); } }
-  .float-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: grid; place-items: center;
-    border: 1.5px solid var(--ink);
-  }
+  .float-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; border: 1.5px solid var(--ink); }
   .float-icon.lime { background: var(--lime); color: var(--ink); }
   .float-icon.coral { background: var(--coral); color: var(--ink); }
   .float-icon svg { width: 16px; height: 16px; stroke-width: 2.2; }
   .float-text { font-size: 13px; font-weight: 700; line-height: 1.2; font-family: var(--font-display); letter-spacing: -0.01em; }
   .float-sub { font-size: 11px; color: var(--ink-muted); font-weight: 500; margin-top: 2px; font-family: var(--font-mono); }
 
-  /* USP grid */
-  .why-us {
-    padding: 120px 0 140px;
-  }
-  .usp-stack {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 1080px;
-    margin: 0 auto;
-  }
+  /* ========== WHY ========== */
+  .why-us { padding: 110px 0 120px; }
+  .usp-stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1120px; margin: 0 auto; }
   .usp-card {
     background: var(--paper-elevated);
     border: 2.5px solid var(--ink);
     border-radius: 24px;
-    padding: 36px;
+    padding: 36px 30px 30px;
     position: relative;
-    overflow: hidden;
     box-shadow: 0 6px 0 var(--ink);
-    transition: all 280ms var(--ease-spring);
+    transition: transform 280ms var(--ease-spring), box-shadow 280ms var(--ease-spring);
   }
-  .usp-card:hover {
-    transform: translate(-2px, -4px);
-    box-shadow: 0 10px 0 var(--ink);
+  .usp-card:hover { transform: translate(-2px, -4px) rotate(-0.4deg); box-shadow: 0 10px 0 var(--ink); }
+  .usp-sticker {
+    position: absolute; top: -14px; left: 24px;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+    padding: 5px 12px; border-radius: 999px;
+    border: 2px solid var(--ink); box-shadow: 0 2px 0 var(--ink);
+    transform: rotate(-4deg);
+    transition: transform 250ms var(--ease-spring);
   }
+  .usp-card:hover .usp-sticker { transform: rotate(3deg) scale(1.06); }
+  .usp-sticker--lime { background: var(--lime); }
+  .usp-sticker--sky { background: var(--sky); }
+  .usp-sticker--butter { background: var(--butter); }
   .usp-headline {
     font-family: var(--font-display);
-    font-size: clamp(28px, 3.2vw, 42px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.025em;
-    margin-bottom: 16px;
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.025em;
+    margin-bottom: 14px;
   }
-  .usp-body {
-    font-size: 16px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin-bottom: 0;
+  .usp-headline .stress { position: relative; display: inline-block; }
+  .usp-headline .stress::after {
+    content: ''; position: absolute; left: -4%; right: -4%; bottom: 4%; height: 30%;
+    background: var(--lime); z-index: -1; transform: skewX(-6deg); border-radius: 4px;
   }
+  .usp-body { font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); }
 
-  /* How section (dark) */
-  .how-section {
-    padding: 120px 0 140px;
-    background: var(--ink);
-    color: var(--paper);
-    position: relative;
-    overflow: hidden;
-  }
-  .how-section .section-eyebrow {
-    background: var(--lime);
-    color: var(--ink);
-    border-color: var(--lime);
-    box-shadow: 0 2px 0 rgba(255,255,255,0.1);
+  /* ========== HOW (dark) ========== */
+  .how-section { padding: 110px 0 130px; background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
+  .how-section::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 26px 26px; pointer-events: none;
   }
   .how-section .section-title { color: var(--paper); }
-  .how-section .section-title .hl::before { background: var(--lime); }
   .how-section .section-title .hl { color: var(--ink); }
   .how-section .section-sub { color: rgba(246,242,233,0.7); }
-  .how-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 26px 26px;
-    pointer-events: none;
-  }
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 60px;
-    position: relative;
-  }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; position: relative; }
   .how-step {
     background: rgba(255,255,255,0.03);
     border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 24px;
-    padding: 32px;
-    position: relative;
-    transition: all 280ms var(--ease-spring);
+    border-radius: 24px; padding: 32px; position: relative;
+    transition: transform 280ms var(--ease-spring), border-color 200ms ease, background 200ms ease;
   }
-  .how-step:hover {
-    border-color: var(--lime);
-    background: rgba(200, 241, 84, 0.06);
-    transform: translateY(-4px);
-  }
-  .how-num {
-    font-family: var(--font-display);
-    font-size: 80px;
-    font-weight: 700;
-    line-height: 0.85;
-    color: var(--lime);
-    margin-bottom: 16px;
-    letter-spacing: -0.04em;
-  }
-  .how-icon {
-    position: absolute;
-    top: 32px; right: 32px;
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    background: rgba(200, 241, 84, 0.1);
-    border: 1.5px solid rgba(200, 241, 84, 0.3);
-    display: grid;
-    place-items: center;
-    color: var(--lime);
-  }
+  .how-step:hover { border-color: var(--lime); background: rgba(200,241,84,0.06); transform: translateY(-4px) rotate(-0.3deg); }
+  .how-num { font-family: var(--font-display); font-size: 80px; font-weight: 700; line-height: 0.85; color: var(--lime); margin-bottom: 16px; letter-spacing: -0.04em; }
+  .how-icon { position: absolute; top: 32px; right: 32px; width: 44px; height: 44px; border-radius: 12px; background: rgba(200,241,84,0.1); border: 1.5px solid rgba(200,241,84,0.3); display: grid; place-items: center; color: var(--lime); }
   .how-icon svg { width: 20px; height: 20px; stroke-width: 2; }
-  .how-title {
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-  }
+  .how-title { font-family: var(--font-display); font-size: 26px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 10px; }
   .how-desc { font-size: 15.5px; line-height: 1.55; color: rgba(246,242,233,0.7); }
 
-  /* Anyone section — SMS flow showcase */
-  .anyone-section {
-    padding: 120px 0;
-    background: var(--paper);
-    position: relative;
-    overflow: hidden;
-  }
-  .anyone-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(14,14,24,0.04) 1px, transparent 1.5px);
-    background-size: 22px 22px;
-    pointer-events: none;
-  }
+  /* ========== ANYONE ========== */
+  .anyone-section { padding: 110px 0; background: var(--paper); position: relative; overflow: hidden; }
+  .anyone-section::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(14,14,24,0.04) 1px, transparent 1.5px); background-size: 22px 22px; pointer-events: none; }
   .anyone-section .section-head { position: relative; z-index: 1; }
-  .anyone-section .section-title .hl.hl-butter { color: var(--ink); }
-
-  .anyone-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin-top: 64px;
-    position: relative;
-    z-index: 1;
-  }
+  .anyone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; position: relative; z-index: 1; }
   .anyone-card {
-    background: var(--paper-elevated);
-    border: 2px solid var(--ink);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 6px 0 var(--ink);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: transform 0.2s ease;
+    background: var(--paper-elevated); border: 2px solid var(--ink); border-radius: 24px; padding: 28px;
+    box-shadow: 0 6px 0 var(--ink); display: flex; flex-direction: column; gap: 12px;
+    transition: transform 250ms var(--ease-spring), box-shadow 250ms var(--ease-spring);
   }
-  .anyone-card:hover { transform: translateY(-4px); box-shadow: 0 10px 0 var(--ink); }
+  .anyone-card:hover { transform: translateY(-4px) rotate(0.4deg); box-shadow: 0 10px 0 var(--ink); }
   .anyone-card--sky { background: var(--sky-soft); }
   .anyone-card--lime { background: var(--lime-soft); }
-
-  .anyone-tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--ink-muted);
-    text-transform: uppercase;
-  }
-  .anyone-title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0;
-  }
-  .anyone-desc {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  /* Peace of mind callout */
+  .anyone-tag { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-muted); text-transform: uppercase; }
+  .anyone-title { font-family: var(--font-display); font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+  .anyone-desc { font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+  .nan-shot { margin-top: auto; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .nan-shot--ink { background: var(--ink); }
+  .nan-shot-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .nan-shot-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: var(--ink); color: var(--paper); border-radius: 999px; padding: 4px 10px; }
+  .nan-shot-label--lime { background: var(--lime); color: var(--ink); }
+  .nan-shot-value { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-muted); }
+  .nan-shot-value--paper { color: rgba(246,242,233,0.65); }
+  .nan-shot-amount { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.04em; line-height: 1; color: var(--ink); }
+  .nan-shot-amount--paper { color: var(--paper); }
+  .nan-shot-amount .dim { opacity: 0.45; font-size: 24px; }
+  .nan-shot-btn { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; text-align: center; border-radius: 12px; padding: 11px 14px; }
+  .nan-shot-btn--ink { background: var(--ink); color: var(--paper); }
+  .nan-shot-btn--lime { background: var(--lime); color: var(--ink); border: 1.5px solid rgba(14,14,24,0.35); }
+  .nan-bubble { background: var(--sky-soft); border: 1.5px solid var(--ink); border-radius: 16px 16px 16px 4px; padding: 14px 16px; font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+  .nan-bubble-link { font-family: var(--font-mono); font-size: 12px; text-decoration: underline; display: inline-block; margin-top: 4px; }
   .anyone-callout {
-    margin: 56px auto 0;
-    max-width: 720px;
-    background: var(--sky-soft, #D6ECFF);
-    border: 2px solid var(--ink);
-    border-radius: 20px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    box-shadow: 0 4px 0 var(--ink);
-    position: relative;
-    z-index: 1;
+    margin: 48px auto 0; max-width: 680px;
+    background: var(--sky-soft); border: 2px solid var(--ink); border-radius: 20px; padding: 18px 22px;
+    display: flex; align-items: flex-start; gap: 16px; box-shadow: 0 4px 0 var(--ink); position: relative; z-index: 1;
   }
-  .anyone-callout-icon {
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    color: var(--ink);
-  }
+  .anyone-callout-icon { flex: 0 0 30px; width: 30px; height: 30px; color: var(--ink); }
   .anyone-callout-icon svg { width: 100%; height: 100%; }
-  .anyone-callout-body {
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-  }
+  .anyone-callout-body { font-size: 15px; line-height: 1.55; color: var(--ink-soft); }
   .anyone-callout-body strong { color: var(--ink); font-weight: 700; }
 
-  /* Earn section */
-  .earn-section {
-    padding: 120px 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .earn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .earn-card {
-    background: var(--lime);
-    color: var(--ink);
-    border-radius: 32px;
-    padding: 44px 40px;
-    border: 3px solid var(--ink);
-    box-shadow: 0 12px 0 var(--ink);
-    position: relative;
-    transform: rotate(-1.5deg);
-    transition: transform 400ms var(--ease-spring);
-    text-align: left;
-  }
-  .earn-card:hover { transform: rotate(0); }
+  /* ========== CARD + PERKS ========== */
+  .card-section { padding: 110px 0 100px; position: relative; overflow: hidden; }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .card-copy h2 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); font-weight: 700; line-height: 0.96; letter-spacing: -0.035em; margin-bottom: 22px; }
+  .card-copy p { font-size: 18px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 18px; max-width: 520px; }
+  .card-bullets { list-style: none; margin-top: 24px; }
+  .card-bullets li { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1.5px dashed var(--line); font-size: 16px; line-height: 1.45; color: var(--ink-soft); }
+  .card-bullets li:last-child { border-bottom: none; }
+  .card-bullets .check { flex-shrink: 0; width: 28px; height: 28px; background: var(--lime); border: 2px solid var(--ink); border-radius: 8px; display: grid; place-items: center; box-shadow: 0 2px 0 var(--ink); transform: rotate(-3deg); }
+  .card-bullets li:nth-child(2) .check { background: var(--coral); transform: rotate(2deg); }
+  .card-bullets li:nth-child(3) .check { background: var(--sky); transform: rotate(-2deg); }
+  .card-bullets .check svg { width: 14px; height: 14px; stroke: var(--ink); stroke-width: 3; }
+  .card-bullets strong { color: var(--ink); font-weight: 700; }
 
-  .earn-card-divider {
-    height: 2.5px;
-    background: var(--ink);
-    margin: 0 0 22px;
-    border-radius: 2px;
-  }
-
-  .earn-card-foot {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    opacity: 0.7;
-  }
-  .earn-card-foot .live {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--ink);
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-
-  .earn-copy h2 {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 700;
-    line-height: 0.96;
-    letter-spacing: -0.035em;
-    margin-bottom: 24px;
-  }
-  .earn-copy p {
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin-bottom: 20px;
-    max-width: 520px;
-  }
-  .earn-bullets { list-style: none; margin-top: 28px; }
-  .earn-bullets li {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1.5px dashed var(--line);
-    font-size: 16px;
-    line-height: 1.45;
-    color: var(--ink-soft);
-  }
-  .earn-bullets li:last-child { border-bottom: none; }
-  .earn-bullets .check {
-    flex-shrink: 0;
-    width: 28px; height: 28px;
-    background: var(--lime);
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    display: grid; place-items: center;
-    box-shadow: 0 2px 0 var(--ink);
-    transform: rotate(-3deg);
-  }
-  .earn-bullets li:nth-child(2) .check { background: var(--coral); transform: rotate(2deg); }
-  .earn-bullets li:nth-child(3) .check { background: var(--sky); transform: rotate(-2deg); }
-  .earn-bullets .check svg { width: 14px; height: 14px; stroke: var(--ink); stroke-width: 3; }
-  .earn-bullets strong { color: var(--ink); font-weight: 700; }
-
-  /* Statement section */
-  .statement-section {
-    padding: 140px 0;
-    text-align: center;
-    background: var(--paper-deep);
-    position: relative;
-  }
-  .statement-block { max-width: 1000px; margin: 0 auto; }
-  .big-quote {
-    font-family: var(--font-display);
-    font-size: clamp(56px, 8vw, 116px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-    margin-bottom: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  .big-quote .word {
-    display: inline-block;
-    padding: 0 20px;
-    border: 3px solid var(--ink);
-    border-radius: 14px;
-    box-shadow: 0 6px 0 var(--ink);
-    color: var(--ink);
-  }
-  .big-quote .w-lime { background: var(--lime); transform: rotate(-1.5deg); }
-  .big-quote .w-coral { background: var(--coral); color: var(--paper); transform: rotate(1.5deg); }
-  .big-quote .w-sky { background: var(--sky); transform: rotate(-1deg); }
-
-  .statement-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--ink);
-    border: 2.5px solid var(--ink);
-    border-radius: 24px;
-    overflow: hidden;
-    max-width: 880px;
-    margin: 60px auto 0;
-    box-shadow: 0 6px 0 var(--ink);
-  }
-  .ss-cell {
-    background: var(--paper-elevated);
-    padding: 36px 24px;
-    text-align: center;
-  }
-  .ss-num {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    margin-bottom: 6px;
-    font-variant-numeric: tabular-nums;
-  }
-  .ss-num .unit { color: var(--ink-muted); font-size: 26px; }
-  .ss-label { font-size: 14px; color: var(--ink-muted); font-weight: 500; line-height: 1.3; }
-
-  /* Trust section */
-  .trust-section { padding: 120px 0; }
-  .trust-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-  .trust-section-copy h2 {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 700;
-    line-height: 0.96;
-    letter-spacing: -0.035em;
-    margin-bottom: 24px;
-  }
-  .trust-section-copy p {
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin-bottom: 16px;
-    max-width: 540px;
-  }
-  .trust-card {
-    background: var(--paper-elevated);
-    border: 2.5px solid var(--ink);
-    border-radius: 28px;
-    padding: 36px;
-    box-shadow: 0 8px 0 var(--ink);
-    transform: rotate(1deg);
-    transition: transform 350ms var(--ease-spring);
-  }
-  .trust-card:hover { transform: rotate(0); }
-  .trust-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 18px 0;
-    border-bottom: 1.5px dashed var(--line);
-  }
-  .trust-row:first-child { padding-top: 0; }
-  .trust-row:last-child { padding-bottom: 0; border-bottom: none; }
-  .trust-row-icon {
-    flex-shrink: 0;
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    border: 2px solid var(--ink);
-    display: grid; place-items: center;
-    box-shadow: 0 2px 0 var(--ink);
-    color: var(--ink);
-  }
-  .trust-row-icon svg { width: 20px; height: 20px; stroke-width: 2; }
-  .trust-row:nth-child(1) .trust-row-icon { background: var(--lime); }
-  .trust-row:nth-child(2) .trust-row-icon { background: var(--sky); }
-  .trust-row:nth-child(3) .trust-row-icon { background: var(--coral); color: var(--paper); }
-  .trust-row:nth-child(4) .trust-row-icon { background: var(--butter); }
-  .trust-row-title {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    margin-bottom: 4px;
-  }
-  .trust-row-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.45; }
-  .audd-link {
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
-    text-decoration-color: var(--lime);
-    font-weight: 700;
-    transition: text-decoration-color 200ms ease;
-  }
-  .audd-link:hover { text-decoration-color: var(--ink); }
-
-  .faq-section {
-    padding: 120px 0;
-    background: var(--paper-deep);
-  }
-
-  /* CTA stage container — see global.css for sticker positioning */
-  .cta-stage {
-    position: relative;
-    isolation: isolate;
-  }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
-    .phone { transform: rotate(-1deg); }
-    .earn-grid, .trust-grid { grid-template-columns: 1fr; gap: 40px; }
-    .earn-card { transform: rotate(-1deg); }
-    .trust-card { transform: rotate(0); }
-    .anyone-grid { gap: 20px; }
-  }
-  @media (max-width: 720px) {
-    .hero { padding: 32px 0 40px; }
-    .hero-actions .btn { flex: 1; min-width: 0; }
-    .usp-stack { grid-template-columns: 1fr; }
-    .how-grid { grid-template-columns: 1fr; }
-    .anyone-grid { grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
-    .anyone-section { padding: 60px 0; }
-    .anyone-callout { margin-top: 32px; flex-direction: column; gap: 12px; }
-    .statement-stats { grid-template-columns: 1fr; }
-    .why-us, .how-section, .earn-section, .trust-section, .faq-section, .statement-section { padding: 60px 0; }
-    .phone { width: 88vw; max-width: 360px; }
-    .float-card-1 { right: -10px; top: 30px; }
-    .float-card-2 { left: -10px; bottom: 60px; }
-    .earn-card { padding: 32px 24px; }
-    .trust-card { padding: 28px; }
-  }
-  @media (max-width: 420px) {
-    /* Tighter buttons + stacked layout for small phones */
-    .hero-actions { flex-direction: column; align-items: stretch; }
-    .hero-actions .btn { width: 100%; }
-    .btn-lg { padding: 14px 20px; font-size: 15px; }
-    /* Smaller phone mockup */
-    .phone { width: 100%; max-width: 340px; }
-    /* Hero trust strip — 3 columns squished, switch to stacked rows */
-    .hero-trust { gap: 18px; }
-    .trust-num { font-size: 28px; }
-    /* USP cards: tighter padding */
-    .usp-card { padding: 24px; }
-  }
-
-  /* ========== Sorted card mockup v2 — cropped wordmark ========== */
+  .card-stage { perspective: 1200px; }
+  .scard-wrap { transform-style: preserve-3d; }
   .scard {
     container-type: inline-size;
     background: var(--ink);
@@ -1308,32 +624,22 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
     border-radius: 18px;
     aspect-ratio: 1.586;
     padding: 0 7cqw 7cqw;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     color: var(--paper);
-    box-shadow: 0 6px 0 rgba(14, 14, 24, 0.18);
-    position: relative;
-    overflow: hidden;
-    background-image: radial-gradient(circle, rgba(200, 241, 84, 0.10) 1px, transparent 1px);
+    box-shadow: 0 12px 0 rgba(14,14,24,0.18), 0 30px 60px -30px rgba(14,14,24,0.45);
+    position: relative; overflow: hidden;
+    background-image: radial-gradient(circle, rgba(200,241,84,0.10) 1px, transparent 1px);
     background-size: 18px 18px;
+    transform: rotate(-3deg);
   }
   .scard > * { position: relative; z-index: 1; }
   .scard-word {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 50%;
+    position: absolute; z-index: 0; top: 0; left: 50%;
     transform: translate(-50%, -46%);
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-display); font-weight: 700;
     font-variation-settings: "opsz" 30;
-    font-size: 26.5cqw;
-    line-height: 1;
-    letter-spacing: -0.045em;
-    color: var(--lime);
-    white-space: nowrap;
-    user-select: none;
-    pointer-events: none;
+    font-size: 26.5cqw; line-height: 1; letter-spacing: -0.045em;
+    color: var(--lime); white-space: nowrap; user-select: none; pointer-events: none;
   }
   .scard-handle { margin-top: auto; margin-bottom: 3cqw; font-family: var(--font-mono); font-size: 6.6cqw; letter-spacing: 0.08em; opacity: 0.94; }
   .scard-bottom { display: flex; justify-content: space-between; align-items: center; }
@@ -1343,106 +649,147 @@ const description = 'Send to any @handle in seconds, then tap to pay everywhere 
   .scard-mc i { width: 7.5cqw; height: 7.5cqw; border-radius: 50%; display: block; }
   .scard-mc i:first-child { background: var(--coral); opacity: 0.92; }
   .scard-mc i:last-child { background: var(--butter); opacity: 0.92; margin-left: -3cqw; }
-  .scard-meta { margin-top: 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); text-align: center; }
+  .scard-meta {
+    margin-top: 28px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 600;
+  }
+  .scard-meta .live { width: 8px; height: 8px; border-radius: 50%; background: var(--lime-deep); animation: pulse 1.4s ease-in-out infinite; }
 
-  /* ========== Nan-section unified interior shots ========== */
-  .nan-shot {
-    margin-top: auto;
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 16px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .nan-shot--ink { background: var(--ink); }
-  .nan-shot-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .nan-shot-label {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    background: var(--ink); color: var(--paper);
-    border-radius: 999px; padding: 4px 10px;
-  }
-  .nan-shot-label--lime { background: var(--lime); color: var(--ink); }
-  .nan-shot-value { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-muted); }
-  .nan-shot-value--paper { color: rgba(246, 242, 233, 0.65); }
-  .nan-shot-amount { font-family: var(--font-display); font-weight: 700; font-size: 40px; letter-spacing: -0.04em; line-height: 1; color: var(--ink); }
-  .nan-shot-amount--paper { color: var(--paper); }
-  .nan-shot-amount .dim { opacity: 0.45; font-size: 24px; }
-  .nan-shot-btn {
-    font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: -0.01em;
-    text-align: center; border-radius: 12px; padding: 11px 14px;
-  }
-  .nan-shot-btn--ink { background: var(--ink); color: var(--paper); }
-  .nan-shot-btn--lime { background: var(--lime); color: var(--ink); border: 1.5px solid rgba(14, 14, 24, 0.35); }
-  .nan-bubble {
-    background: var(--sky-soft, #D6ECFF);
-    border: 1.5px solid var(--ink);
-    border-radius: 16px 16px 16px 4px;
-    padding: 14px 16px;
-    font-size: 14.5px;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-  .nan-bubble-link { font-family: var(--font-mono); font-size: 12px; text-decoration: underline; display: inline-block; margin-top: 4px; }
-
-  /* ========== Locals — Sorted Perks partner wall (logo slots fill at launch) ========== */
-  .locals-section { padding: 110px 0; background: var(--paper); }
-  .locals-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 56px;
-  }
-  .locals-tile {
-    border: 2px dashed rgba(14, 14, 24, 0.28);
-    border-radius: 18px;
+  .perks-strip {
+    margin-top: 80px;
     background: var(--paper-elevated);
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
+    border: 2.5px solid var(--ink);
+    border-radius: 28px;
+    padding: 36px 40px;
+    box-shadow: 0 6px 0 var(--ink);
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 28px 40px;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    position: relative;
   }
-  .locals-tile:hover { transform: translateY(-3px); border-color: var(--ink); }
-  .locals-cat { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; color: var(--ink); }
-  .locals-soon { font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); background: var(--paper); border: 1.5px solid var(--line, #E5E0D2); border-radius: 999px; padding: 3px 9px; }
-  .locals-note { margin-top: 36px; text-align: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--ink-muted); }
-  @media (max-width: 880px) {
-    .locals-grid { grid-template-columns: repeat(2, 1fr); }
+  .perks-lead .section-eyebrow { margin-bottom: 14px; }
+  .perks-text { font-family: var(--font-display); font-size: 22px; line-height: 1.2; letter-spacing: -0.02em; color: var(--ink-soft); }
+  .perks-text strong { color: var(--ink); }
+  .perks-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .perk-chip {
+    display: inline-flex; align-items: baseline; gap: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.02em;
+    padding: 10px 16px; border-radius: 14px;
+    border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink);
+    background: var(--lime);
+    transform: rotate(var(--r, 0deg));
+    transition: transform 250ms var(--ease-spring);
   }
+  .perk-chip em { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
+  .perk-chip:hover { transform: rotate(calc(var(--r, 0deg) * -1)) scale(1.06) translateY(-2px); }
+  .perk-chip:nth-child(1) { --r: -2deg; background: var(--lime); }
+  .perk-chip:nth-child(2) { --r: 2deg; background: var(--butter); }
+  .perk-chip:nth-child(3) { --r: -1.5deg; background: var(--sky); }
+  .perk-chip:nth-child(4) { --r: 1deg; background: var(--coral); color: var(--paper); }
+  .perk-chip:nth-child(5) { --r: -2.5deg; background: var(--paper); }
+  .perk-chip:nth-child(6) { --r: 1.5deg; background: var(--lime); }
+  .perks-note { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--ink-muted); }
 
-  /* Small phones: keep the hero tight and everything inside the viewport */
+  /* ========== STATEMENT ========== */
+  .statement-section { padding: 120px 0; text-align: center; background: var(--paper-deep); }
+  .big-quote {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 116px);
+    font-weight: 700; line-height: 1; letter-spacing: -0.04em; color: var(--ink);
+    margin-bottom: 32px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+  }
+  .big-quote .word {
+    display: inline-block; padding: 0 20px;
+    border: 3px solid var(--ink); border-radius: 14px; box-shadow: 0 6px 0 var(--ink); color: var(--ink);
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 300ms var(--ease-spring);
+  }
+  .big-quote .word:hover { transform: rotate(calc(var(--tilt, 0deg) * -1.5)) translateY(-6px); }
+  .big-quote .w-lime { background: var(--lime); }
+  .big-quote .w-coral { background: var(--coral); color: var(--paper); }
+  .big-quote .w-sky { background: var(--sky); }
+  .statement-section .section-sub { font-size: 20px; }
+
+  /* ========== TRUST ========== */
+  .trust-section { padding: 110px 0; }
+  .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .trust-copy h2 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 64px); font-weight: 700; line-height: 0.96; letter-spacing: -0.035em; margin-bottom: 22px; }
+  .trust-copy p { font-size: 18px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 16px; max-width: 540px; }
+  .trust-card {
+    background: var(--paper-elevated); border: 2.5px solid var(--ink); border-radius: 28px; padding: 32px;
+    box-shadow: 0 8px 0 var(--ink);
+  }
+  .trust-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1.5px dashed var(--line); }
+  .trust-row:first-child { padding-top: 0; }
+  .trust-row:last-child { padding-bottom: 0; border-bottom: none; }
+  .trust-row-icon { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--ink); display: grid; place-items: center; box-shadow: 0 2px 0 var(--ink); color: var(--ink); transform: rotate(-3deg); }
+  .trust-row-icon svg { width: 20px; height: 20px; stroke-width: 2; }
+  .trust-row:nth-child(1) .trust-row-icon { background: var(--lime); }
+  .trust-row:nth-child(2) .trust-row-icon { background: var(--sky); transform: rotate(2deg); }
+  .trust-row:nth-child(3) .trust-row-icon { background: var(--coral); color: var(--paper); }
+  .trust-row:nth-child(4) .trust-row-icon { background: var(--butter); transform: rotate(3deg); }
+  .trust-row-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 3px; }
+  .trust-row-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.45; }
+  .audd-link {
+    color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px;
+    text-decoration-color: var(--lime); font-weight: 700; transition: text-decoration-color 200ms ease;
+  }
+  .audd-link:hover { text-decoration-color: var(--ink); }
+
+  /* ========== FAQ ========== */
+  .faq-section { padding: 110px 0; background: var(--paper-deep); }
+  .faq-section .faq-list { margin-top: 48px; }
+  .faq-more { text-align: center; margin-top: 28px; font-family: var(--font-display); font-size: 17px; }
+
+  .cta-stage { position: relative; isolation: isolate; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1080px) {
+    .usp-stack { grid-template-columns: 1fr 1fr; }
+    .usp-card:last-child { grid-column: 1 / -1; }
+  }
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+    .card-grid, .trust-grid { grid-template-columns: 1fr; gap: 40px; }
+    .perks-strip { grid-template-columns: 1fr; }
+    .anyone-grid { gap: 20px; }
+  }
+  @media (max-width: 720px) {
+    .hero { padding: 32px 0 40px; }
+    .hero-actions .btn { flex: 1; min-width: 0; }
+    .usp-stack { grid-template-columns: 1fr; }
+    .how-grid, .anyone-grid { grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
+    .anyone-callout { margin-top: 32px; flex-direction: column; gap: 12px; }
+    .why-us, .how-section, .anyone-section, .card-section, .trust-section, .faq-section, .statement-section { padding: 60px 0; }
+    .phone { width: 88vw; max-width: 360px; }
+    .float-card-1 { right: -10px; top: 30px; }
+    .float-card-2 { left: -10px; bottom: 60px; }
+    .perks-strip { margin-top: 48px; padding: 26px 22px; }
+    .trust-card { padding: 24px; }
+    .scard { transform: rotate(-1.5deg); }
+  }
   @media (max-width: 480px) {
-    /* Floating chips poke past the edge on narrow screens — tuck them in */
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions .btn { width: 100%; }
+    .btn-lg { padding: 14px 20px; font-size: 15px; }
     .float-card-1 { right: 4px; top: 16px; transform: rotate(2deg) scale(0.9); }
     .float-card-2 { left: 4px; bottom: 40px; transform: rotate(-2deg) scale(0.9); }
-    /* Phone mockup: let height follow width so it never towers */
-    .phone-screen { height: min(640px, 152vw); }
-    .phone { animation: none; }
-    /* Hero trust strip reads as a tidy 3-up grid */
+    .phone { width: 100%; max-width: 340px; animation: none; }
+    .phone-screen { height: min(620px, 150vw); }
     .hero-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .trust-num { font-size: 24px; }
     .trust-label { font-size: 11px; }
-    /* Big statement scales down without losing the punch */
     .big-quote .word { font-size: clamp(44px, 15vw, 72px); }
-    .ss-num { font-size: 40px; }
-    /* Section headers breathe less on small screens */
     .section-head { margin-bottom: 8px; }
     .section-sub { font-size: 15px; }
-    /* Locals wall: two columns, shorter tiles */
-    .locals-tile { min-height: 96px; }
-    .locals-section { padding: 60px 0; }
-    /* Sticker card in the fix section sits flatter so it can't clip */
     .anyone-card { padding: 22px 18px; }
     .nan-shot-amount { font-size: 32px; }
+    .usp-card { padding: 30px 22px 24px; }
+    .perk-chip { font-size: 16px; padding: 8px 12px; }
   }
-
   @media (pointer: coarse) {
     .ph-action { min-width: 64px; }
   }
-
 </style>
