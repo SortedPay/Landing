@@ -103,7 +103,7 @@ const ogImage = new URL('/og-image.png', site).href;
     }
 
     // ─── Reveal on scroll ───
-    const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .spring-in');
+    const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .spring-in, .slap, .slap-stagger');
     if (reveals.length) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
@@ -147,6 +147,27 @@ const ogImage = new URL('/og-image.png', site).href;
         });
       }, { threshold: 0.4 });
       counters.forEach((el) => countObs.observe(el));
+    }
+
+    // ─── Pointer tilt on [data-tilt] (fine pointers only, respects reduced motion) ───
+    const canTilt =
+      window.matchMedia('(pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (canTilt) {
+      document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+        const max = parseFloat(el.dataset.tilt || '8');
+        el.style.transition = 'transform 520ms var(--ease-spring)';
+        el.style.willChange = 'transform';
+        el.addEventListener('pointermove', (e) => {
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transform = `perspective(1000px) rotateX(${(-y * max).toFixed(2)}deg) rotateY(${(x * max).toFixed(2)}deg)`;
+        });
+        el.addEventListener('pointerleave', () => {
+          el.style.transform = '';
+        });
+      });
     }
   </script>
 </body>

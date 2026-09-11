@@ -688,3 +688,103 @@ footer .logo:hover { color: var(--lime); }
   }
   html { scroll-behavior: auto; }
 }
+
+/* ──────── SCROLL EFFECTS ────────
+   Baseline: IntersectionObserver adds .in (see Base.astro).
+   Enhancement: browsers with scroll-driven animations get the same reveals
+   tied to scroll position, plus gentle parallax on the hero and ribbons. */
+.slap {
+  opacity: 0;
+  transform: scale(0.92) rotate(-2.5deg) translateY(22px);
+  transition: opacity 520ms var(--ease-spring), transform 640ms var(--ease-spring);
+}
+.slap.in { opacity: 1; transform: none; }
+.slap-stagger > * {
+  opacity: 0;
+  transform: scale(0.92) rotate(-2.5deg) translateY(22px);
+  transition: opacity 520ms var(--ease-spring), transform 640ms var(--ease-spring);
+}
+.slap-stagger.in > * { opacity: 1; transform: none; }
+.slap-stagger.in > *:nth-child(2) { transition-delay: 90ms; }
+.slap-stagger.in > *:nth-child(3) { transition-delay: 180ms; }
+.slap-stagger.in > *:nth-child(4) { transition-delay: 270ms; }
+.slap-stagger.in > *:nth-child(5) { transition-delay: 360ms; }
+.slap-stagger.in > *:nth-child(6) { transition-delay: 450ms; }
+
+@keyframes fx-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fx-slap {
+  0% { opacity: 0; transform: scale(0.9) rotate(-3deg) translateY(24px); }
+  70% { opacity: 1; transform: scale(1.02) rotate(0.6deg) translateY(-3px); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes fx-word {
+  0% { opacity: 0; transform: scale(0.8) rotate(calc(var(--tilt, 0deg) - 8deg)) translateY(30px); }
+  70% { opacity: 1; transform: scale(1.04) rotate(calc(var(--tilt, 0deg) + 1deg)) translateY(-4px); }
+  100% { opacity: 1; transform: rotate(var(--tilt, 0deg)); }
+}
+@keyframes fx-card-in {
+  from { opacity: 0; transform: rotate(-11deg) scale(0.9) translateY(40px); }
+  to { opacity: 1; transform: rotate(-3deg) scale(1) translateY(0); }
+}
+@keyframes fx-hero-parallax {
+  to { transform: translateY(-90px); }
+}
+@keyframes fx-ribbon-drift {
+  from { transform: translateX(-2.5%) scale(1.06); }
+  to { transform: translateX(2.5%) scale(1.06); }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal, .reveal-stagger > *, .spring-in, .slap, .slap-stagger > * {
+    transition: none;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 260px;
+  }
+  .reveal, .reveal-stagger > * { animation-name: fx-rise; }
+  .spring-in, .slap, .slap-stagger > * { animation-name: fx-slap; }
+  .reveal-stagger > *:nth-child(2), .slap-stagger > *:nth-child(2) { animation-range: entry 40px entry 300px; }
+  .reveal-stagger > *:nth-child(3), .slap-stagger > *:nth-child(3) { animation-range: entry 80px entry 340px; }
+  .reveal-stagger > *:nth-child(4), .slap-stagger > *:nth-child(4) { animation-range: entry 120px entry 380px; }
+  .reveal-stagger > *:nth-child(5), .slap-stagger > *:nth-child(5) { animation-range: entry 160px entry 420px; }
+  .reveal-stagger > *:nth-child(6), .slap-stagger > *:nth-child(6) { animation-range: entry 200px entry 460px; }
+  .reveal.in, .reveal-stagger.in > *, .spring-in.in, .slap.in, .slap-stagger.in > * { opacity: unset; transform: unset; }
+
+  .hero-parallax {
+    animation: fx-hero-parallax linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120vh;
+  }
+  .ribbon svg {
+    animation: fx-ribbon-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  .big-quote .word {
+    animation: fx-word linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+  .big-quote .word:nth-child(2) { animation-range: entry 12% entry 67%; }
+  .big-quote .word:nth-child(3) { animation-range: entry 24% entry 79%; }
+  .scard {
+    animation: fx-card-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > *, .spring-in, .slap, .slap-stagger > *,
+  .hero-parallax, .ribbon svg, .big-quote .word, .scard {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .reveal, .reveal-stagger > *, .spring-in, .slap, .slap-stagger > * { transform: none !important; }
+  .hero-parallax, .ribbon svg { transform: none !important; }
+}
